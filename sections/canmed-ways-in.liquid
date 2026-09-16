@@ -1,15 +1,24 @@
 <section class="cm-ways cm-section" {{ section.shopify_attributes }}>
   <div class="cm-ways__particles" aria-hidden="true">
     {% for i in (1..26) %}
+      {% liquid
+        assign left = i | times: 37 | modulo: 100
+        assign top = i | times: 61 | modulo: 100
+        assign size_mod = i | times: 7 | modulo: 9
+        assign size = 3 | plus: size_mod
+        assign dur_mod = i | times: 3 | modulo: 9
+        assign dur = 10 | plus: dur_mod
+        assign delay = i | modulo: 7 | times: 0.8
+      %}
       <span
         class="cm-ways__particle"
         style="
-          left: {{ i | times: 37 | modulo: 100 }}%;
-          top: {{ i | times: 61 | modulo: 100 }}%;
-          width: {{ 3 | plus: i | times: 7 | modulo: 9 }}px;
-          height: {{ 3 | plus: i | times: 7 | modulo: 9 }}px;
-          animation-duration: {{ 10 | plus: i | times: 3 | modulo: 9 }}s;
-          animation-delay: {{ i | modulo: 7 | times: 0.8 }}s;
+          left: {{ left }}%;
+          top: {{ top }}%;
+          width: {{ size }}px;
+          height: {{ size }}px;
+          animation-duration: {{ dur }}s;
+          animation-delay: {{ delay }}s;
         "
       ></span>
     {% endfor %}
@@ -37,10 +46,22 @@
             else
               assign accent_hex = '#c850d1'
           endcase
+
+          if block.settings.link != blank
+            assign card_url = block.settings.link
+          elsif block.settings.label == 'Shop'
+            assign card_url = routes.all_products_collection_url
+          elsif block.settings.label == 'Prescriptions'
+            assign card_url = '/pages/prescriptions'
+          elsif block.settings.label == 'For Patients'
+            assign card_url = '/pages/patients'
+          else
+            assign card_url = routes.root_url
+          endif
         %}
         <a
           class="cm-ways__card"
-          href="{{ block.settings.link | default: '#' }}"
+          href="{{ card_url }}"
           style="border-top: 3px solid {{ accent_hex }};"
           {{ block.shopify_attributes }}
         >

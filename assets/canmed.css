@@ -161,20 +161,24 @@ body:has(.cm-hero) {
 }
 
 .cm-btn--accent:hover {
-  background: var(--cm-pine);
-  border-color: var(--cm-pine);
+  background: var(--cm-amber);
+  border-color: var(--cm-amber);
   color: #fff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -16px rgb(200 80 209 / 0.85);
 }
 
 .cm-btn--secondary {
   background: var(--cm-ivory);
   color: var(--cm-pine) !important;
-  border: 1px solid var(--cm-hairline);
+  border: 1px solid rgb(157 62 198 / 0.4);
 }
 
 .cm-btn--secondary:hover {
   border-color: var(--cm-pine);
   color: var(--cm-pine-dark) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -18px rgb(74 63 82 / 0.35);
 }
 
 .cm-btn-row {
@@ -741,7 +745,7 @@ body:has(.cm-hero) {
 @media (min-width: 768px) {
   .cm-how__steps {
     grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
+    gap: 2.5rem;
   }
 }
 
@@ -911,8 +915,30 @@ body:has(.cm-hero) {
   background: var(--cm-ivory);
 }
 
-.cm-locations__card .cm-mono-data {
+.cm-how__head,
+.cm-ways__head {
+  max-width: 42rem;
+}
+
+.cm-locations__address {
   margin-top: 0.75rem;
+}
+
+.cm-locations__card .cm-mono-data {
+  margin-top: 0;
+}
+
+.cm-locations__phone {
+  display: block;
+  margin-top: 0.75rem;
+  color: var(--cm-pine) !important;
+  text-decoration: none !important;
+  font-family: var(--cm-font-mono);
+  font-size: 0.8125rem;
+}
+
+.cm-locations__phone:hover {
+  text-decoration: underline !important;
 }
 
 .cm-locations__card a {
@@ -924,8 +950,21 @@ body:has(.cm-hero) {
   font-size: 0.8125rem;
 }
 
-.cm-locations__card a:hover {
-  text-decoration: underline;
+.cm-btn:focus-visible,
+.cm-header__link:focus-visible,
+.cm-header__account:focus-visible,
+.cm-header__menu-btn:focus-visible,
+.cm-announce__dismiss:focus-visible,
+.cm-ways__card:focus-visible,
+.cm-locations__phone:focus-visible,
+.cm-footer__legal-links a:focus-visible {
+  outline: 2px solid var(--cm-amber);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--cm-amber-light);
+  color: var(--cm-pine-dark);
 }
 
 .cm-compliance {

@@ -30,22 +30,26 @@
               {% if block.settings.name != blank %}
                 <p class="cm-mono-caption">{{ block.settings.name | escape }}</p>
               {% endif %}
-              {% if block.settings.address != blank %}
-                <p class="cm-mono-data">{{ block.settings.address | escape }}</p>
-              {% endif %}
-              {% if block.settings.suburb != blank %}
-                <p class="cm-mono-data">{{ block.settings.suburb | escape }}</p>
-              {% endif %}
+              <p class="cm-mono-data cm-locations__address">
+                {% if block.settings.address != blank %}
+                  {{ block.settings.address | escape }}
+                  {% if block.settings.suburb != blank %}<br>{% endif %}
+                {% endif %}
+                {% if block.settings.suburb != blank %}
+                  {{ block.settings.suburb | escape }}
+                {% endif %}
+              </p>
               {% if block.settings.phone != blank %}
-                <p class="cm-mono-data">
-                  {% if block.settings.phone_link != blank %}
-                    <a href="{{ block.settings.phone_link }}">{{ block.settings.phone | escape }}</a>
-                  {% else %}
-                    <a href="tel:{{ block.settings.phone | replace: ' ', '' | replace: '(', '' | replace: ')', '' }}">
-                      {{- block.settings.phone | escape -}}
-                    </a>
-                  {% endif %}
-                </p>
+                {% if block.settings.phone_link != blank %}
+                  <a class="cm-locations__phone" href="{{ block.settings.phone_link }}">{{ block.settings.phone | escape }}</a>
+                {% else %}
+                  <a
+                    class="cm-locations__phone"
+                    href="tel:{{ block.settings.phone | replace: ' ', '' | replace: '(', '' | replace: ')', '' }}"
+                  >
+                    {{- block.settings.phone | escape -}}
+                  </a>
+                {% endif %}
               {% endif %}
             </div>
           {% endif %}
