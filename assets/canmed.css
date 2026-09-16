@@ -667,8 +667,13 @@ body:has(.cm-hero) {
   height: 100%;
 }
 
+.cm-hero__canvas-wrap {
+  min-height: 100%;
+}
+
+.cm-hero__canvas-wrap > div,
 .cm-hero__canvas-wrap canvas {
-  display: block;
+  display: block !important;
   width: 100% !important;
   height: 100% !important;
 }
