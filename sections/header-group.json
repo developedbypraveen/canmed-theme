@@ -23,12 +23,24 @@
     "canmed_header": {
       "type": "canmed-header",
       "settings": {
+        "logo": "shopify://shop_images/canmed-logo.webp",
         "brand_name": "CanMed",
         "brand_tagline": "Compounding Chemist",
+        "menu": "",
         "account_label": "My account",
-        "cta_label": "Start a prescription"
+        "link_account": "",
+        "cta_label": "Start a prescription",
+        "cta_link": "",
+        "link_prescriptions": "",
+        "link_patients": "",
+        "link_professionals": "",
+        "link_about": "",
+        "link_contact": ""
       }
     }
   },
-  "order": ["canmed_announcement", "canmed_header"]
+  "order": [
+    "canmed_announcement",
+    "canmed_header"
+  ]
 }
