@@ -1,0 +1,197 @@
+{% comment %} CanMed header — matches Lovable SiteChrome Header {% endcomment %}
+<header
+  class="cm-header"
+  data-cm-header
+  {{ section.shopify_attributes }}
+>
+  <div class="cm-shell cm-header__bar">
+    <a href="{{ routes.root_url }}" class="cm-header__brand">
+      {% if section.settings.logo != blank %}
+        {{
+          section.settings.logo
+          | image_url: width: 132
+          | image_tag:
+            class: 'cm-header__logo',
+            widths: '44, 88, 132',
+            sizes: '44px',
+            loading: 'eager',
+            alt: shop.name
+        }}
+      {% else %}
+        <img
+          class="cm-header__logo"
+          src="{{ 'canmed-logo.png' | asset_url }}"
+          alt="{{ shop.name | escape }}"
+          width="44"
+          height="44"
+          loading="eager"
+        >
+      {% endif %}
+      <span class="cm-header__wordmark">
+        <span class="cm-header__name">{{ section.settings.brand_name | default: 'CanMed' | escape }}</span>
+        {% if section.settings.brand_tagline != blank %}
+          <span class="cm-header__tagline">{{ section.settings.brand_tagline | escape }}</span>
+        {% endif %}
+      </span>
+    </a>
+
+    <nav class="cm-header__nav" aria-label="Primary">
+      {% if section.settings.menu != blank %}
+        {% for link in section.settings.menu.links %}
+          <a
+            href="{{ link.url }}"
+            class="cm-header__link{% if link.active %} is-active{% endif %}"
+          >
+            {{- link.title | escape -}}
+          </a>
+        {% endfor %}
+      {% else %}
+        <a class="cm-header__link" href="{{ routes.all_products_collection_url }}">Shop</a>
+        <a class="cm-header__link" href="{{ section.settings.link_prescriptions | default: '/pages/prescriptions' }}">Prescriptions</a>
+        <a class="cm-header__link" href="{{ section.settings.link_patients | default: '/pages/patients' }}">For Patients</a>
+        <a class="cm-header__link" href="{{ section.settings.link_professionals | default: '/pages/professionals' }}">For Professionals</a>
+        <a class="cm-header__link" href="{{ section.settings.link_about | default: '/pages/about' }}">About</a>
+        <a class="cm-header__link" href="{{ section.settings.link_contact | default: '/pages/contact' }}">Contact</a>
+      {% endif %}
+    </nav>
+
+    <div class="cm-header__actions">
+      {% if shop.customer_accounts_enabled %}
+        <a class="cm-header__account" href="{{ routes.account_url }}">
+          {{ section.settings.account_label | default: 'My account' | escape }}
+        </a>
+      {% else %}
+        <a class="cm-header__account" href="{{ section.settings.link_account | default: '/account' }}">
+          {{ section.settings.account_label | default: 'My account' | escape }}
+        </a>
+      {% endif %}
+
+      {% if section.settings.cta_label != blank %}
+        <a
+          class="cm-btn cm-btn--accent cm-header__cta"
+          href="{{ section.settings.cta_link | default: '/pages/prescriptions' }}"
+        >
+          {{ section.settings.cta_label | escape }}
+        </a>
+      {% endif %}
+
+      <button
+        type="button"
+        class="cm-header__menu-btn"
+        data-cm-menu-toggle
+        aria-expanded="false"
+        aria-controls="cm-mobile-nav-{{ section.id }}"
+        aria-label="Open menu"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="cm-header__drawer" id="cm-mobile-nav-{{ section.id }}" data-cm-menu-drawer hidden>
+    <nav class="cm-shell cm-header__drawer-nav" aria-label="Mobile">
+      {% if section.settings.menu != blank %}
+        {% for link in section.settings.menu.links %}
+          <a href="{{ link.url }}" class="cm-header__drawer-link">{{ link.title | escape }}</a>
+        {% endfor %}
+      {% else %}
+        <a class="cm-header__drawer-link" href="{{ routes.all_products_collection_url }}">Shop</a>
+        <a class="cm-header__drawer-link" href="{{ section.settings.link_prescriptions | default: '/pages/prescriptions' }}">Prescriptions</a>
+        <a class="cm-header__drawer-link" href="{{ section.settings.link_patients | default: '/pages/patients' }}">For Patients</a>
+        <a class="cm-header__drawer-link" href="{{ section.settings.link_professionals | default: '/pages/professionals' }}">For Professionals</a>
+        <a class="cm-header__drawer-link" href="{{ section.settings.link_about | default: '/pages/about' }}">About</a>
+        <a class="cm-header__drawer-link" href="{{ section.settings.link_contact | default: '/pages/contact' }}">Contact</a>
+      {% endif %}
+      {% if shop.customer_accounts_enabled %}
+        <a class="cm-header__drawer-link" href="{{ routes.account_url }}">{{ section.settings.account_label | default: 'My account' | escape }}</a>
+      {% else %}
+        <a class="cm-header__drawer-link" href="{{ section.settings.link_account | default: '/account' }}">{{ section.settings.account_label | default: 'My account' | escape }}</a>
+      {% endif %}
+      {% if section.settings.cta_label != blank %}
+        <a
+          class="cm-btn cm-btn--accent"
+          href="{{ section.settings.cta_link | default: '/pages/prescriptions' }}"
+          style="margin-top: 1rem;"
+        >
+          {{ section.settings.cta_label | escape }}
+        </a>
+      {% endif %}
+    </nav>
+  </div>
+</header>
+
+<script src="{{ 'canmed-header.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "CanMed — Header",
+  "tag": "section",
+  "class": "cm-section-header",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo",
+      "info": "Optional. Falls back to theme asset canmed-logo.png"
+    },
+    {
+      "type": "text",
+      "id": "brand_name",
+      "label": "Brand name",
+      "default": "CanMed"
+    },
+    {
+      "type": "text",
+      "id": "brand_tagline",
+      "label": "Brand tagline",
+      "default": "Compounding Chemist"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "info": "If empty, default CanMed links are used until you create pages."
+    },
+    {
+      "type": "text",
+      "id": "account_label",
+      "label": "Account link label",
+      "default": "My account"
+    },
+    {
+      "type": "url",
+      "id": "link_account",
+      "label": "Account link (if accounts disabled)"
+    },
+    {
+      "type": "header",
+      "content": "CTA button"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Label",
+      "default": "Start a prescription"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Fallback nav links (when no menu selected)"
+    },
+    { "type": "url", "id": "link_prescriptions", "label": "Prescriptions" },
+    { "type": "url", "id": "link_patients", "label": "For Patients" },
+    { "type": "url", "id": "link_professionals", "label": "For Professionals" },
+    { "type": "url", "id": "link_about", "label": "About" },
+    { "type": "url", "id": "link_contact", "label": "Contact" }
+  ]
+}
+{% endschema %}

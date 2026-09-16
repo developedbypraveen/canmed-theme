@@ -1,0 +1,82 @@
+{% comment %} CanMed delivery announcement — matches Lovable UtilityBar {% endcomment %}
+{% if section.settings.enabled %}
+  <div
+    class="cm-announce"
+    id="cm-announce-{{ section.id }}"
+    data-cm-announce
+    {{ section.shopify_attributes }}
+  >
+    <div class="cm-shell cm-announce__inner">
+      <p class="cm-announce__text">{{ section.settings.text | escape }}</p>
+      {% if section.settings.show_dismiss %}
+        <button
+          type="button"
+          class="cm-announce__dismiss"
+          data-cm-announce-dismiss
+          aria-label="{{ section.settings.dismiss_label | default: 'Dismiss delivery notice' | escape }}"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </button>
+      {% endif %}
+    </div>
+  </div>
+  <script>
+    (function () {
+      var bar = document.getElementById('cm-announce-{{ section.id }}');
+      if (!bar) return;
+      var key = 'cm-announce-dismissed';
+      try {
+        if (sessionStorage.getItem(key) === '1') {
+          bar.hidden = true;
+          return;
+        }
+      } catch (e) {}
+      var btn = bar.querySelector('[data-cm-announce-dismiss]');
+      if (btn) {
+        btn.addEventListener('click', function () {
+          bar.hidden = true;
+          try { sessionStorage.setItem(key, '1'); } catch (e) {}
+        });
+      }
+    })();
+  </script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "CanMed — Announcement",
+  "tag": "section",
+  "class": "cm-section-announce",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Show announcement bar",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Announcement text",
+      "default": "Free delivery over $99 — phytocannabinoid orders ship free over $180 and require an approved script."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dismiss",
+      "label": "Show dismiss button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "dismiss_label",
+      "label": "Dismiss button label",
+      "default": "Dismiss delivery notice"
+    }
+  ]
+}
+{% endschema %}

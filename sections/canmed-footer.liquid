@@ -1,0 +1,191 @@
+{% comment %} CanMed footer — matches Lovable SiteChrome Footer {% endcomment %}
+<footer class="cm-footer" {{ section.shopify_attributes }}>
+  <div class="cm-shell cm-footer__inner">
+    <div class="cm-footer__grid">
+      <div class="cm-footer__brand">
+        {% if section.settings.logo != blank %}
+          {{
+            section.settings.logo
+            | image_url: width: 192
+            | image_tag:
+              class: 'cm-footer__logo',
+              widths: '64, 128, 192',
+              sizes: '64px',
+              loading: 'lazy',
+              alt: shop.name
+          }}
+        {% else %}
+          <img
+            class="cm-footer__logo"
+            src="{{ 'canmed-logo.png' | asset_url }}"
+            alt="{{ shop.name | escape }}"
+            width="64"
+            height="64"
+            loading="lazy"
+          >
+        {% endif %}
+        <p class="cm-footer__name">{{ section.settings.brand_name | default: 'CanMed' | escape }}</p>
+        {% if section.settings.brand_tagline != blank %}
+          <p class="cm-footer__tagline">{{ section.settings.brand_tagline | escape }}</p>
+        {% endif %}
+        {% if section.settings.tagline != blank %}
+          <p class="cm-footer__blurb">{{ section.settings.tagline | escape }}</p>
+        {% endif %}
+      </div>
+
+      <div class="cm-footer__locations">
+        {% for block in section.blocks %}
+          {% if block.type == 'location' %}
+            <div class="cm-footer__location" {{ block.shopify_attributes }}>
+              {% if block.settings.name != blank %}
+                <p class="cm-footer__loc-name">{{ block.settings.name | escape }}</p>
+              {% endif %}
+              <address class="cm-footer__address">
+                {% if block.settings.address != blank %}
+                  {{ block.settings.address | escape }}<br>
+                {% endif %}
+                {% if block.settings.suburb != blank %}
+                  {{ block.settings.suburb | escape }}<br>
+                {% endif %}
+                {% if block.settings.phone != blank %}
+                  {% if block.settings.phone_link != blank %}
+                    <a href="{{ block.settings.phone_link }}">{{ block.settings.phone | escape }}</a>
+                  {% else %}
+                    <a href="tel:{{ block.settings.phone | replace: ' ', '' | replace: '(', '' | replace: ')', '' }}">
+                      {{- block.settings.phone | escape -}}
+                    </a>
+                  {% endif %}
+                {% endif %}
+              </address>
+              <dl class="cm-footer__hours">
+                {% if block.settings.hours_1_days != blank %}
+                  <div><dt>{{ block.settings.hours_1_days | escape }}</dt><dd>{{ block.settings.hours_1_time | escape }}</dd></div>
+                {% endif %}
+                {% if block.settings.hours_2_days != blank %}
+                  <div><dt>{{ block.settings.hours_2_days | escape }}</dt><dd>{{ block.settings.hours_2_time | escape }}</dd></div>
+                {% endif %}
+                {% if block.settings.hours_3_days != blank %}
+                  <div><dt>{{ block.settings.hours_3_days | escape }}</dt><dd>{{ block.settings.hours_3_time | escape }}</dd></div>
+                {% endif %}
+              </dl>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+    {% if section.settings.show_compliance %}
+      <div class="cm-footer__compliance">
+        <p class="cm-footer__compliance-eyebrow">{{ section.settings.compliance_eyebrow | escape }}</p>
+        <p class="cm-footer__compliance-body">{{ section.settings.compliance_body | escape }}</p>
+      </div>
+    {% endif %}
+
+    <div class="cm-footer__legal">
+      <p class="cm-footer__copy">
+        © {{ 'now' | date: '%Y' }}
+        {{ section.settings.copyright | default: 'CanMed Compounding Chemist. Pharmacy licence VIC-2291.' | escape }}
+      </p>
+      <div class="cm-footer__legal-links">
+        <a href="{{ section.settings.link_privacy | default: '/policies/privacy-policy' }}">Privacy</a>
+        <a href="{{ section.settings.link_terms | default: '/policies/terms-of-service' }}">Terms</a>
+        <a href="{{ section.settings.link_admin | default: '/pages/admin' }}">Staff portal</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "CanMed — Footer",
+  "tag": "section",
+  "class": "cm-section-footer",
+  "enabled_on": {
+    "groups": ["footer"]
+  },
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "text",
+      "id": "brand_name",
+      "label": "Brand name",
+      "default": "CanMed"
+    },
+    {
+      "type": "text",
+      "id": "brand_tagline",
+      "label": "Brand tagline",
+      "default": "Compounding Chemist"
+    },
+    {
+      "type": "textarea",
+      "id": "tagline",
+      "label": "Blurb",
+      "default": "Medicines compounded to the person taking them, from three Victorian dispensaries."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_compliance",
+      "label": "Show regulatory notice",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "compliance_eyebrow",
+      "label": "Notice heading",
+      "default": "Regulatory notice"
+    },
+    {
+      "type": "textarea",
+      "id": "compliance_body",
+      "label": "Notice body",
+      "default": "Compounded medicines are prepared for an individual patient and are not evaluated by the TGA in the way registered products are. Nothing on this site is medical advice. Schedule 4 and Schedule 8 items are supplied only against a valid Australian prescription."
+    },
+    {
+      "type": "text",
+      "id": "copyright",
+      "label": "Copyright line",
+      "default": "CanMed Compounding Chemist. Pharmacy licence VIC-2291."
+    },
+    {
+      "type": "url",
+      "id": "link_privacy",
+      "label": "Privacy link"
+    },
+    {
+      "type": "url",
+      "id": "link_terms",
+      "label": "Terms link"
+    },
+    {
+      "type": "url",
+      "id": "link_admin",
+      "label": "Staff portal link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "location",
+      "name": "Location",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Name", "default": "Kensington" },
+        { "type": "text", "id": "address", "label": "Street address", "default": "412 Macaulay Road" },
+        { "type": "text", "id": "suburb", "label": "Suburb", "default": "Kensington VIC 3031" },
+        { "type": "text", "id": "phone", "label": "Phone", "default": "(03) 9376 2140" },
+        { "type": "text", "id": "phone_link", "label": "Phone link", "default": "tel:+61393762140" },
+        { "type": "text", "id": "hours_1_days", "label": "Hours 1 — days", "default": "Mon – Fri" },
+        { "type": "text", "id": "hours_1_time", "label": "Hours 1 — time", "default": "08:30 – 18:00" },
+        { "type": "text", "id": "hours_2_days", "label": "Hours 2 — days", "default": "Saturday" },
+        { "type": "text", "id": "hours_2_time", "label": "Hours 2 — time", "default": "09:00 – 13:00" },
+        { "type": "text", "id": "hours_3_days", "label": "Hours 3 — days", "default": "Sunday" },
+        { "type": "text", "id": "hours_3_time", "label": "Hours 3 — time", "default": "Closed" }
+      ]
+    }
+  ]
+}
+{% endschema %}

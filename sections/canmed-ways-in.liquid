@@ -1,5 +1,21 @@
 <section class="cm-ways cm-section" {{ section.shopify_attributes }}>
-  <div class="cm-shell">
+  <div class="cm-ways__particles" aria-hidden="true">
+    {% for i in (1..26) %}
+      <span
+        class="cm-ways__particle"
+        style="
+          left: {{ i | times: 37 | modulo: 100 }}%;
+          top: {{ i | times: 61 | modulo: 100 }}%;
+          width: {{ 3 | plus: i | times: 7 | modulo: 9 }}px;
+          height: {{ 3 | plus: i | times: 7 | modulo: 9 }}px;
+          animation-duration: {{ 10 | plus: i | times: 3 | modulo: 9 }}s;
+          animation-delay: {{ i | modulo: 7 | times: 0.8 }}s;
+        "
+      ></span>
+    {% endfor %}
+  </div>
+
+  <div class="cm-shell" style="position: relative;">
     <div class="cm-ways__head">
       {% if section.settings.eyebrow != blank %}
         <p class="cm-eyebrow">{{ section.settings.eyebrow | escape }}</p>
@@ -25,7 +41,7 @@
         <a
           class="cm-ways__card"
           href="{{ block.settings.link | default: '#' }}"
-          style="--cm-card-accent: {{ accent_hex }};"
+          style="border-top: 3px solid {{ accent_hex }};"
           {{ block.shopify_attributes }}
         >
           {% if block.settings.label != blank %}
