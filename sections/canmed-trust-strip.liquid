@@ -1,0 +1,72 @@
+<section class="cm-trust" {{ section.shopify_attributes }}>
+  <div class="cm-shell cm-trust__grid">
+    {% for block in section.blocks %}
+      <div class="cm-trust__item" {{ block.shopify_attributes }}>
+        {% if block.settings.label != blank %}
+          <p class="cm-mono-caption">{{ block.settings.label | escape }}</p>
+        {% endif %}
+        {% if block.settings.value != blank %}
+          <p class="cm-mono-data">{{ block.settings.value | escape }}</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CanMed — Trust strip",
+  "tag": "section",
+  "class": "cm-section-trust",
+  "max_blocks": 6,
+  "settings": [],
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "Trust item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Three dispensaries"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "Kensington · Hawthorn · Geelong"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CanMed — Trust strip",
+      "blocks": [
+        {
+          "type": "trust_item",
+          "settings": {
+            "label": "Three dispensaries",
+            "value": "Kensington · Hawthorn · Geelong"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "label": "Pharmacist compounded",
+            "value": "AACP-trained, PSA registered"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "label": "Compliance",
+            "value": "Pharmacy licence VIC-2291"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

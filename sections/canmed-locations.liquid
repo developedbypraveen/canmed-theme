@@ -1,0 +1,205 @@
+<section class="cm-locations cm-section" {{ section.shopify_attributes }}>
+  <div class="cm-shell cm-locations__grid">
+    <div class="cm-locations__copy">
+      {% if section.settings.eyebrow != blank %}
+        <p class="cm-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {% endif %}
+      {% if section.settings.heading != blank %}
+        <h2 class="cm-display-l">{{ section.settings.heading | escape }}</h2>
+      {% endif %}
+      {% if section.settings.lede != blank %}
+        <p class="cm-body-l">{{ section.settings.lede | escape }}</p>
+      {% endif %}
+      {% if section.settings.cta_label != blank %}
+        <div class="cm-btn-row">
+          <a
+            class="cm-btn cm-btn--secondary"
+            href="{{ section.settings.cta_link | default: '/pages/about' }}"
+          >
+            {{ section.settings.cta_label | escape }}
+          </a>
+        </div>
+      {% endif %}
+    </div>
+
+    <div>
+      <div class="cm-locations__cards">
+        {% for block in section.blocks %}
+          {% if block.type == 'location' %}
+            <div class="cm-locations__card" {{ block.shopify_attributes }}>
+              {% if block.settings.name != blank %}
+                <p class="cm-mono-caption">{{ block.settings.name | escape }}</p>
+              {% endif %}
+              {% if block.settings.address != blank %}
+                <p class="cm-mono-data">{{ block.settings.address | escape }}</p>
+              {% endif %}
+              {% if block.settings.suburb != blank %}
+                <p class="cm-mono-data">{{ block.settings.suburb | escape }}</p>
+              {% endif %}
+              {% if block.settings.phone != blank %}
+                <p class="cm-mono-data">
+                  {% if block.settings.phone_link != blank %}
+                    <a href="{{ block.settings.phone_link }}">{{ block.settings.phone | escape }}</a>
+                  {% else %}
+                    <a href="tel:{{ block.settings.phone | replace: ' ', '' | replace: '(', '' | replace: ')', '' }}">
+                      {{- block.settings.phone | escape -}}
+                    </a>
+                  {% endif %}
+                </p>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      {% if section.settings.show_compliance %}
+        <div class="cm-compliance">
+          {% if section.settings.compliance_eyebrow != blank %}
+            <p class="cm-mono-caption">{{ section.settings.compliance_eyebrow | escape }}</p>
+          {% endif %}
+          {% if section.settings.compliance_body != blank %}
+            <p class="cm-mono-data">{{ section.settings.compliance_body | escape }}</p>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CanMed — Locations",
+  "tag": "section",
+  "class": "cm-section-locations",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Find us"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Three dispensaries, one formulary."
+    },
+    {
+      "type": "textarea",
+      "id": "lede",
+      "label": "Supporting text",
+      "default": "Every location compounds to the same standard operating procedures and shares your record."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Location details"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Regulatory notice"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_compliance",
+      "label": "Show regulatory notice",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "compliance_eyebrow",
+      "label": "Notice heading",
+      "default": "Regulatory notice"
+    },
+    {
+      "type": "textarea",
+      "id": "compliance_body",
+      "label": "Notice body",
+      "default": "Compounded medicines are prepared for an individual patient and are not evaluated by the TGA in the way registered products are. Nothing on this site is medical advice. Schedule 4 and Schedule 8 items are supplied only against a valid Australian prescription."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "location",
+      "name": "Location",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Kensington"
+        },
+        {
+          "type": "text",
+          "id": "address",
+          "label": "Street address",
+          "default": "412 Macaulay Road"
+        },
+        {
+          "type": "text",
+          "id": "suburb",
+          "label": "Suburb / postcode",
+          "default": "Kensington VIC 3031"
+        },
+        {
+          "type": "text",
+          "id": "phone",
+          "label": "Phone (display)",
+          "default": "(03) 9376 2140"
+        },
+        {
+          "type": "text",
+          "id": "phone_link",
+          "label": "Phone link (tel:)",
+          "default": "tel:+61393762140",
+          "info": "Include tel: prefix, e.g. tel:+61393762140"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CanMed — Locations",
+      "blocks": [
+        {
+          "type": "location",
+          "settings": {
+            "name": "Kensington",
+            "address": "412 Macaulay Road",
+            "suburb": "Kensington VIC 3031",
+            "phone": "(03) 9376 2140",
+            "phone_link": "tel:+61393762140"
+          }
+        },
+        {
+          "type": "location",
+          "settings": {
+            "name": "Hawthorn",
+            "address": "88 Burwood Road",
+            "suburb": "Hawthorn VIC 3122",
+            "phone": "(03) 9818 7752",
+            "phone_link": "tel:+61398187752"
+          }
+        },
+        {
+          "type": "location",
+          "settings": {
+            "name": "Geelong",
+            "address": "27 Malop Street",
+            "suburb": "Geelong VIC 3220",
+            "phone": "(03) 5229 4418",
+            "phone_link": "tel:+61352294418"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,153 @@
+<section class="cm-how cm-section" {{ section.shopify_attributes }}>
+  <div class="cm-shell">
+    <div class="cm-how__head">
+      {% if section.settings.eyebrow != blank %}
+        <p class="cm-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {% endif %}
+      {% if section.settings.heading != blank %}
+        <h2 class="cm-display-l">{{ section.settings.heading | escape }}</h2>
+      {% endif %}
+      {% if section.settings.lede != blank %}
+        <p class="cm-body-l">{{ section.settings.lede | escape }}</p>
+      {% endif %}
+    </div>
+
+    <ol class="cm-how__steps">
+      {% for block in section.blocks %}
+        <li class="cm-how__step" {{ block.shopify_attributes }}>
+          <div class="cm-how__step-top">
+            <span class="cm-how__num">{{ block.settings.number | escape }}</span>
+            <span class="cm-how__icon" aria-hidden="true">
+              {% case block.settings.icon %}
+                {% when 'review' %}
+                  {% render 'canmed-icon-review' %}
+                {% when 'flask' %}
+                  {% render 'canmed-icon-flask' %}
+                {% when 'delivery' %}
+                  {% render 'canmed-icon-delivery' %}
+                {% else %}
+                  {% render 'canmed-icon-script' %}
+              {% endcase %}
+            </span>
+          </div>
+          {% if block.settings.title != blank %}
+            <h3 class="cm-display-m">{{ block.settings.title | escape }}</h3>
+          {% endif %}
+          {% if block.settings.body != blank %}
+            <p class="cm-body-l">{{ block.settings.body | escape }}</p>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CanMed — How it works",
+  "tag": "section",
+  "class": "cm-section-how",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "How it works"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Four steps, and a pharmacist at every one."
+    },
+    {
+      "type": "textarea",
+      "id": "lede",
+      "label": "Supporting text",
+      "default": "Nothing is compounded until a pharmacist has read your script end to end."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Step number",
+          "default": "01"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "script", "label": "Script / upload" },
+            { "value": "review", "label": "Pharmacist review" },
+            { "value": "flask", "label": "Compounding flask" },
+            { "value": "delivery", "label": "Delivery" }
+          ],
+          "default": "script"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Submit your script"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Body",
+          "default": "Upload a photo or send the original. We confirm receipt the same day."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CanMed — How it works",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "number": "01",
+            "icon": "script",
+            "title": "Submit your script",
+            "body": "Upload a photo or send the original. We confirm receipt the same day."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "number": "02",
+            "icon": "review",
+            "title": "Pharmacist review",
+            "body": "A compounding pharmacist checks strength, base and interactions before anything is made."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "number": "03",
+            "icon": "flask",
+            "title": "Compounded to you",
+            "body": "Prepared in-house in small batches, weighed and batch-numbered on the label."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "number": "04",
+            "icon": "delivery",
+            "title": "Delivered or collected",
+            "body": "Cold-chain courier where required, or pick up at your nearest dispensary."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

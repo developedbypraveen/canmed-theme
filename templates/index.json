@@ -1,285 +1,182 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */{
+{
   "sections": {
-    "hero_jVaWmY": {
-      "type": "hero",
-      "blocks": {
-        "text_YLPk4p": {
-          "type": "text",
-          "name": "t:names.heading",
-          "settings": {
-            "text": "<p>Browse our latest products</p>",
-            "text_color": "{{ settings.color_palette.background }}",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "button_H9gpTf": {
-          "type": "button",
-          "name": "t:names.button",
-          "settings": {
-            "label": "Shop all",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
-            "style_class": "button-custom",
-            "custom_button_background": "rgba(0,0,0,0)",
-            "custom_button_text": "{{ settings.color_palette.background }}",
-            "custom_button_border": "{{ settings.color_palette.background }}",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "text_YLPk4p",
-        "button_H9gpTf"
-      ],
-      "name": "t:names.hero",
+    "canmed_hero": {
+      "type": "canmed-hero",
       "settings": {
-        "media_type_1": "image",
-        "media_type_2": "image",
-        "stack_media_on_mobile": false,
-        "custom_mobile_media": false,
-        "media_type_1_mobile": "image",
-        "media_type_2_mobile": "image",
-        "open_in_new_tab": false,
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "space-between",
-        "vertical_alignment": "flex-end",
-        "align_baseline": true,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "flex-end",
-        "gap": 24,
-        "section_width": "page-width",
-        "section_height": "medium",
-        "section_height_custom": 50,
-        "background_color": "rgba(0,0,0,0)",
-        "toggle_overlay": true,
-        "overlay_color": "#12121266",
-        "overlay_style": "solid",
-        "gradient_direction": "to bottom",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "padding-block-start": 100,
-        "padding-block-end": 72
+        "eyebrow": "Compounded for you",
+        "heading": "Medicine, formulated to the person taking it.",
+        "body": "Three Victorian dispensaries compounding paediatric, geriatric, veterinary and phytocannabinoid medicines — one patient, one batch, at a time.",
+        "primary_label": "Start a prescription",
+        "secondary_label": "Browse the shop",
+        "image_alt": "A glass amber tincture vessel"
       }
     },
-    "product_list_fa6P9H": {
-      "type": "product-list",
+    "canmed_trust": {
+      "type": "canmed-trust-strip",
       "blocks": {
-        "static-header": {
-          "type": "_product-list-content",
-          "name": "t:names.header",
-          "static": true,
+        "trust_1": {
+          "type": "trust_item",
           "settings": {
-            "content_direction": "row",
-            "vertical_on_mobile": false,
-            "horizontal_alignment": "space-between",
-            "vertical_alignment": "flex-end",
-            "align_baseline": true,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_list_text_YFtzcL": {
-              "type": "_product-list-text",
-              "name": "t:names.collection_title",
-              "settings": {
-                "text": "<h3>{{ closest.collection.title }}</h3>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h4",
-                "font": "var(--font-body--family)",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_list_button_MWeP9V": {
-              "type": "_product-list-button",
-              "name": "t:names.product_list_button",
-              "settings": {
-                "label": "View all",
-                "open_in_new_tab": false,
-                "style_class": "link",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_list_text_YFtzcL",
-            "product_list_button_MWeP9V"
-          ]
+            "label": "Three dispensaries",
+            "value": "Kensington · Hawthorn · Geelong"
+          }
         },
-        "static-product-card": {
-          "type": "_product-card",
-          "name": "t:names.product_card",
-          "static": true,
+        "trust_2": {
+          "type": "trust_item",
           "settings": {
-            "product_card_gap": 4,
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_card_gallery_677WP3": {
-              "type": "_product-card-gallery",
-              "name": "t:names.product_card_media",
-              "settings": {
-                "image_ratio": "adapt",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_title_YXxMTj": {
-              "type": "product-title",
-              "name": "t:names.product_title",
-              "settings": {
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "price_JQzVV4": {
-              "type": "price",
-              "name": "t:names.product_price",
-              "settings": {
-                "show_sale_price_first": true,
-                "show_installments": false,
-                "show_tax_info": false,
-                "type_preset": "h6",
-                "width": "100%",
-                "alignment": "left",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_card_gallery_677WP3",
-            "product_title_YXxMTj",
-            "price_JQzVV4"
-          ]
+            "label": "Pharmacist compounded",
+            "value": "AACP-trained, PSA registered"
+          }
+        },
+        "trust_3": {
+          "type": "trust_item",
+          "settings": {
+            "label": "Compliance",
+            "value": "Pharmacy licence VIC-2291"
+          }
         }
       },
-      "name": "t:names.product_list",
+      "block_order": ["trust_1", "trust_2", "trust_3"],
+      "settings": {}
+    },
+    "canmed_how": {
+      "type": "canmed-how-it-works",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "number": "01",
+            "icon": "script",
+            "title": "Submit your script",
+            "body": "Upload a photo or send the original. We confirm receipt the same day."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "number": "02",
+            "icon": "review",
+            "title": "Pharmacist review",
+            "body": "A compounding pharmacist checks strength, base and interactions before anything is made."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "number": "03",
+            "icon": "flask",
+            "title": "Compounded to you",
+            "body": "Prepared in-house in small batches, weighed and batch-numbered on the label."
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "number": "04",
+            "icon": "delivery",
+            "title": "Delivered or collected",
+            "body": "Cold-chain courier where required, or pick up at your nearest dispensary."
+          }
+        }
+      },
+      "block_order": ["step_1", "step_2", "step_3", "step_4"],
       "settings": {
-        "collection": "all",
-        "layout_type": "grid",
-        "carousel_on_mobile": false,
-        "max_products": 8,
-        "columns": 4,
-        "mobile_columns": "2",
-        "mobile_card_size": "60cqw",
-        "columns_gap": 8,
-        "rows_gap": 24,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
-        "horizontal_alignment": "flex-start",
-        "gap": 28,
-        "background_color": "{{ settings.color_palette.background }}",
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "eyebrow": "How it works",
+        "heading": "Four steps, and a pharmacist at every one.",
+        "lede": "Nothing is compounded until a pharmacist has read your script end to end."
+      }
+    },
+    "canmed_ways": {
+      "type": "canmed-ways-in",
+      "blocks": {
+        "card_shop": {
+          "type": "card",
+          "settings": {
+            "accent": "amber",
+            "label": "Shop",
+            "title": "Compounded and stocked lines",
+            "body": "Browse by access tier — prescription only, pharmacist only, or over the counter.",
+            "link_label": "Open →"
+          }
+        },
+        "card_rx": {
+          "type": "card",
+          "settings": {
+            "accent": "pine",
+            "label": "Prescriptions",
+            "title": "Send us your script",
+            "body": "A four-step intake. Upload, choose your dispensary, and track it from there.",
+            "link_label": "Open →"
+          }
+        },
+        "card_patients": {
+          "type": "card",
+          "settings": {
+            "accent": "sage",
+            "label": "For Patients",
+            "title": "What compounding actually is",
+            "body": "Plain-language answers before you commit to anything.",
+            "link_label": "Open →"
+          }
+        }
+      },
+      "block_order": ["card_shop", "card_rx", "card_patients"],
+      "settings": {
+        "eyebrow": "Where to start",
+        "heading": "Three ways in."
+      }
+    },
+    "canmed_locations": {
+      "type": "canmed-locations",
+      "blocks": {
+        "loc_kensington": {
+          "type": "location",
+          "settings": {
+            "name": "Kensington",
+            "address": "412 Macaulay Road",
+            "suburb": "Kensington VIC 3031",
+            "phone": "(03) 9376 2140",
+            "phone_link": "tel:+61393762140"
+          }
+        },
+        "loc_hawthorn": {
+          "type": "location",
+          "settings": {
+            "name": "Hawthorn",
+            "address": "88 Burwood Road",
+            "suburb": "Hawthorn VIC 3122",
+            "phone": "(03) 9818 7752",
+            "phone_link": "tel:+61398187752"
+          }
+        },
+        "loc_geelong": {
+          "type": "location",
+          "settings": {
+            "name": "Geelong",
+            "address": "27 Malop Street",
+            "suburb": "Geelong VIC 3220",
+            "phone": "(03) 5229 4418",
+            "phone_link": "tel:+61352294418"
+          }
+        }
+      },
+      "block_order": ["loc_kensington", "loc_hawthorn", "loc_geelong"],
+      "settings": {
+        "eyebrow": "Find us",
+        "heading": "Three dispensaries, one formulary.",
+        "lede": "Every location compounds to the same standard operating procedures and shares your record.",
+        "cta_label": "Location details",
+        "show_compliance": true,
+        "compliance_eyebrow": "Regulatory notice",
+        "compliance_body": "Compounded medicines are prepared for an individual patient and are not evaluated by the TGA in the way registered products are. Nothing on this site is medical advice. Schedule 4 and Schedule 8 items are supplied only against a valid Australian prescription."
       }
     }
   },
   "order": [
-    "hero_jVaWmY",
-    "product_list_fa6P9H"
+    "canmed_hero",
+    "canmed_trust",
+    "canmed_how",
+    "canmed_ways",
+    "canmed_locations"
   ]
 }

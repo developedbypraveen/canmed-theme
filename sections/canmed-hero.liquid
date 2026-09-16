@@ -1,0 +1,140 @@
+{% comment %} CanMed homepage hero — content + image editable in Theme Customizer {% endcomment %}
+
+<section class="cm-hero" {{ section.shopify_attributes }}>
+  <div class="cm-shell cm-hero__grid">
+    <div class="cm-hero__copy">
+      {% if section.settings.eyebrow != blank %}
+        <p class="cm-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h1 class="cm-display-xl">{{ section.settings.heading | escape }}</h1>
+      {% endif %}
+
+      {% if section.settings.body != blank %}
+        <p class="cm-body-l">{{ section.settings.body | escape }}</p>
+      {% endif %}
+
+      <div class="cm-btn-row">
+        {% if section.settings.primary_label != blank %}
+          <a
+            class="cm-btn cm-btn--accent"
+            href="{{ section.settings.primary_link | default: '/pages/prescriptions' }}"
+          >
+            {{ section.settings.primary_label | escape }}
+          </a>
+        {% endif %}
+        {% if section.settings.secondary_label != blank %}
+          <a
+            class="cm-btn cm-btn--secondary"
+            href="{{ section.settings.secondary_link | default: routes.all_products_collection_url }}"
+          >
+            {{ section.settings.secondary_label | escape }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div
+      class="cm-hero__media"
+      role="img"
+      aria-label="{{ section.settings.image_alt | default: 'CanMed compounding vessel' | escape }}"
+    >
+      <div class="cm-hero__glow" aria-hidden="true"></div>
+      <div class="cm-hero__media-inner">
+        {% if section.settings.image != blank %}
+          {{
+            section.settings.image
+            | image_url: width: 1200
+            | image_tag:
+              loading: 'eager',
+              widths: '400, 600, 800, 1000, 1200',
+              sizes: '(min-width: 768px) 50vw, 90vw',
+              alt: section.settings.image_alt
+          }}
+        {% else %}
+          {% render 'canmed-vessel-svg' %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CanMed — Hero",
+  "tag": "section",
+  "class": "cm-section-hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Compounded for you"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Medicine, formulated to the person taking it."
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body text",
+      "default": "Three Victorian dispensaries compounding paediatric, geriatric, veterinary and phytocannabinoid medicines — one patient, one batch, at a time."
+    },
+    {
+      "type": "header",
+      "content": "Primary button"
+    },
+    {
+      "type": "text",
+      "id": "primary_label",
+      "label": "Label",
+      "default": "Start a prescription"
+    },
+    {
+      "type": "url",
+      "id": "primary_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Secondary button"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Label",
+      "default": "Browse the shop"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Hero image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Optional. If empty, a vessel illustration is shown. Upload a PNG/WebP of your bottle or brand visual."
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "A glass amber tincture vessel"
+    }
+  ],
+  "presets": [
+    {
+      "name": "CanMed — Hero"
+    }
+  ]
+}
+{% endschema %}

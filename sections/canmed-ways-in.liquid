@@ -1,0 +1,153 @@
+<section class="cm-ways cm-section" {{ section.shopify_attributes }}>
+  <div class="cm-shell">
+    <div class="cm-ways__head">
+      {% if section.settings.eyebrow != blank %}
+        <p class="cm-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {% endif %}
+      {% if section.settings.heading != blank %}
+        <h2 class="cm-display-l">{{ section.settings.heading | escape }}</h2>
+      {% endif %}
+    </div>
+
+    <div class="cm-ways__grid">
+      {% for block in section.blocks %}
+        {% liquid
+          assign accent = block.settings.accent | default: 'amber'
+          case accent
+            when 'pine'
+              assign accent_hex = '#9d3ec6'
+            when 'sage'
+              assign accent_hex = '#b96fd9'
+            else
+              assign accent_hex = '#c850d1'
+          endcase
+        %}
+        <a
+          class="cm-ways__card"
+          href="{{ block.settings.link | default: '#' }}"
+          style="--cm-card-accent: {{ accent_hex }};"
+          {{ block.shopify_attributes }}
+        >
+          {% if block.settings.label != blank %}
+            <p class="cm-mono-caption">{{ block.settings.label | escape }}</p>
+          {% endif %}
+          {% if block.settings.title != blank %}
+            <h3 class="cm-display-m">{{ block.settings.title | escape }}</h3>
+          {% endif %}
+          {% if block.settings.body != blank %}
+            <p class="cm-body-l">{{ block.settings.body | escape }}</p>
+          {% endif %}
+          <span class="cm-ways__open">{{ block.settings.link_label | default: 'Open →' | escape }}</span>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CanMed — Ways in",
+  "tag": "section",
+  "class": "cm-section-ways",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Where to start"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Three ways in."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "select",
+          "id": "accent",
+          "label": "Accent colour",
+          "options": [
+            { "value": "amber", "label": "Amber / magenta" },
+            { "value": "pine", "label": "Pine / purple" },
+            { "value": "sage", "label": "Sage / lilac" }
+          ],
+          "default": "amber"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Shop"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Compounded and stocked lines"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Body",
+          "default": "Browse by access tier — prescription only, pharmacist only, or over the counter."
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label",
+          "default": "Open →"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CanMed — Ways in",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "accent": "amber",
+            "label": "Shop",
+            "title": "Compounded and stocked lines",
+            "body": "Browse by access tier — prescription only, pharmacist only, or over the counter.",
+            "link_label": "Open →"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "accent": "pine",
+            "label": "Prescriptions",
+            "title": "Send us your script",
+            "body": "A four-step intake. Upload, choose your dispensary, and track it from there.",
+            "link_label": "Open →"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "accent": "sage",
+            "label": "For Patients",
+            "title": "What compounding actually is",
+            "body": "Plain-language answers before you commit to anything.",
+            "link_label": "Open →"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
