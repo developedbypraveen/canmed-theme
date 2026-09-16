@@ -1,4 +1,4 @@
-{% comment %} CanMed homepage hero — WebGL vessel on desktop, VesselEcho on mobile (same as Lovable) {% endcomment %}
+{% comment %} CanMed homepage hero — same WebGL vessel on desktop and mobile {% endcomment %}
 
 <section class="cm-hero" {{ section.shopify_attributes }}>
   <div class="cm-shell cm-hero__grid">
@@ -42,12 +42,8 @@
     >
       <div class="cm-hero__glow" aria-hidden="true"></div>
 
-      {%- comment -%} Desktop: Three.js canvas (Vessel3D). Mobile: VesselEcho SVG looping. {%- endcomment -%}
-      <div class="cm-hero__canvas-wrap cm-hero__desktop-only" data-cm-vessel data-particles="72"></div>
-
-      <div class="cm-hero__echo cm-hero__mobile-only" aria-hidden="true">
-        {% render 'canmed-vessel-echo', filled: 12, total: 12, size: 220, looping: true %}
-      </div>
+      {%- comment -%} Same WebGL Vessel3D on all viewports {% endcomment -%}
+      <div class="cm-hero__canvas-wrap" data-cm-vessel data-particles="72"></div>
     </div>
   </div>
 </section>

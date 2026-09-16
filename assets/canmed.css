@@ -684,24 +684,6 @@ body:has(.cm-hero) {
   justify-content: center;
 }
 
-.cm-hero__desktop-only {
-  display: none;
-}
-
-.cm-hero__mobile-only {
-  display: flex;
-}
-
-@media (min-width: 768px) {
-  .cm-hero__desktop-only {
-    display: block;
-  }
-
-  .cm-hero__mobile-only {
-    display: none !important;
-  }
-}
-
 .cm-echo-dot {
   animation: cm-drift var(--dur, 10s) ease-in-out var(--d, 0s) infinite;
 }
