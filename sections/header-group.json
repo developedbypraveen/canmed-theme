@@ -26,7 +26,7 @@
         "logo": "shopify://shop_images/canmed-logo.webp",
         "brand_name": "CanMed",
         "brand_tagline": "Compounding Chemist",
-        "menu": "",
+        "menu": "main-menu",
         "account_label": "My account",
         "link_account": "",
         "cta_label": "Start a prescription",
