@@ -1,0 +1,81 @@
+<section class="cm-section" {{ section.shopify_attributes }}>
+  <div class="cm-shell">
+    <div class="cm-table-wrap" style="margin-top:0;">
+      <table class="cm-table" style="min-width:640px;">
+        <thead>
+          <tr>
+            {% assign heads = section.settings.columns | default: 'Species,Preferred forms,Excipient rules' | split: ',' %}
+            {% for h in heads %}<th>{{ h | strip | escape }}</th>{% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for block in section.blocks %}
+            {% if block.type == 'row' %}
+              <tr {{ block.shopify_attributes }}>
+                <td>{{ block.settings.c1 | escape }}</td>
+                <td>{{ block.settings.c2 | escape }}</td>
+                <td>{{ block.settings.c3 | escape }}</td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cm-info-cards">
+      {% for block in section.blocks %}
+        {% if block.type == 'card' %}
+          <div class="cm-info-card" {{ block.shopify_attributes }}>
+            <p class="cm-mono-caption" style="color:var(--cm-muted);">{{ block.settings.title | escape }}</p>
+            <div class="cm-mono-data" style="margin-top:0.5rem; color:rgb(74 63 82 / 0.85);">{{ block.settings.body }}</div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <div class="cm-btn-row" style="margin-top:2.5rem;">
+      {% if section.settings.primary_label != blank %}
+        <a class="cm-btn cm-btn--accent" href="{{ section.settings.primary_link | default: '/pages/contact' }}">{{ section.settings.primary_label | escape }}</a>
+      {% endif %}
+      {% if section.settings.secondary_label != blank %}
+        <a class="cm-btn cm-btn--secondary" href="{{ section.settings.secondary_link | default: '/pages/professionals' }}">{{ section.settings.secondary_label | escape }}</a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CanMed — Vets content",
+  "tag": "section",
+  "class": "cm-section-vets",
+  "max_blocks": 16,
+  "settings": [
+    { "type": "text", "id": "columns", "label": "Column headers", "default": "Species,Preferred forms,Excipient rules" },
+    { "type": "text", "id": "primary_label", "label": "Primary CTA", "default": "Open a practice account" },
+    { "type": "url", "id": "primary_link", "label": "Primary link" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary CTA", "default": "Human formulary" },
+    { "type": "url", "id": "secondary_link", "label": "Secondary link" }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Species row",
+      "settings": [
+        { "type": "text", "id": "c1", "label": "Species", "default": "Feline" },
+        { "type": "text", "id": "c2", "label": "Forms", "default": "Transdermal PLO, oral liquid" },
+        { "type": "text", "id": "c3", "label": "Rules", "default": "Avoid: xylitol, benzyl alcohol, propylene glycol" }
+      ]
+    },
+    {
+      "type": "card",
+      "name": "Info card",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Practice ordering" },
+        { "type": "textarea", "id": "body", "label": "Body", "default": "Bulk practice orders accepted against a written direction. Minimum batch 5 units." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "CanMed — Vets content" }]
+}
+{% endschema %}

@@ -1,0 +1,53 @@
+{
+  "sections": {
+    "hero": {
+      "type": "canmed-page-hero",
+      "settings": {
+        "layout": "title_left",
+        "eyebrow": "For patients",
+        "heading": "When the packet doesn't fit the person.",
+        "heading_size": "xl",
+        "body": "Manufactured medicines come in fixed strengths and fixed forms. Compounding is what happens when your prescriber needs something else — a smaller dose, a liquid instead of a tablet, a cream instead of a capsule, or a formula without the ingredient you react to. A pharmacist makes it, one batch, for you.",
+        "primary_label": "Start a prescription",
+        "secondary_label": "Ask a question first"
+      }
+    },
+    "rx_types": {
+      "type": "canmed-rx-types",
+      "blocks": {
+        "t1": { "type": "type", "settings": { "icon": "paediatric", "title": "Paediatric", "body": "Child-scaled doses and flavours" } },
+        "t2": { "type": "type", "settings": { "icon": "geriatric", "title": "Geriatric", "body": "Swallowing and polypharmacy support" } },
+        "t3": { "type": "type", "settings": { "icon": "veterinary", "title": "Veterinary", "body": "Species-specific formulations" } },
+        "t4": { "type": "type", "settings": { "icon": "phyto", "title": "Phytocannabinoid", "body": "Approved prescriptions only" } },
+        "t5": { "type": "type", "settings": { "icon": "other", "title": "Something else", "body": "Tell us and we'll route it" } }
+      },
+      "block_order": ["t1", "t2", "t3", "t4", "t5"],
+      "settings": {
+        "eyebrow": "What we make",
+        "heading": "Five kinds of problem we solve most often."
+      }
+    },
+    "otc": {
+      "type": "canmed-otc-teaser",
+      "blocks": {
+        "p1": { "type": "product", "settings": { "badge": "Over the counter", "title": "Barrier Repair Ointment", "body": "Fragrance-free, for compromised skin", "price": "$28.00" } },
+        "p2": { "type": "product", "settings": { "badge": "Over the counter", "title": "Electrolyte Replacement Sachets", "body": "Clinically weighted salts, low sugar", "price": "$22.00" } },
+        "p3": { "type": "product", "settings": { "badge": "Over the counter", "title": "Wound Irrigation Kit", "body": "Sterile saline, single-use ampoules", "price": "$19.00" } }
+      },
+      "block_order": ["p1", "p2", "p3"],
+      "settings": {}
+    },
+    "faq": {
+      "type": "canmed-faq",
+      "blocks": {
+        "q1": { "type": "item", "settings": { "question": "Do I need a prescription?", "answer": "For anything Schedule 4 or 8, yes. S3 lines need a short conversation with a pharmacist. Over-the-counter lines you can order directly." } },
+        "q2": { "type": "item", "settings": { "question": "How long does compounding take?", "answer": "Most oral liquids and creams are ready within 24 to 48 hours of pharmacist approval. Sterile preparations take longer, and we tell you when we approve the script." } },
+        "q3": { "type": "item", "settings": { "question": "Can you flavour a child's medicine?", "answer": "Yes — strawberry, banana or unflavoured, in a sugar-free, dye-free base. We label the syringe in millilitres so there is no tablet-splitting maths at bedtime." } },
+        "q4": { "type": "item", "settings": { "question": "Is a compounded medicine TGA registered?", "answer": "No. Compounded medicines are made for one patient and sit outside the registration pathway. That is why a pharmacist reviews every script personally." } }
+      },
+      "block_order": ["q1", "q2", "q3", "q4"],
+      "settings": {}
+    }
+  },
+  "order": ["hero", "rx_types", "otc", "faq"]
+}

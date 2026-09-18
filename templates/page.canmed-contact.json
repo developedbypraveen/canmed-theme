@@ -1,0 +1,48 @@
+{
+  "sections": {
+    "contact": {
+      "type": "canmed-contact",
+      "blocks": {
+        "kensington": {
+          "type": "location",
+          "settings": {
+            "name": "Kensington",
+            "address": "412 Macaulay Road",
+            "suburb": "Kensington VIC 3031",
+            "phone": "(03) 9376 2140",
+            "phone_link": "tel:+61393762140",
+            "hours_summary": "Mon – Fri 08:30 – 18:00",
+            "pharmacist": "Priya Raman"
+          }
+        },
+        "hawthorn": {
+          "type": "location",
+          "settings": {
+            "name": "Hawthorn",
+            "address": "88 Burwood Road",
+            "suburb": "Hawthorn VIC 3122",
+            "phone": "(03) 9818 7752",
+            "phone_link": "tel:+61398187752",
+            "hours_summary": "Mon – Fri 08:00 – 19:00",
+            "pharmacist": "Daniel Okoye"
+          }
+        },
+        "geelong": {
+          "type": "location",
+          "settings": {
+            "name": "Geelong",
+            "address": "27 Malop Street",
+            "suburb": "Geelong VIC 3220",
+            "phone": "(03) 5229 4418",
+            "phone_link": "tel:+61352294418",
+            "hours_summary": "Mon – Fri 08:30 – 17:30",
+            "pharmacist": "Alice Whitmore"
+          }
+        }
+      },
+      "block_order": ["kensington", "hawthorn", "geelong"],
+      "settings": {}
+    }
+  },
+  "order": ["contact"]
+}

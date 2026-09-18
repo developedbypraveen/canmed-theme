@@ -1,0 +1,95 @@
+{
+  "sections": {
+    "hero": {
+      "type": "canmed-page-hero",
+      "settings": {
+        "layout": "title_left",
+        "eyebrow": "About us",
+        "heading": "A dispensary that still weighs things.",
+        "heading_size": "xl",
+        "body": "CanMed started in 2009 as a single Kensington bench where a pharmacist made suspensions for children who couldn't swallow tablets. Three dispensaries later, the work is the same: read the script properly, weigh accurately, label clearly, and explain it to the person taking it. We don't outsource compounding, and we don't dispense anything a pharmacist hasn't personally reviewed."
+      }
+    },
+    "locations": {
+      "type": "canmed-about-locations",
+      "blocks": {
+        "kensington": {
+          "type": "location",
+          "settings": {
+            "name": "Kensington",
+            "address": "412 Macaulay Road",
+            "suburb": "Kensington VIC 3031",
+            "phone": "(03) 9376 2140",
+            "phone_link": "tel:+61393762140",
+            "hours_1_days": "Mon – Fri",
+            "hours_1_time": "08:30 – 18:00",
+            "hours_2_days": "Saturday",
+            "hours_2_time": "09:00 – 13:00",
+            "hours_3_days": "Sunday",
+            "hours_3_time": "Closed",
+            "pharmacist": "Priya Raman",
+            "credential": "B.Pharm, MPS — Compounding lead"
+          }
+        },
+        "hawthorn": {
+          "type": "location",
+          "settings": {
+            "name": "Hawthorn",
+            "address": "88 Burwood Road",
+            "suburb": "Hawthorn VIC 3122",
+            "phone": "(03) 9818 7752",
+            "phone_link": "tel:+61398187752",
+            "hours_1_days": "Mon – Fri",
+            "hours_1_time": "08:00 – 19:00",
+            "hours_2_days": "Saturday",
+            "hours_2_time": "09:00 – 15:00",
+            "hours_3_days": "Sunday",
+            "hours_3_time": "10:00 – 14:00",
+            "pharmacist": "Daniel Okoye",
+            "credential": "B.Pharm (Hons) — Sterile compounding"
+          }
+        },
+        "geelong": {
+          "type": "location",
+          "settings": {
+            "name": "Geelong",
+            "address": "27 Malop Street",
+            "suburb": "Geelong VIC 3220",
+            "phone": "(03) 5229 4418",
+            "phone_link": "tel:+61352294418",
+            "hours_1_days": "Mon – Fri",
+            "hours_1_time": "08:30 – 17:30",
+            "hours_2_days": "Saturday",
+            "hours_2_time": "Closed",
+            "hours_3_days": "Sunday",
+            "hours_3_time": "Closed",
+            "pharmacist": "Alice Whitmore",
+            "credential": "B.Pharm, AACP — Veterinary compounding"
+          }
+        }
+      },
+      "block_order": ["kensington", "hawthorn", "geelong"],
+      "settings": {
+        "eyebrow": "Locations",
+        "heading": "Pick a dispensary.",
+        "selector_label": "Viewing"
+      }
+    },
+    "team": {
+      "type": "canmed-team",
+      "blocks": {
+        "p1": { "type": "person", "settings": { "initials": "PR", "name": "Priya Raman", "credential": "B.Pharm, MPS — Compounding lead", "location_label": "Kensington dispensary" } },
+        "p2": { "type": "person", "settings": { "initials": "DO", "name": "Daniel Okoye", "credential": "B.Pharm (Hons) — Sterile compounding", "location_label": "Hawthorn dispensary" } },
+        "p3": { "type": "person", "settings": { "initials": "AW", "name": "Alice Whitmore", "credential": "B.Pharm, AACP — Veterinary compounding", "location_label": "Geelong dispensary" } }
+      },
+      "block_order": ["p1", "p2", "p3"],
+      "settings": {
+        "eyebrow": "The people",
+        "heading": "Who is actually making it.",
+        "lede": "Illustrative portraits — we'd rather show you a drawing than a stock photo of someone who has never worked here.",
+        "cta_label": "Talk to a pharmacist"
+      }
+    }
+  },
+  "order": ["hero", "locations", "team"]
+}

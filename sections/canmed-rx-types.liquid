@@ -1,0 +1,58 @@
+<section class="cm-band cm-section" {{ section.shopify_attributes }}>
+  <div class="cm-shell">
+    <div class="cm-how__head">
+      {% if section.settings.eyebrow != blank %}<p class="cm-eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
+      {% if section.settings.heading != blank %}<h2 class="cm-display-l">{{ section.settings.heading | escape }}</h2>{% endif %}
+    </div>
+    <div class="cm-rx-grid">
+      {% for block in section.blocks %}
+        <div class="cm-rx-item" {{ block.shopify_attributes }}>
+          <div class="cm-rx-item__icon" aria-hidden="true">
+            {% case block.settings.icon %}
+              {% when 'geriatric' %}{% render 'canmed-icon-geriatric' %}
+              {% when 'veterinary' %}{% render 'canmed-icon-veterinary' %}
+              {% when 'phyto' %}{% render 'canmed-icon-phyto' %}
+              {% when 'other' %}{% render 'canmed-icon-other' %}
+              {% else %}{% render 'canmed-icon-paediatric' %}
+            {% endcase %}
+          </div>
+          <h3>{{ block.settings.title | escape }}</h3>
+          <p>{{ block.settings.body | escape }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CanMed — Rx types",
+  "tag": "section",
+  "class": "cm-section-rx-types",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "What we make" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Five kinds of problem we solve most often." }
+  ],
+  "blocks": [
+    {
+      "type": "type",
+      "name": "Type",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "default": "paediatric",
+          "options": [
+            { "value": "paediatric", "label": "Paediatric" },
+            { "value": "geriatric", "label": "Geriatric" },
+            { "value": "veterinary", "label": "Veterinary" },
+            { "value": "phyto", "label": "Phytocannabinoid" },
+            { "value": "other", "label": "Other" }
+          ]
+        },
+        { "type": "text", "id": "title", "label": "Title", "default": "Paediatric" },
+        { "type": "textarea", "id": "body", "label": "Body", "default": "Child-scaled doses and flavours" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "CanMed — Rx types" }]
+}
+{% endschema %}

@@ -1,0 +1,74 @@
+<section class="cm-page-hero" {{ section.shopify_attributes }}>
+  <div class="cm-shell cm-page-hero__grid{% if section.settings.layout == 'wide_left' %} cm-page-hero__grid--swap{% endif %}">
+    <div>
+      {% if section.settings.eyebrow != blank %}
+        <p class="cm-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {% endif %}
+      {% if section.settings.heading != blank %}
+        <h1 class="{% if section.settings.heading_size == 'l' %}cm-display-l{% else %}cm-display-xl{% endif %}">
+          {{ section.settings.heading | escape }}
+        </h1>
+      {% endif %}
+      {% if section.settings.body != blank and section.settings.layout == 'wide_left' %}
+        <p class="cm-body-l" style="margin-top: 1.5rem;">{{ section.settings.body | escape }}</p>
+        {% if section.settings.primary_label != blank or section.settings.secondary_label != blank %}
+          <div class="cm-btn-row cm-page-hero__actions">
+            {% if section.settings.primary_label != blank %}
+              <a class="cm-btn cm-btn--accent" href="{{ section.settings.primary_link | default: '/pages/prescriptions' }}">{{ section.settings.primary_label | escape }}</a>
+            {% endif %}
+            {% if section.settings.secondary_label != blank %}
+              <a class="cm-btn cm-btn--secondary" href="{{ section.settings.secondary_link | default: '/pages/contact' }}">{{ section.settings.secondary_label | escape }}</a>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+    <div class="cm-page-hero__lede-col">
+      {% if section.settings.body != blank and section.settings.layout != 'wide_left' %}
+        <p class="cm-body-l">{{ section.settings.body | escape }}</p>
+      {% endif %}
+      {% if section.settings.layout == 'wide_left' %}
+        {% comment %} body already in left col {% endcomment %}
+      {% elsif section.settings.primary_label != blank or section.settings.secondary_label != blank %}
+        <div class="cm-btn-row cm-page-hero__actions">
+          {% if section.settings.primary_label != blank %}
+            <a class="cm-btn cm-btn--accent" href="{{ section.settings.primary_link | default: '/pages/prescriptions' }}">{{ section.settings.primary_label | escape }}</a>
+          {% endif %}
+          {% if section.settings.secondary_label != blank %}
+            <a class="cm-btn cm-btn--secondary" href="{{ section.settings.secondary_link | default: '/pages/contact' }}">{{ section.settings.secondary_label | escape }}</a>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CanMed — Page hero",
+  "tag": "section",
+  "class": "cm-section-page-hero",
+  "settings": [
+    { "type": "select", "id": "layout", "label": "Layout", "default": "title_left",
+      "options": [
+        { "value": "title_left", "label": "Title left / body right" },
+        { "value": "wide_left", "label": "Wide title + body left / actions" }
+      ]
+    },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "About us" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "A dispensary that still weighs things." },
+    { "type": "select", "id": "heading_size", "label": "Heading size", "default": "xl",
+      "options": [
+        { "value": "xl", "label": "Display XL" },
+        { "value": "l", "label": "Display L" }
+      ]
+    },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "CanMed started in 2009 as a single Kensington bench where a pharmacist made suspensions for children who couldn't swallow tablets." },
+    { "type": "text", "id": "primary_label", "label": "Primary button" },
+    { "type": "url", "id": "primary_link", "label": "Primary link" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary button" },
+    { "type": "url", "id": "secondary_link", "label": "Secondary link" }
+  ],
+  "presets": [{ "name": "CanMed — Page hero" }]
+}
+{% endschema %}

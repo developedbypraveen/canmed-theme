@@ -1,0 +1,71 @@
+<section class="cm-section" {{ section.shopify_attributes }}>
+  <div class="cm-shell cm-otc-grid">
+    <div>
+      {% if section.settings.eyebrow != blank %}<p class="cm-eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
+      {% if section.settings.heading != blank %}<h2 class="cm-display-l" style="margin-top:1rem;">{{ section.settings.heading | escape }}</h2>{% endif %}
+      {% if section.settings.lede != blank %}<p class="cm-body-l" style="margin-top:1rem;">{{ section.settings.lede | escape }}</p>{% endif %}
+      {% if section.settings.cta_label != blank %}
+        <div style="margin-top:2rem;">
+          <a class="cm-btn cm-btn--secondary" href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}">{{ section.settings.cta_label | escape }}</a>
+        </div>
+      {% endif %}
+    </div>
+    <div class="cm-otc-cards">
+      {% for block in section.blocks %}
+        {% if block.type == 'product' %}
+          {% assign product = block.settings.product %}
+          <a
+            class="cm-otc-card"
+            href="{% if product != blank %}{{ product.url }}{% else %}{{ block.settings.link | default: routes.all_products_collection_url }}{% endif %}"
+            {{ block.shopify_attributes }}
+          >
+            <p class="cm-mono-caption">{{ block.settings.badge | default: 'Over the counter' | escape }}</p>
+            <h3>
+              {% if product != blank %}{{ product.title | escape }}
+              {% else %}{{ block.settings.title | escape }}{% endif %}
+            </h3>
+            <p>
+              {% if product != blank %}{{ product.description | strip_html | truncate: 90 | escape }}
+              {% else %}{{ block.settings.body | escape }}{% endif %}
+            </p>
+            <p class="cm-otc-card__price">
+              {% if product != blank %}{{ product.price | money }}
+              {% else %}{{ block.settings.price | escape }}{% endif %}
+            </p>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CanMed — OTC teaser",
+  "tag": "section",
+  "class": "cm-section-otc",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Online pharmacy" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Everyday lines, no consultation needed." },
+    { "type": "textarea", "id": "lede", "label": "Lede", "default": "Simpler than the compounding shop — these ship straight to you." },
+    { "type": "text", "id": "cta_label", "label": "CTA", "default": "See all tiers" },
+    { "type": "url", "id": "cta_link", "label": "CTA link" }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product card",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Shopify product (optional)" },
+        { "type": "text", "id": "badge", "label": "Badge", "default": "Over the counter" },
+        { "type": "text", "id": "title", "label": "Title fallback", "default": "Barrier Repair Ointment" },
+        { "type": "textarea", "id": "body", "label": "Body fallback", "default": "Fragrance-free, for compromised skin" },
+        { "type": "text", "id": "price", "label": "Price fallback", "default": "$28.00" },
+        { "type": "url", "id": "link", "label": "Link fallback" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "CanMed — OTC teaser" }]
+}
+{% endschema %}

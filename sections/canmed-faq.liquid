@@ -1,0 +1,40 @@
+<section class="cm-section" style="padding-top:0;" {{ section.shopify_attributes }}>
+  <div class="cm-shell">
+    <div class="cm-how__head">
+      {% if section.settings.eyebrow != blank %}<p class="cm-eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
+      {% if section.settings.heading != blank %}<h2 class="cm-display-l">{{ section.settings.heading | escape }}</h2>{% endif %}
+    </div>
+    <dl class="cm-faq">
+      {% for block in section.blocks %}
+        <div class="cm-faq__item" {{ block.shopify_attributes }}>
+          <dt class="cm-faq__q">{{ block.settings.question | escape }}</dt>
+          <dd class="cm-faq__a">{{ block.settings.answer | escape }}</dd>
+        </div>
+      {% endfor %}
+    </dl>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CanMed — FAQ",
+  "tag": "section",
+  "class": "cm-section-faq",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Common questions" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The things people ask us first." }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Do I need a prescription?" },
+        { "type": "textarea", "id": "answer", "label": "Answer", "default": "For anything Schedule 4 or 8, yes. S3 lines need a short conversation with a pharmacist. Over-the-counter lines you can order directly." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "CanMed — FAQ" }]
+}
+{% endschema %}

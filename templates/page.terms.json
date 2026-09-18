@@ -1,0 +1,76 @@
+{
+  "sections": {
+    "legal": {
+      "type": "canmed-legal",
+      "blocks": {
+        "s1": {
+          "type": "section",
+          "settings": {
+            "title": "Prescriptions",
+            "body": "Schedule 4 and Schedule 8 medicines require a valid Australian prescription from a registered prescriber. We verify every script with the prescriber's practice before compounding. Uploading a prescription is a request, not a completed order."
+          }
+        },
+        "s2": {
+          "type": "section",
+          "settings": {
+            "title": "Pharmacist discretion",
+            "body": "A pharmacist may decline to dispense where the formulation is unsafe, where a commercial product exists that meets the clinical need, or where the prescription cannot be verified. If we decline, we tell you why and refund any payment in full."
+          }
+        },
+        "s3": {
+          "type": "section",
+          "settings": {
+            "title": "Compounded medicines",
+            "body": "Compounded medicines are made for an individual patient and are not TGA-registered products. They are prepared to the strength and form specified by your prescriber, with beyond-use dates based on the formulation, not the shelf life of a commercial equivalent."
+          }
+        },
+        "s4": {
+          "type": "section",
+          "settings": {
+            "title": "Pricing and payment",
+            "body": "Prices shown are in AUD and include GST where applicable. Compounded items are quoted after pharmacist review because ingredients and quantity vary. Payment is taken once the formulation is confirmed."
+          }
+        },
+        "s5": {
+          "type": "section",
+          "settings": {
+            "title": "Delivery",
+            "body": "Cold-chain items ship in insulated packaging with a temperature indicator and are dispatched Monday to Wednesday only. Someone must be present to accept Schedule 4 and Schedule 8 deliveries. Click and collect is available at all three dispensaries."
+          }
+        },
+        "s6": {
+          "type": "section",
+          "settings": {
+            "title": "Returns",
+            "body": "For safety reasons, dispensed medicines cannot be returned or resupplied to another patient. If an item arrives damaged, incorrectly compounded or outside its temperature range, contact us within 48 hours and we will remake or refund it."
+          }
+        },
+        "s7": {
+          "type": "section",
+          "settings": {
+            "title": "Veterinary supply",
+            "body": "Veterinary compounds are supplied against a prescription from a registered veterinarian for a named animal under their care, and must not be given to any other animal or to humans."
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5",
+        "s6",
+        "s7"
+      ],
+      "settings": {
+        "eyebrow": "Legal",
+        "heading": "Terms of Service",
+        "updated": "Last updated 1 August 2026",
+        "intro": "These terms apply when you order from CanMed Compounding Chemist, in store or online."
+      }
+    }
+  },
+  "order": [
+    "legal"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "sections": {
+    "banner": {
+      "type": "canmed-pro-banner",
+      "settings": {
+        "tone": "dark",
+        "show_icon": true,
+        "eyebrow": "For veterinary practice",
+        "heading": "The dose the animal will actually take.",
+        "body": "Compounded at Geelong under veterinary SOPs. Species-appropriate excipients only — we exclude xylitol, benzyl alcohol and propylene glycol from feline preparations by default, and note every exclusion on the batch record."
+      }
+    },
+    "content": {
+      "type": "canmed-vets",
+      "blocks": {
+        "r1": { "type": "row", "settings": { "c1": "Feline", "c2": "Transdermal PLO, oral liquid", "c3": "Avoid: xylitol, benzyl alcohol, propylene glycol" } },
+        "r2": { "type": "row", "settings": { "c1": "Canine", "c2": "Flavoured chew, oral suspension", "c3": "Avoid: xylitol, chocolate-derived flavours" } },
+        "r3": { "type": "row", "settings": { "c1": "Equine", "c2": "Oral paste, bulk powder", "c3": "Excipient volume capped at 60 mL/dose" } },
+        "r4": { "type": "row", "settings": { "c1": "Avian / exotic", "c2": "Micro-dose suspension", "c3": "Compounded to 0.01 mg accuracy" } },
+        "c1": { "type": "card", "settings": { "title": "Practice ordering", "body": "Bulk practice orders accepted against a written direction. Minimum batch 5 units." } },
+        "c2": { "type": "card", "settings": { "title": "Turnaround", "body": "48 hours from approval. Courier to metro practices next business day." } },
+        "c3": { "type": "card", "settings": { "title": "Compounding lead", "body": "Alice Whitmore — B.Pharm, AACP — Veterinary compounding\n(03) 5229 4418" } }
+      },
+      "block_order": ["r1", "r2", "r3", "r4", "c1", "c2", "c3"],
+      "settings": {
+        "primary_label": "Open a practice account",
+        "secondary_label": "Human formulary"
+      }
+    }
+  },
+  "order": ["banner", "content"]
+}

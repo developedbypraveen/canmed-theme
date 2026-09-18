@@ -1,0 +1,62 @@
+<section class="cm-section" {{ section.shopify_attributes }}>
+  <div class="cm-shell">
+    <div class="cm-how__head">
+      {% if section.settings.eyebrow != blank %}<p class="cm-eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
+      {% if section.settings.heading != blank %}<h2 class="cm-display-l">{{ section.settings.heading | escape }}</h2>{% endif %}
+      {% if section.settings.lede != blank %}<p class="cm-body-l">{{ section.settings.lede | escape }}</p>{% endif %}
+    </div>
+    <div class="cm-team-grid">
+      {% for block in section.blocks %}
+        <div class="cm-team-card" {{ block.shopify_attributes }}>
+          <div class="cm-team-card__media" style="background: linear-gradient(150deg, color-mix(in oklab, var(--cm-amber-light) {{ 28 | plus: forloop.index0 | times: 8 }}%, var(--cm-ivory)), var(--cm-ivory));">
+            {% if block.settings.image != blank %}
+              {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', alt: block.settings.name }}
+            {% else %}
+              <span class="cm-team-card__initials">{{ block.settings.initials | default: 'CM' | escape }}</span>
+            {% endif %}
+          </div>
+          <div class="cm-team-card__body">
+            <p class="cm-team-card__name">{{ block.settings.name | escape }}</p>
+            <p class="cm-mono-data" style="margin-top:0.25rem; color:var(--cm-muted);">{{ block.settings.credential | escape }}</p>
+            <p class="cm-mono-data" style="margin-top:0.75rem; color:rgb(74 63 82 / 0.7);">{{ block.settings.location_label | escape }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    {% if section.settings.cta_label != blank %}
+      <div class="cm-team-cta">
+        <a class="cm-btn cm-btn--secondary" href="{{ section.settings.cta_link | default: '/pages/contact' }}">{{ section.settings.cta_label | escape }}</a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CanMed — Team",
+  "tag": "section",
+  "class": "cm-section-team",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The people" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Who is actually making it." },
+    { "type": "textarea", "id": "lede", "label": "Lede", "default": "Illustrative portraits — we'd rather show you a drawing than a stock photo of someone who has never worked here." },
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Talk to a pharmacist" },
+    { "type": "url", "id": "cta_link", "label": "CTA link" }
+  ],
+  "blocks": [
+    {
+      "type": "person",
+      "name": "Person",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Photo (optional)" },
+        { "type": "text", "id": "initials", "label": "Initials fallback", "default": "PR" },
+        { "type": "text", "id": "name", "label": "Name", "default": "Priya Raman" },
+        { "type": "text", "id": "credential", "label": "Credential", "default": "B.Pharm, MPS — Compounding lead" },
+        { "type": "text", "id": "location_label", "label": "Location label", "default": "Kensington dispensary" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "CanMed — Team" }]
+}
+{% endschema %}

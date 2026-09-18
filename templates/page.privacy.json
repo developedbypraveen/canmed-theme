@@ -1,0 +1,76 @@
+{
+  "sections": {
+    "legal": {
+      "type": "canmed-legal",
+      "blocks": {
+        "s1": {
+          "type": "section",
+          "settings": {
+            "title": "What we collect",
+            "body": "Your name, date of birth, contact details, Medicare and concession numbers where relevant, prescriber details, the prescriptions you upload, and the medicines we dispense to you. For veterinary compounds we also record the animal's species, weight and the treating vet."
+          }
+        },
+        "s2": {
+          "type": "section",
+          "settings": {
+            "title": "Why we collect it",
+            "body": "To dispense your medicine safely and legally. Compounding requires an accurate clinical picture \u2014 allergies, concurrent medicines and dose history \u2014 and Australian pharmacy law requires us to keep dispensing records."
+          }
+        },
+        "s3": {
+          "type": "section",
+          "settings": {
+            "title": "How long we keep it",
+            "body": "Dispensing records are retained for a minimum of seven years, and until a paediatric patient turns 25, as required by state pharmacy regulations. Uploaded prescription images are stored encrypted and purged once the record is transcribed and verified."
+          }
+        },
+        "s4": {
+          "type": "section",
+          "settings": {
+            "title": "Who can see it",
+            "body": "The pharmacists and dispensary technicians at your nominated location, and your prescriber. We never sell health information, and we do not use it for advertising or share it with third-party marketing platforms."
+          }
+        },
+        "s5": {
+          "type": "section",
+          "settings": {
+            "title": "Security",
+            "body": "Health information is encrypted in transit and at rest. Access is role-based and every view or change of a prescription record is written to an audit trail attached to a named staff member."
+          }
+        },
+        "s6": {
+          "type": "section",
+          "settings": {
+            "title": "Accessing or correcting your record",
+            "body": "You may request a copy of your record or ask us to correct it at any time. Email privacy@canmed.com.au or speak to the pharmacist at your dispensary. We respond within 30 days."
+          }
+        },
+        "s7": {
+          "type": "section",
+          "settings": {
+            "title": "Complaints",
+            "body": "If you believe we have mishandled your information, contact our Privacy Officer first. If you are not satisfied with our response, you can escalate to the Office of the Australian Information Commissioner at oaic.gov.au."
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5",
+        "s6",
+        "s7"
+      ],
+      "settings": {
+        "eyebrow": "Legal",
+        "heading": "Privacy Policy",
+        "updated": "Last updated 1 August 2026",
+        "intro": "CanMed Compounding Chemist handles health information under the Privacy Act 1988 (Cth) and the Australian Privacy Principles. This page is written in plain language on purpose."
+      }
+    }
+  },
+  "order": [
+    "legal"
+  ]
+}

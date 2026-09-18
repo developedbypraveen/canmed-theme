@@ -1,0 +1,45 @@
+{
+  "sections": {
+    "banner": {
+      "type": "canmed-pro-banner",
+      "blocks": {
+        "f1": { "type": "fact", "settings": { "label": "Prescriber line", "value": "(03) 9818 7750" } },
+        "f2": { "type": "fact", "settings": { "label": "Orders", "value": "orders@canmed.com.au" } },
+        "f3": { "type": "fact", "settings": { "label": "Same-day cutoff", "value": "11:00 AEST" } },
+        "f4": { "type": "fact", "settings": { "label": "Account setup", "value": "2 business days" } }
+      },
+      "block_order": ["f1", "f2", "f3", "f4"],
+      "settings": {
+        "tone": "pine",
+        "show_icon": false,
+        "eyebrow": "For medical professionals",
+        "heading": "Formulary, ranges, turnaround.",
+        "body": "Direct ordering for registered prescribers. Scripts received before 11:00 are triaged the same day. Compounding records and CoA available on request per batch."
+      }
+    },
+    "formulary": {
+      "type": "canmed-formulary",
+      "blocks": {
+        "r1": { "type": "row", "settings": { "c1": "CM-PS-014", "c2": "Oral suspension", "c3": "SyrSpend SF pH4", "c4": "0.1 – 50 mg/mL", "c5": "24 h", "c6": "Kensington" } },
+        "r2": { "type": "row", "settings": { "c1": "CM-TD-233", "c2": "Transdermal cream", "c3": "Anhydrous emollient", "c4": "0.5 – 200 mg/g", "c5": "48 h", "c6": "Hawthorn" } },
+        "r3": { "type": "row", "settings": { "c1": "CM-TR-118", "c2": "Buccal troche", "c3": "PEG 1450", "c4": "1 – 100 mg/unit", "c5": "48 h", "c6": "Hawthorn" } },
+        "r4": { "type": "row", "settings": { "c1": "CM-VT-058", "c2": "PLO gel", "c3": "Pluronic F127", "c4": "1 – 25 mg/0.1 mL", "c5": "48 h", "c6": "Geelong" } },
+        "r5": { "type": "row", "settings": { "c1": "CM-GD-071", "c2": "Thickened liquid", "c3": "Xanthan", "c4": "IDDSI 2 – 4", "c5": "24 h", "c6": "Kensington" } },
+        "r6": { "type": "row", "settings": { "c1": "CM-PC-102", "c2": "Oral liquid", "c3": "MCT", "c4": "5 – 100 mg/mL", "c5": "72 h", "c6": "Hawthorn" } },
+        "ph1": { "type": "pharmacist", "settings": { "location": "Kensington", "name": "Priya Raman", "credential": "B.Pharm, MPS — Compounding lead", "phone": "(03) 9376 2140", "phone_link": "tel:+61393762140" } },
+        "ph2": { "type": "pharmacist", "settings": { "location": "Hawthorn", "name": "Daniel Okoye", "credential": "B.Pharm (Hons) — Sterile compounding", "phone": "(03) 9818 7752", "phone_link": "tel:+61398187752" } },
+        "ph3": { "type": "pharmacist", "settings": { "location": "Geelong", "name": "Alice Whitmore", "credential": "B.Pharm, AACP — Veterinary compounding", "phone": "(03) 5229 4418", "phone_link": "tel:+61352294418" } },
+        "pw1": { "type": "pathway", "settings": { "title": "Credentialing", "body": "AHPRA number, prescriber number and practice address. Verified in two business days." } },
+        "pw2": { "type": "pathway", "settings": { "title": "Referral pathway", "body": "Send scripts by eScript token, secure fax or the prescriber portal." } },
+        "pw3": { "type": "pathway", "settings": { "title": "Records", "body": "Batch record, CoA and compounding worksheet supplied on request within 24 hours." } }
+      },
+      "block_order": ["r1", "r2", "r3", "r4", "r5", "r6", "ph1", "ph2", "ph3", "pw1", "pw2", "pw3"],
+      "settings": {
+        "secondary_label": "For vets",
+        "primary_label": "Open a prescriber account",
+        "show_pharmacists": true
+      }
+    }
+  },
+  "order": ["banner", "formulary"]
+}

@@ -1,0 +1,129 @@
+<section class="cm-shell cm-contact-grid" data-cm-contact {{ section.shopify_attributes }}>
+  <div>
+    {% if section.settings.eyebrow != blank %}<p class="cm-eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
+    {% if section.settings.heading != blank %}<h1 class="cm-display-l" style="margin-top:1.25rem;">{{ section.settings.heading | escape }}</h1>{% endif %}
+    {% if section.settings.body != blank %}<p class="cm-body-l" style="margin-top:1rem;">{{ section.settings.body | escape }}</p>{% endif %}
+
+    <div class="cm-contact-locs">
+      {% for block in section.blocks %}
+        {% if block.type == 'location' %}
+          <div class="cm-contact-loc" {{ block.shopify_attributes }}>
+            <p class="cm-mono-caption">{{ block.settings.name | escape }}</p>
+            <address class="cm-mono-data" style="margin-top:0.5rem; font-style:normal; color:rgb(74 63 82 / 0.8);">
+              {{ block.settings.address | escape }}, {{ block.settings.suburb | escape }}
+            </address>
+            <a class="cm-locations__phone" style="margin-top:0.25rem;" href="{{ block.settings.phone_link }}">{{ block.settings.phone | escape }}</a>
+            <p class="cm-mono-data" style="margin-top:0.25rem; color:var(--cm-muted);">
+              {{ block.settings.hours_summary | escape }}
+            </p>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="cm-contact-card">
+    {% form 'contact', class: 'cm-contact-form' %}
+      {% if form.posted_successfully? %}
+        <div class="cm-form-success">
+          <h2 class="cm-display-m">{{ section.settings.success_heading | default: 'Message received.' | escape }}</h2>
+          <p class="cm-body-l" style="margin-top:1rem;">{{ section.settings.success_body | default: 'A pharmacist will reply within one business day.' | escape }}</p>
+        </div>
+      {% else %}
+        {% if form.errors %}
+          <p class="cm-mono-data" style="color:#b42318; margin-bottom:1rem;">{{ form.errors | default_errors }}</p>
+        {% endif %}
+
+        <div>
+          <p class="cm-mono-caption" style="color:var(--cm-muted);">{{ section.settings.selector_label | default: 'Which dispensary' | escape }}</p>
+          <div class="cm-loc-pills" role="radiogroup" aria-label="Dispensary">
+            {% for block in section.blocks %}
+              {% if block.type == 'location' %}
+                <label class="cm-loc-pill{% if forloop.first %} is-active{% endif %}" data-cm-contact-pill>
+                  <input
+                    type="radio"
+                    name="contact[location]"
+                    value="{{ block.settings.name | escape }}"
+                    {% if forloop.first %}checked{% endif %}
+                    style="position:absolute; opacity:0; pointer-events:none;"
+                    data-cm-contact-loc
+                    data-pharmacist="{{ block.settings.pharmacist | escape }}"
+                    data-phone="{{ block.settings.phone | escape }}"
+                  >
+                  {{ block.settings.name | escape }}
+                </label>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <p class="cm-contact-hint" data-cm-contact-hint>
+            {% assign first = section.blocks | where: 'type', 'location' | first %}
+            Goes to {{ first.settings.pharmacist }} · {{ first.settings.phone }}
+          </p>
+        </div>
+
+        <div class="cm-form-grid">
+          <div class="cm-field">
+            <label class="cm-field__label" for="cm-contact-name">{{ section.settings.name_label | default: 'Your name' | escape }}</label>
+            <input class="cm-input" id="cm-contact-name" type="text" name="contact[name]" required placeholder="{{ section.settings.name_placeholder | escape }}">
+          </div>
+          <div class="cm-field">
+            <label class="cm-field__label" for="cm-contact-email">{{ section.settings.email_label | default: 'Email' | escape }}</label>
+            <input class="cm-input" id="cm-contact-email" type="email" name="contact[email]" required placeholder="{{ section.settings.email_placeholder | escape }}">
+          </div>
+        </div>
+
+        <div class="cm-field" style="margin-top:1.75rem;">
+          <label class="cm-field__label" for="cm-contact-body">{{ section.settings.message_label | default: 'What do you need?' | escape }}</label>
+          <textarea class="cm-input" id="cm-contact-body" name="contact[body]" rows="5" required placeholder="{{ section.settings.message_placeholder | escape }}"></textarea>
+        </div>
+
+        <div class="cm-form-actions">
+          <p class="cm-form-note">{{ section.settings.form_note | default: "Don't include your full script here — upload it instead." | escape }}</p>
+          <button type="submit" class="cm-btn cm-btn--accent">{{ section.settings.submit_label | default: 'Send message' | escape }}</button>
+        </div>
+      {% endif %}
+    {% endform %}
+  </div>
+</section>
+<script src="{{ 'canmed-contact.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "CanMed — Contact",
+  "tag": "section",
+  "class": "cm-section-contact",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Contact us" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Ask the dispensary directly." },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "Clinical questions go straight to the compounding pharmacist on shift. We answer within one business day, usually the same afternoon." },
+    { "type": "text", "id": "selector_label", "label": "Selector label", "default": "Which dispensary" },
+    { "type": "text", "id": "name_label", "label": "Name label", "default": "Your name" },
+    { "type": "text", "id": "name_placeholder", "label": "Name placeholder", "default": "Jordan Alvarez" },
+    { "type": "text", "id": "email_label", "label": "Email label", "default": "Email" },
+    { "type": "text", "id": "email_placeholder", "label": "Email placeholder", "default": "you@example.com" },
+    { "type": "text", "id": "message_label", "label": "Message label", "default": "What do you need?" },
+    { "type": "textarea", "id": "message_placeholder", "label": "Message placeholder", "default": "My daughter can't swallow her 25 mg tablets — can this be made as a liquid?" },
+    { "type": "text", "id": "form_note", "label": "Form note", "default": "Don't include your full script here — upload it instead." },
+    { "type": "text", "id": "submit_label", "label": "Submit label", "default": "Send message" },
+    { "type": "text", "id": "success_heading", "label": "Success heading", "default": "Message received." },
+    { "type": "textarea", "id": "success_body", "label": "Success body", "default": "A pharmacist will reply within one business day. For anything urgent, call your dispensary." }
+  ],
+  "blocks": [
+    {
+      "type": "location",
+      "name": "Location",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Name", "default": "Kensington" },
+        { "type": "text", "id": "address", "label": "Address", "default": "412 Macaulay Road" },
+        { "type": "text", "id": "suburb", "label": "Suburb", "default": "Kensington VIC 3031" },
+        { "type": "text", "id": "phone", "label": "Phone", "default": "(03) 9376 2140" },
+        { "type": "text", "id": "phone_link", "label": "Phone link", "default": "tel:+61393762140" },
+        { "type": "text", "id": "hours_summary", "label": "Hours summary", "default": "Mon – Fri 08:30 – 18:00" },
+        { "type": "text", "id": "pharmacist", "label": "Pharmacist", "default": "Priya Raman" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "CanMed — Contact" }]
+}
+{% endschema %}
