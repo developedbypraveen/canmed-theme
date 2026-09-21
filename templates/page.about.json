@@ -28,7 +28,9 @@
             "hours_3_days": "Sunday",
             "hours_3_time": "Closed",
             "pharmacist": "Priya Raman",
-            "credential": "B.Pharm, MPS — Compounding lead"
+            "credential": "B.Pharm, MPS — Compounding lead",
+            "media_mode": "placeholder",
+            "map_note": "Parking on site · Tram + rail within 400 m · Step-free entry"
           }
         },
         "hawthorn": {
@@ -46,7 +48,9 @@
             "hours_3_days": "Sunday",
             "hours_3_time": "10:00 – 14:00",
             "pharmacist": "Daniel Okoye",
-            "credential": "B.Pharm (Hons) — Sterile compounding"
+            "credential": "B.Pharm (Hons) — Sterile compounding",
+            "media_mode": "placeholder",
+            "map_note": "Parking on site · Tram + rail within 400 m · Step-free entry"
           }
         },
         "geelong": {
@@ -64,7 +68,9 @@
             "hours_3_days": "Sunday",
             "hours_3_time": "Closed",
             "pharmacist": "Alice Whitmore",
-            "credential": "B.Pharm, AACP — Veterinary compounding"
+            "credential": "B.Pharm, AACP — Veterinary compounding",
+            "media_mode": "placeholder",
+            "map_note": "Parking on site · Tram + rail within 400 m · Step-free entry"
           }
         }
       },

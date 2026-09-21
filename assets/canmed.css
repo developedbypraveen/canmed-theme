@@ -1018,7 +1018,9 @@ body:has(.cm-hero) {
   background: var(--cm-secondary);
 }
 
-.cm-loc-pills { margin-top: 0.75rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.cm-loc-selector { margin-top: 2rem; }
+.cm-loc-selector__label { margin: 0 0 0.75rem; color: var(--cm-muted); }
+.cm-loc-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .cm-loc-pill {
   font-family: var(--cm-font-mono);
   font-size: 0.8125rem;
@@ -1029,17 +1031,27 @@ body:has(.cm-hero) {
   color: rgb(74 63 82 / 0.7);
   cursor: pointer;
 }
+.cm-loc-pill:hover { color: var(--cm-pine); }
 .cm-loc-pill.is-active {
   border-color: transparent;
   background: var(--cm-pine);
   color: #fff;
 }
+.cm-loc-pill.is-active:hover { color: #fff; }
 
 .cm-about-detail { margin-top: 2.5rem; display: grid; gap: 2.5rem; }
+.cm-about-detail[hidden] { display: none !important; }
 @media (min-width: 768px) {
-  .cm-about-detail { grid-template-columns: 5fr 7fr; }
+  .cm-about-detail { grid-template-columns: 5fr 7fr; align-items: stretch; }
+}
+.cm-about-detail__address {
+  margin-top: 1rem;
+  font-style: normal;
+  line-height: 1.6;
+  color: rgb(74 63 82 / 0.85);
 }
 .cm-about-detail__map {
+  position: relative;
   min-height: 280px;
   border: 1px solid var(--cm-hairline);
   border-radius: 12px;
@@ -1048,11 +1060,51 @@ body:has(.cm-hero) {
   flex-direction: column;
   justify-content: space-between;
   padding: 1.5rem;
+  overflow: hidden;
 }
-.cm-about-detail [hidden] { display: none !important; }
+.cm-about-detail__map--image,
+.cm-about-detail__map--embed {
+  padding: 0;
+  background: var(--cm-ivory);
+}
+.cm-about-detail__map-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  object-fit: cover;
+}
+.cm-about-detail__map-frame {
+  position: relative;
+  flex: 1;
+  min-height: 280px;
+}
+.cm-about-detail__map-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.cm-about-detail__map-caption {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  color: rgb(74 63 82 / 0.65);
+  background: color-mix(in oklab, var(--cm-ivory) 92%, transparent);
+}
+.cm-about-detail__map--image .cm-about-detail__map-caption,
+.cm-about-detail__map--embed .cm-about-detail__map-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
 .cm-about-detail__hours { margin-top: 1.5rem; max-width: 20rem; border-top: 1px solid var(--cm-hairline); padding-top: 1rem; }
 .cm-about-detail__hours div { display: flex; justify-content: space-between; gap: 1.5rem; margin-top: 0.5rem; }
-.cm-about-detail__hours dt, .cm-about-detail__hours dd { margin: 0; font-family: var(--cm-font-mono); font-size: 0.8125rem; color: rgb(74 63 82 / 0.75); }
+.cm-about-detail__hours dt,
+.cm-about-detail__hours dd { margin: 0; font-family: var(--cm-font-mono); font-size: 0.8125rem; color: rgb(74 63 82 / 0.75); }
+.cm-about-detail__pharmacist { margin-top: 1.5rem; }
+.cm-about-detail__pharmacist-name { margin: 0.5rem 0 0; font-weight: 600; color: var(--cm-pine); }
 .cm-about-phone { display: block; margin-top: 0.75rem; color: var(--cm-amber) !important; text-decoration: none !important; font-family: var(--cm-font-mono); font-size: 0.8125rem; }
 .cm-about-phone:hover { text-decoration: underline !important; }
 

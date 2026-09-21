@@ -5,34 +5,44 @@
       {% if section.settings.heading != blank %}<h2 class="cm-display-l">{{ section.settings.heading | escape }}</h2>{% endif %}
     </div>
 
-    <div class="cm-loc-pills" role="radiogroup" aria-label="{{ section.settings.selector_label | default: 'Viewing' | escape }}">
-      <p class="cm-mono-caption" style="width:100%; margin-bottom:0.25rem;">{{ section.settings.selector_label | default: 'Viewing' | escape }}</p>
-      {% for block in section.blocks %}
-        {% if block.type == 'location' %}
-          <button
-            type="button"
-            class="cm-loc-pill{% if forloop.first %} is-active{% endif %}"
-            role="radio"
-            aria-checked="{% if forloop.first %}true{% else %}false{% endif %}"
-            data-cm-loc-tab="{{ block.id }}"
-            {{ block.shopify_attributes }}
-          >
-            {{ block.settings.name | escape }}
-          </button>
-        {% endif %}
-      {% endfor %}
+    <div class="cm-loc-selector">
+      <p class="cm-mono-caption cm-loc-selector__label">{{ section.settings.selector_label | default: 'Viewing' | escape }}</p>
+      <div class="cm-loc-pills" role="tablist" aria-label="{{ section.settings.selector_label | default: 'Viewing' | escape }}">
+        {% assign loc_tab_index = 0 %}
+        {% for block in section.blocks %}
+          {% if block.type == 'location' %}
+            <button
+              type="button"
+              class="cm-loc-pill{% if loc_tab_index == 0 %} is-active{% endif %}"
+              role="tab"
+              id="cm-about-tab-{{ block.id }}"
+              aria-selected="{% if loc_tab_index == 0 %}true{% else %}false{% endif %}"
+              aria-controls="cm-about-panel-{{ block.id }}"
+              data-cm-loc-tab="{{ block.id }}"
+              {{ block.shopify_attributes }}
+            >
+              {{ block.settings.name | escape }}
+            </button>
+            {% assign loc_tab_index = loc_tab_index | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+      </div>
     </div>
 
+    {% assign loc_panel_index = 0 %}
     {% for block in section.blocks %}
       {% if block.type == 'location' %}
         <div
           class="cm-about-detail"
+          id="cm-about-panel-{{ block.id }}"
+          role="tabpanel"
+          aria-labelledby="cm-about-tab-{{ block.id }}"
           data-cm-loc-panel="{{ block.id }}"
-          {% unless forloop.first %}hidden{% endunless %}
+          {% unless loc_panel_index == 0 %}hidden{% endunless %}
         >
           <div>
             <h3 class="cm-display-m">{{ block.settings.name | escape }}</h3>
-            <address class="cm-mono-data" style="margin-top:1rem; font-style:normal; line-height:1.6; color:rgb(74 63 82 / 0.85);">
+            <address class="cm-mono-data cm-about-detail__address">
               {{ block.settings.address | escape }}<br>
               {{ block.settings.suburb | escape }}
             </address>
@@ -50,23 +60,57 @@
                 <div><dt>{{ block.settings.hours_3_days | escape }}</dt><dd>{{ block.settings.hours_3_time | escape }}</dd></div>
               {% endif %}
             </dl>
-            <div style="margin-top:1.5rem;">
-              <p class="cm-mono-caption" style="color:var(--cm-muted);">Compounding pharmacist</p>
-              <p style="margin:0.5rem 0 0; font-weight:600; color:var(--cm-pine);">{{ block.settings.pharmacist | escape }}</p>
-              <p class="cm-mono-data" style="color:var(--cm-muted);">{{ block.settings.credential | escape }}</p>
-            </div>
+            {% if block.settings.pharmacist != blank %}
+              <div class="cm-about-detail__pharmacist">
+                <p class="cm-mono-caption" style="color:var(--cm-muted);">Compounding pharmacist</p>
+                <p class="cm-about-detail__pharmacist-name">{{ block.settings.pharmacist | escape }}</p>
+                {% if block.settings.credential != blank %}
+                  <p class="cm-mono-data" style="color:var(--cm-muted);">{{ block.settings.credential | escape }}</p>
+                {% endif %}
+              </div>
+            {% endif %}
           </div>
-          <div
-            class="cm-about-detail__map"
-            role="img"
-            aria-label="Illustrative map panel for the {{ block.settings.name | escape }} dispensary"
-          >
-            <p class="cm-mono-caption" style="color:rgb(74 63 82 / 0.6);">{{ block.settings.suburb | escape }}</p>
-            <p class="cm-mono-data" style="color:rgb(74 63 82 / 0.6);">
-              {{ block.settings.map_note | default: 'Parking on site · Tram + rail within 400 m · Step-free entry' | escape }}
-            </p>
+
+          {% liquid
+            assign media_mode = block.settings.media_mode | default: 'placeholder'
+            assign map_note = block.settings.map_note | default: 'Parking on site · Tram + rail within 400 m · Step-free entry'
+            assign map_alt = block.settings.map_image.alt | default: block.settings.name | append: ' dispensary'
+          %}
+          <div class="cm-about-detail__map{% if media_mode == 'image' and block.settings.map_image != blank %} cm-about-detail__map--image{% elsif media_mode == 'map' and block.settings.map_embed != blank %} cm-about-detail__map--embed{% endif %}">
+            {% if media_mode == 'image' and block.settings.map_image != blank %}
+              {{
+                block.settings.map_image
+                | image_url: width: 1600
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '400, 800, 1200, 1600',
+                  sizes: '(min-width: 768px) 55vw, 100vw',
+                  class: 'cm-about-detail__map-img',
+                  alt: map_alt
+              }}
+              {% if map_note != blank %}
+                <p class="cm-about-detail__map-caption cm-mono-data">{{ map_note | escape }}</p>
+              {% endif %}
+            {% elsif media_mode == 'map' and block.settings.map_embed != blank %}
+              <div class="cm-about-detail__map-frame">
+                <iframe
+                  src="{{ block.settings.map_embed | escape }}"
+                  title="Map of {{ block.settings.name | escape }} dispensary"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  allowfullscreen
+                ></iframe>
+              </div>
+              {% if map_note != blank %}
+                <p class="cm-about-detail__map-caption cm-mono-data">{{ map_note | escape }}</p>
+              {% endif %}
+            {% else %}
+              <p class="cm-mono-caption" style="color:rgb(74 63 82 / 0.6);">{{ block.settings.suburb | escape }}</p>
+              <p class="cm-mono-data" style="color:rgb(74 63 82 / 0.6);">{{ map_note | escape }}</p>
+            {% endif %}
           </div>
         </div>
+        {% assign loc_panel_index = loc_panel_index | plus: 1 %}
       {% endif %}
     {% endfor %}
   </div>
@@ -82,7 +126,7 @@
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Locations" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Pick a dispensary." },
-    { "type": "text", "id": "selector_label", "label": "Selector label", "default": "Viewing" }
+    { "type": "text", "id": "selector_label", "label": "Tab label", "default": "Viewing" }
   ],
   "blocks": [
     {
@@ -102,7 +146,37 @@
         { "type": "text", "id": "hours_3_time", "label": "Hours 3 time", "default": "Closed" },
         { "type": "text", "id": "pharmacist", "label": "Pharmacist", "default": "Priya Raman" },
         { "type": "text", "id": "credential", "label": "Credential", "default": "B.Pharm, MPS — Compounding lead" },
-        { "type": "text", "id": "map_note", "label": "Map note", "default": "Parking on site · Tram + rail within 400 m · Step-free entry" }
+        {
+          "type": "select",
+          "id": "media_mode",
+          "label": "Map panel",
+          "info": "Choose a Google Maps embed URL or upload an image. Placeholder keeps the soft panel.",
+          "options": [
+            { "value": "placeholder", "label": "Placeholder panel" },
+            { "value": "map", "label": "Add map (embed URL)" },
+            { "value": "image", "label": "Add image" }
+          ],
+          "default": "placeholder"
+        },
+        {
+          "type": "text",
+          "id": "map_embed",
+          "label": "Map embed URL",
+          "info": "Paste the Google Maps iframe src only (Share → Embed a map → copy the src= URL).",
+          "visible_if": "{{ block.settings.media_mode == 'map' }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "map_image",
+          "label": "Map / location image",
+          "visible_if": "{{ block.settings.media_mode == 'image' }}"
+        },
+        {
+          "type": "text",
+          "id": "map_note",
+          "label": "Caption / note",
+          "default": "Parking on site · Tram + rail within 400 m · Step-free entry"
+        }
       ]
     }
   ],
