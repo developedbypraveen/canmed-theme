@@ -1409,6 +1409,19 @@ body:has(.cm-hero) {
 .cm-shop-card__media--otc {
   background: linear-gradient(160deg, color-mix(in oklab, var(--cm-sage) 16%, var(--cm-ivory)), var(--cm-ivory));
 }
+.cm-shop-card__media--photo {
+  padding: 0;
+  display: block;
+  background: var(--cm-ivory);
+}
+.cm-shop-card__media--photo::after { display: none; }
+.cm-shop-card__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 4 / 3;
+}
 .cm-shop-card__body {
   display: flex;
   flex-direction: column;

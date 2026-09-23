@@ -1,0 +1,68 @@
+{% liquid
+  assign descriptor = product.metafields.canmed.descriptor.value | default: product.metafields.canmed.descriptor
+  if descriptor == blank
+    assign descriptor = product.description | strip_html | truncate: 120
+  endif
+  assign form_label = product.metafields.canmed.form.value | default: product.metafields.canmed.form
+  if form_label == blank
+    assign form_label = product.type
+  endif
+  assign base_sku = product.metafields.canmed.base_sku.value | default: product.metafields.canmed.base_sku
+  if base_sku == blank
+    assign base_sku = product.selected_or_first_available_variant.sku
+  endif
+  assign variant_count = product.variants.size
+  assign idx = index | default: 1 | minus: 1
+  if idx < 0
+    assign idx = 0
+  endif
+  assign delay = idx | times: 0.05
+%}
+
+<a
+  class="cm-shop-card"
+  href="{{ product.url }}"
+  data-cm-shop-card
+  data-price="{{ product.price }}"
+  data-title="{{ product.title | escape }}"
+  data-created="{{ product.created_at | date: '%s' }}"
+  style="--cm-shop-reveal: {{ delay }}s;"
+>
+  <div class="cm-shop-card__media cm-shop-card__media--{{ media_tier }}{% if product.featured_media %} cm-shop-card__media--photo{% endif %}">
+    {% if product.featured_media %}
+      {{
+        product.featured_media
+        | image_url: width: 900
+        | image_tag:
+          loading: 'lazy',
+          widths: '400, 600, 900',
+          sizes: '(min-width: 768px) 30vw, 100vw',
+          class: 'cm-shop-card__img',
+          alt: product.featured_media.alt | default: product.title
+      }}
+    {% else %}
+      <span class="cm-mono-caption">{{ form_label | escape }}</span>
+      <span class="cm-mono-data">{{ base_sku | escape }}</span>
+    {% endif %}
+  </div>
+  <div class="cm-shop-card__body">
+    <h3 class="cm-shop-card__title">{{ product.title | escape }}</h3>
+    {% if descriptor != blank %}
+      <p class="cm-shop-card__desc">{{ descriptor | escape }}</p>
+    {% endif %}
+    <div class="cm-shop-card__meta">
+      <span class="cm-mono-data">{{ product.price | money }}</span>
+      <span class="cm-mono-data cm-shop-card__muted">
+        {{ variant_count }}
+        {% if variant_count == 1 %}size{% else %}sizes{% endif %}
+      </span>
+    </div>
+    <div class="cm-shop-card__variants">
+      {% for variant in product.variants limit: 8 %}
+        {% unless variant.title == 'Default Title' %}
+          <span class="cm-shop-card__pill">{{ variant.title | escape }}</span>
+        {% endunless %}
+      {% endfor %}
+    </div>
+  </div>
+</a>

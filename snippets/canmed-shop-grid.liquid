@@ -1,0 +1,51 @@
+{% comment %}
+  Shop product grid for one access tier.
+{% endcomment %}
+
+{% liquid
+  assign media_tier = media_tier | default: 'otc'
+  assign tier_tag = tier_tag | default: 'access-otc'
+  assign shown = 0
+%}
+
+<div class="cm-shop__grid" data-cm-shop-grid>
+  {% if collection != blank and collection.products.size > 0 %}
+    {% for product in collection.products %}
+      {% if product.tags contains tier_tag %}
+        {% assign shown = shown | plus: 1 %}
+        {% render 'canmed-shop-card', product: product, media_tier: media_tier, index: shown %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+  {% if shown == 0 %}
+    {% for product in collections['prescription-only'].products %}
+      {% if product.tags contains tier_tag %}
+        {% assign shown = shown | plus: 1 %}
+        {% render 'canmed-shop-card', product: product, media_tier: media_tier, index: shown %}
+      {% endif %}
+    {% endfor %}
+    {% for product in collections['s3-pharmacist-only'].products %}
+      {% if product.tags contains tier_tag %}
+        {% assign shown = shown | plus: 1 %}
+        {% render 'canmed-shop-card', product: product, media_tier: media_tier, index: shown %}
+      {% endif %}
+    {% endfor %}
+    {% for product in collections['over-the-counter'].products %}
+      {% if product.tags contains tier_tag %}
+        {% assign shown = shown | plus: 1 %}
+        {% render 'canmed-shop-card', product: product, media_tier: media_tier, index: shown %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+</div>
+
+{% if shown == 0 %}
+  <div class="cm-shop__empty">
+    <h3 class="cm-display-m">{{ empty_heading | default: 'Nothing in this tier yet.' | escape }}</h3>
+    <p>{{ empty_body | default: "Try another access tier, or tell us what you need and we'll quote a compound." | escape }}</p>
+    <a class="cm-mono-data cm-shop__empty-link" href="{{ empty_link | default: '/pages/contact' }}">
+      {{ empty_cta | default: 'Ask a pharmacist →' | escape }}
+    </a>
+  </div>
+{% endif %}

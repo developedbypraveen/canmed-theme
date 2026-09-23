@@ -1,5 +1,5 @@
 {% comment %}
-  CanMed Shop — match Lovable /shop: hero + glass tier bar + gradient cards
+  CanMed Shop — Lovable layout; photos when present; tier panels isolated
 {% endcomment %}
 
 <section class="cm-shop" data-cm-shop {{ section.shopify_attributes }}>
@@ -65,98 +65,23 @@
   </div>
 
   <div class="cm-shell cm-shop__panels">
-    {% assign tiers = 'prescription,s3,otc' | split: ',' %}
-    {% for tier in tiers %}
-      {% liquid
-        case tier
-          when 'prescription'
-            assign panel_col = col_rx
-            assign panel_note = section.settings.note_rx | default: 'Requires a valid script from your prescriber before we dispense.'
-            assign media_tier = 'prescription'
-          when 's3'
-            assign panel_col = col_s3
-            assign panel_note = section.settings.note_s3 | default: 'No script needed — a pharmacist speaks with you before supply.'
-            assign media_tier = 's3'
-          else
-            assign panel_col = col_otc
-            assign panel_note = section.settings.note_otc | default: 'Available to order directly, no consultation required.'
-            assign media_tier = 'otc'
-        endcase
-        assign product_list = panel_col.products
-      %}
-      <div
-        class="cm-shop__panel"
-        role="tabpanel"
-        data-cm-shop-panel="{{ tier }}"
-        {% unless forloop.first %}hidden{% endunless %}
-      >
-        <p class="cm-mono-data cm-shop__note">{{ panel_note | escape }}</p>
+    {% comment %} Prescription {% endcomment %}
+    <div class="cm-shop__panel" role="tabpanel" data-cm-shop-panel="prescription">
+      <p class="cm-mono-data cm-shop__note">{{ section.settings.note_rx | default: 'Requires a valid script from your prescriber before we dispense.' | escape }}</p>
+      {% render 'canmed-shop-grid', collection: col_rx, tier_tag: 'access-prescription', media_tier: 'prescription', empty_heading: section.settings.empty_heading, empty_body: section.settings.empty_body, empty_cta: section.settings.empty_cta, empty_link: section.settings.empty_link %}
+    </div>
 
-        {% if panel_col == blank or product_list.size == 0 %}
-          <div class="cm-shop__empty">
-            <h3 class="cm-display-m">{{ section.settings.empty_heading | default: 'Nothing in this tier yet.' | escape }}</h3>
-            <p>{{ section.settings.empty_body | default: "Try another access tier, or tell us what you need and we'll quote a compound." | escape }}</p>
-            <a class="cm-mono-data cm-shop__empty-link" href="{{ section.settings.empty_link | default: '/pages/contact' }}">
-              {{ section.settings.empty_cta | default: 'Ask a pharmacist →' | escape }}
-            </a>
-          </div>
-        {% else %}
-          <div class="cm-shop__grid" data-cm-shop-grid>
-            {% for product in product_list %}
-              {% liquid
-                assign descriptor = product.metafields.canmed.descriptor.value | default: product.metafields.canmed.descriptor
-                if descriptor == blank
-                  assign descriptor = product.description | strip_html | truncate: 120
-                endif
-                assign form_label = product.metafields.canmed.form.value | default: product.metafields.canmed.form
-                if form_label == blank
-                  assign form_label = product.type
-                endif
-                assign base_sku = product.metafields.canmed.base_sku.value | default: product.metafields.canmed.base_sku
-                if base_sku == blank
-                  assign base_sku = product.selected_or_first_available_variant.sku
-                endif
-                assign variant_count = product.variants.size
-              %}
-              <a
-                class="cm-shop-card"
-                href="{{ product.url }}"
-                data-cm-shop-card
-                data-price="{{ product.price }}"
-                data-title="{{ product.title | escape }}"
-                data-created="{{ product.created_at | date: '%s' }}"
-                style="--cm-shop-reveal: {{ forloop.index0 | times: 0.05 }}s;"
-              >
-                <div class="cm-shop-card__media cm-shop-card__media--{{ media_tier }}">
-                  <span class="cm-mono-caption">{{ form_label | escape }}</span>
-                  <span class="cm-mono-data">{{ base_sku | escape }}</span>
-                </div>
-                <div class="cm-shop-card__body">
-                  <h3 class="cm-shop-card__title">{{ product.title | escape }}</h3>
-                  {% if descriptor != blank %}
-                    <p class="cm-shop-card__desc">{{ descriptor | escape }}</p>
-                  {% endif %}
-                  <div class="cm-shop-card__meta">
-                    <span class="cm-mono-data">{{ product.price | money }}</span>
-                    <span class="cm-mono-data cm-shop-card__muted">
-                      {{ variant_count }}
-                      {% if variant_count == 1 %}size{% else %}sizes{% endif %}
-                    </span>
-                  </div>
-                  <div class="cm-shop-card__variants">
-                    {% for variant in product.variants limit: 8 %}
-                      {% unless variant.title == 'Default Title' %}
-                        <span class="cm-shop-card__pill">{{ variant.title | escape }}</span>
-                      {% endunless %}
-                    {% endfor %}
-                  </div>
-                </div>
-              </a>
-            {% endfor %}
-          </div>
-        {% endif %}
-      </div>
-    {% endfor %}
+    {% comment %} S3 {% endcomment %}
+    <div class="cm-shop__panel" role="tabpanel" data-cm-shop-panel="s3" hidden>
+      <p class="cm-mono-data cm-shop__note">{{ section.settings.note_s3 | default: 'No script needed — a pharmacist speaks with you before supply.' | escape }}</p>
+      {% render 'canmed-shop-grid', collection: col_s3, tier_tag: 'access-s3', media_tier: 's3', empty_heading: section.settings.empty_heading, empty_body: section.settings.empty_body, empty_cta: section.settings.empty_cta, empty_link: section.settings.empty_link %}
+    </div>
+
+    {% comment %} OTC {% endcomment %}
+    <div class="cm-shop__panel" role="tabpanel" data-cm-shop-panel="otc" hidden>
+      <p class="cm-mono-data cm-shop__note">{{ section.settings.note_otc | default: 'Available to order directly, no consultation required.' | escape }}</p>
+      {% render 'canmed-shop-grid', collection: col_otc, tier_tag: 'access-otc', media_tier: 'otc', empty_heading: section.settings.empty_heading, empty_body: section.settings.empty_body, empty_cta: section.settings.empty_cta, empty_link: section.settings.empty_link %}
+    </div>
   </div>
 </section>
 
