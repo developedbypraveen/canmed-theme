@@ -1,6 +1,6 @@
 {% comment %}
-  CanMed product detail — access-tier CTAs
-  prescription → Send script | s3 → phone capture | otc → nearest store + add to cart
+  CanMed product detail — Add to cart for all products (phone collected at checkout).
+  S3: optional pharmacist note | OTC: optional nearest-store check
 {% endcomment %}
 
 {% liquid
@@ -162,23 +162,6 @@
           </div>
         </div>
 
-        {% if tier == 's3' %}
-          <div class="cm-product__s3" data-cm-s3>
-            <label class="cm-mono-caption" for="cm-s3-phone-{{ section.id }}">
-              {{ section.settings.s3_phone_label | default: 'Phone (optional — pharmacist may call)' | escape }}
-            </label>
-            <input
-              id="cm-s3-phone-{{ section.id }}"
-              class="cm-product__input"
-              type="tel"
-              name="properties[Phone]"
-              autocomplete="tel"
-              placeholder="{{ section.settings.s3_phone_placeholder | default: '04xx xxx xxx' | escape }}"
-              data-cm-s3-phone
-            >
-          </div>
-        {% endif %}
-
         {% if tier == 'otc' %}
           <div class="cm-product__nearest" data-cm-nearest>
             <p class="cm-mono-caption">{{ section.settings.nearest_label | default: 'Find your nearest dispensary' | escape }}</p>
@@ -270,12 +253,6 @@
     { "type": "text", "id": "variant_legend", "label": "Variant legend", "default": "Size / strength" },
     { "type": "text", "id": "rx_cta", "label": "Prescription CTA", "default": "Send your script" },
     { "type": "text", "id": "ask_cta", "label": "Ask pharmacist CTA", "default": "Ask a pharmacist" },
-    { "type": "text", "id": "s3_phone_label", "label": "S3 phone label", "default": "Your phone number" },
-    { "type": "text", "id": "s3_phone_placeholder", "label": "S3 phone placeholder", "default": "04xx xxx xxx" },
-    { "type": "text", "id": "s3_cta", "label": "S3 CTA", "default": "Request pharmacist call" },
-    { "type": "textarea", "id": "s3_hint", "label": "S3 hint", "default": "A pharmacist will call before supply. You can also ring us directly:" },
-    { "type": "text", "id": "s3_phone_display", "label": "S3 display phone", "default": "(03) 9376 2140" },
-    { "type": "text", "id": "s3_phone_link", "label": "S3 phone tel link", "default": "tel:+61393762140" },
     { "type": "text", "id": "nearest_label", "label": "Nearest store label", "default": "Find your nearest dispensary" },
     { "type": "text", "id": "postcode_placeholder", "label": "Postcode placeholder", "default": "Postcode" },
     { "type": "text", "id": "nearest_cta", "label": "Check availability CTA", "default": "Check availability" },

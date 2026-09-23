@@ -96,11 +96,6 @@
       });
     });
 
-    // S3 phone is optional — no block on submit
-    var s3Phone = root.querySelector('[data-cm-s3-phone]');
-    var s3Msg = root.querySelector('[data-cm-s3-msg]');
-    if (s3Msg) s3Msg.hidden = true;
-
     // OTC nearest store
     var postcodeInput = root.querySelector('[data-cm-postcode]');
     var nearestBtn = root.querySelector('[data-cm-nearest-btn]');
