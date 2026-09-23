@@ -130,6 +130,39 @@
 
         <p class="cm-product__note cm-mono-data">{{ tier_note | escape }}</p>
 
+        {% comment %} Fulfilment choice — delivery or collect in store (S3 + OTC) {% endcomment %}
+        {% unless tier == 'prescription' %}
+          <div class="cm-product__fulfil" data-cm-fulfil>
+            <p class="cm-mono-caption">{{ section.settings.fulfil_label | default: 'How you want it' | escape }}</p>
+            <div class="cm-product__option-pills" role="group" aria-label="Fulfilment method">
+              <button type="button" class="cm-product__option-pill is-active" data-cm-fulfil-method="delivery">
+                {{ section.settings.delivery_label | default: 'Delivery' | escape }}
+              </button>
+              <button type="button" class="cm-product__option-pill" data-cm-fulfil-method="pickup">
+                {{ section.settings.pickup_label | default: 'Collect in store' | escape }}
+              </button>
+            </div>
+            <input type="hidden" name="properties[Fulfilment]" value="Delivery" data-cm-fulfil-prop>
+            <input type="hidden" name="properties[Pickup store]" value="" data-cm-pickup-store-prop>
+
+            <div class="cm-product__pickup" data-cm-pickup-panel hidden>
+              <p class="cm-mono-caption">{{ section.settings.pickup_store_label | default: 'Pick up from' | escape }}</p>
+              <div class="cm-loc-pills" role="radiogroup" aria-label="Pickup store">
+                <button type="button" class="cm-loc-pill is-active" data-cm-pickup-store="Kensington" data-address="{{ section.settings.store_1_address | default: '412 Macaulay Road, Kensington VIC 3031' | escape }}">
+                  {{ section.settings.store_1_name | default: 'Kensington' | escape }}
+                </button>
+                <button type="button" class="cm-loc-pill" data-cm-pickup-store="Hawthorn" data-address="{{ section.settings.store_2_address | default: '88 Burwood Road, Hawthorn VIC 3122' | escape }}">
+                  {{ section.settings.store_2_name | default: 'Hawthorn' | escape }}
+                </button>
+                <button type="button" class="cm-loc-pill" data-cm-pickup-store="Geelong" data-address="{{ section.settings.store_3_address | default: '27 Malop Street, Geelong VIC 3220' | escape }}">
+                  {{ section.settings.store_3_name | default: 'Geelong' | escape }}
+                </button>
+              </div>
+              <p class="cm-mono-data cm-product__pickup-meta" data-cm-pickup-meta></p>
+            </div>
+          </div>
+        {% endunless %}
+
         {% if tier == 'prescription' %}
           <div class="cm-product__actions">
             <a class="cm-btn cm-btn--accent" href="{{ section.settings.prescriptions_link | default: '/pages/prescriptions' }}">
@@ -271,6 +304,10 @@
     { "type": "text", "id": "postcode_placeholder", "label": "Postcode placeholder", "default": "Postcode" },
     { "type": "text", "id": "nearest_cta", "label": "Check availability CTA", "default": "Check availability" },
     { "type": "text", "id": "order_cta", "label": "Add to order CTA", "default": "Add to order" },
+    { "type": "text", "id": "fulfil_label", "label": "Fulfilment label", "default": "How you want it" },
+    { "type": "text", "id": "delivery_label", "label": "Delivery option", "default": "Delivery" },
+    { "type": "text", "id": "pickup_label", "label": "Pickup option", "default": "Collect in store" },
+    { "type": "text", "id": "pickup_store_label", "label": "Pickup store label", "default": "Pick up from" },
     { "type": "header", "content": "Store 1 — Kensington" },
     { "type": "text", "id": "store_1_name", "label": "Name", "default": "Kensington" },
     { "type": "text", "id": "store_1_address", "label": "Address", "default": "412 Macaulay Road, Kensington VIC 3031" },

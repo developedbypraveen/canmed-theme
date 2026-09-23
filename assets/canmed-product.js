@@ -46,6 +46,56 @@
       });
     });
 
+    // Fulfilment: Delivery vs Collect in store
+    var fulfilBtns = root.querySelectorAll('[data-cm-fulfil-method]');
+    var pickupPanel = root.querySelector('[data-cm-pickup-panel]');
+    var fulfilProp = root.querySelector('[data-cm-fulfil-prop]');
+    var pickupStoreProp = root.querySelector('[data-cm-pickup-store-prop]');
+    var pickupMeta = root.querySelector('[data-cm-pickup-meta]');
+    var pickupStoreBtns = root.querySelectorAll('[data-cm-pickup-store]');
+
+    function setPickupStore(btn) {
+      if (!btn) return;
+      pickupStoreBtns.forEach(function (b) {
+        b.classList.toggle('is-active', b === btn);
+      });
+      if (pickupStoreProp) pickupStoreProp.value = btn.getAttribute('data-cm-pickup-store') || '';
+      if (pickupMeta) {
+        pickupMeta.textContent = btn.getAttribute('data-address') || '';
+      }
+    }
+
+    if (pickupStoreBtns[0]) setPickupStore(pickupStoreBtns[0]);
+
+    fulfilBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var method = btn.getAttribute('data-cm-fulfil-method');
+        fulfilBtns.forEach(function (b) {
+          b.classList.toggle('is-active', b === btn);
+        });
+        if (fulfilProp) {
+          fulfilProp.value = method === 'pickup' ? 'Collect in store' : 'Delivery';
+        }
+        if (pickupPanel) {
+          if (method === 'pickup') {
+            pickupPanel.removeAttribute('hidden');
+            if (pickupStoreProp && !pickupStoreProp.value && pickupStoreBtns[0]) {
+              setPickupStore(pickupStoreBtns[0]);
+            }
+          } else {
+            pickupPanel.setAttribute('hidden', '');
+            if (pickupStoreProp) pickupStoreProp.value = '';
+          }
+        }
+      });
+    });
+
+    pickupStoreBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        setPickupStore(btn);
+      });
+    });
+
     // S3: require phone before submit
     var s3Phone = root.querySelector('[data-cm-s3-phone]');
     var s3Msg = root.querySelector('[data-cm-s3-msg]');

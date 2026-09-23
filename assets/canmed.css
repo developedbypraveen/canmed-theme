@@ -1685,3 +1685,10 @@ body:has(.cm-hero) {
 .cm-rx__success { text-align: center; max-width: 40rem; margin-inline: auto; }
 .cm-rx__success .cm-display-l { margin-top: 2rem; }
 .cm-rx__success .cm-body-l { margin-top: 1rem; color: var(--cm-muted); }
+
+.cm-product__fulfil { margin-top: 1.75rem; }
+.cm-product__fulfil .cm-product__option-pills { margin-top: 0.75rem; }
+.cm-product__pickup { margin-top: 1rem; }
+.cm-product__pickup .cm-loc-pills { margin-top: 0.5rem; }
+.cm-product__pickup-meta { margin-top: 0.5rem; color: var(--cm-muted); }
+.cm-product__pickup[hidden] { display: none !important; }
