@@ -128,115 +128,91 @@
           </fieldset>
         {% endunless %}
 
-        <p class="cm-product__note cm-mono-data">{{ tier_note | escape }}</p>
+        {% if access_note != blank or tier_note != blank %}
+          <p class="cm-product__note cm-mono-data">{{ access_note | default: tier_note | escape }}</p>
+        {% endif %}
 
-        {% comment %} Fulfilment choice — delivery or collect in store (S3 + OTC) {% endcomment %}
-        {% unless tier == 'prescription' %}
-          <div class="cm-product__fulfil" data-cm-fulfil>
-            <p class="cm-mono-caption">{{ section.settings.fulfil_label | default: 'How you want it' | escape }}</p>
-            <div class="cm-product__option-pills" role="group" aria-label="Fulfilment method">
-              <button type="button" class="cm-product__option-pill is-active" data-cm-fulfil-method="delivery">
-                {{ section.settings.delivery_label | default: 'Delivery' | escape }}
+        <div class="cm-product__fulfil" data-cm-fulfil>
+          <p class="cm-mono-caption">{{ section.settings.fulfil_label | default: 'How you want it' | escape }}</p>
+          <div class="cm-product__option-pills" role="group" aria-label="Fulfilment method">
+            <button type="button" class="cm-product__option-pill is-active" data-cm-fulfil-method="delivery">
+              {{ section.settings.delivery_label | default: 'Delivery' | escape }}
+            </button>
+            <button type="button" class="cm-product__option-pill" data-cm-fulfil-method="pickup">
+              {{ section.settings.pickup_label | default: 'Collect in store' | escape }}
+            </button>
+          </div>
+          <input type="hidden" name="properties[Fulfilment]" value="Delivery" data-cm-fulfil-prop>
+          <input type="hidden" name="properties[Pickup store]" value="" data-cm-pickup-store-prop>
+
+          <div class="cm-product__pickup" data-cm-pickup-panel hidden>
+            <p class="cm-mono-caption">{{ section.settings.pickup_store_label | default: 'Pick up from' | escape }}</p>
+            <div class="cm-loc-pills" role="radiogroup" aria-label="Pickup store">
+              <button type="button" class="cm-loc-pill is-active" data-cm-pickup-store="Kensington" data-address="{{ section.settings.store_1_address | default: '412 Macaulay Road, Kensington VIC 3031' | escape }}">
+                {{ section.settings.store_1_name | default: 'Kensington' | escape }}
               </button>
-              <button type="button" class="cm-product__option-pill" data-cm-fulfil-method="pickup">
-                {{ section.settings.pickup_label | default: 'Collect in store' | escape }}
+              <button type="button" class="cm-loc-pill" data-cm-pickup-store="Hawthorn" data-address="{{ section.settings.store_2_address | default: '88 Burwood Road, Hawthorn VIC 3122' | escape }}">
+                {{ section.settings.store_2_name | default: 'Hawthorn' | escape }}
+              </button>
+              <button type="button" class="cm-loc-pill" data-cm-pickup-store="Geelong" data-address="{{ section.settings.store_3_address | default: '27 Malop Street, Geelong VIC 3220' | escape }}">
+                {{ section.settings.store_3_name | default: 'Geelong' | escape }}
               </button>
             </div>
-            <input type="hidden" name="properties[Fulfilment]" value="Delivery" data-cm-fulfil-prop>
-            <input type="hidden" name="properties[Pickup store]" value="" data-cm-pickup-store-prop>
-
-            <div class="cm-product__pickup" data-cm-pickup-panel hidden>
-              <p class="cm-mono-caption">{{ section.settings.pickup_store_label | default: 'Pick up from' | escape }}</p>
-              <div class="cm-loc-pills" role="radiogroup" aria-label="Pickup store">
-                <button type="button" class="cm-loc-pill is-active" data-cm-pickup-store="Kensington" data-address="{{ section.settings.store_1_address | default: '412 Macaulay Road, Kensington VIC 3031' | escape }}">
-                  {{ section.settings.store_1_name | default: 'Kensington' | escape }}
-                </button>
-                <button type="button" class="cm-loc-pill" data-cm-pickup-store="Hawthorn" data-address="{{ section.settings.store_2_address | default: '88 Burwood Road, Hawthorn VIC 3122' | escape }}">
-                  {{ section.settings.store_2_name | default: 'Hawthorn' | escape }}
-                </button>
-                <button type="button" class="cm-loc-pill" data-cm-pickup-store="Geelong" data-address="{{ section.settings.store_3_address | default: '27 Malop Street, Geelong VIC 3220' | escape }}">
-                  {{ section.settings.store_3_name | default: 'Geelong' | escape }}
-                </button>
-              </div>
-              <p class="cm-mono-data cm-product__pickup-meta" data-cm-pickup-meta></p>
-            </div>
+            <p class="cm-mono-data cm-product__pickup-meta" data-cm-pickup-meta></p>
           </div>
-        {% endunless %}
+        </div>
 
-        {% if tier == 'prescription' %}
-          <div class="cm-product__actions">
-            <a class="cm-btn cm-btn--accent" href="{{ section.settings.prescriptions_link | default: '/pages/prescriptions' }}">
-              {{ section.settings.rx_cta | default: 'Send your script' | escape }}
-            </a>
-            <a class="cm-btn cm-btn--secondary" href="{{ section.settings.contact_link | default: '/pages/contact' }}">
-              {{ section.settings.ask_cta | default: 'Ask a pharmacist' | escape }}
-            </a>
-          </div>
-
-        {% elsif tier == 's3' %}
+        {% if tier == 's3' %}
           <div class="cm-product__s3" data-cm-s3>
             <label class="cm-mono-caption" for="cm-s3-phone-{{ section.id }}">
-              {{ section.settings.s3_phone_label | default: 'Your phone number' | escape }}
+              {{ section.settings.s3_phone_label | default: 'Phone (optional — pharmacist may call)' | escape }}
             </label>
-            <div class="cm-product__s3-row">
-              <input
-                id="cm-s3-phone-{{ section.id }}"
-                class="cm-product__input"
-                type="tel"
-                name="properties[Phone]"
-                autocomplete="tel"
-                required
-                placeholder="{{ section.settings.s3_phone_placeholder | default: '04xx xxx xxx' | escape }}"
-                data-cm-s3-phone
-              >
-              <button type="submit" class="cm-btn cm-btn--accent" data-cm-s3-submit>
-                {{ section.settings.s3_cta | default: 'Request pharmacist call' | escape }}
-              </button>
-            </div>
-            <p class="cm-mono-data cm-product__s3-hint">
-              {{ section.settings.s3_hint | default: 'A pharmacist will call before supply. You can also ring us directly:' | escape }}
-              <a href="{{ section.settings.s3_phone_link | default: 'tel:+61393762140' }}">{{ section.settings.s3_phone_display | default: '(03) 9376 2140' | escape }}</a>
-            </p>
-            <p class="cm-mono-data cm-product__s3-msg" data-cm-s3-msg hidden></p>
-          </div>
-          <div class="cm-product__actions">
-            <a class="cm-btn cm-btn--secondary" href="{{ section.settings.contact_link | default: '/pages/contact' }}">
-              {{ section.settings.ask_cta | default: 'Ask a pharmacist' | escape }}
-            </a>
-          </div>
-
-        {% else %}
-          <div class="cm-product__otc" data-cm-otc>
-            <div class="cm-product__nearest" data-cm-nearest>
-              <p class="cm-mono-caption">{{ section.settings.nearest_label | default: 'Find your nearest dispensary' | escape }}</p>
-              <div class="cm-product__s3-row">
-                <input
-                  class="cm-product__input"
-                  type="text"
-                  inputmode="numeric"
-                  pattern="[0-9]{4}"
-                  maxlength="4"
-                  placeholder="{{ section.settings.postcode_placeholder | default: 'Postcode' | escape }}"
-                  aria-label="Australian postcode"
-                  data-cm-postcode
-                >
-                <button type="button" class="cm-btn cm-btn--secondary" data-cm-nearest-btn>
-                  {{ section.settings.nearest_cta | default: 'Check availability' | escape }}
-                </button>
-              </div>
-              <div class="cm-product__nearest-result" data-cm-nearest-result hidden></div>
-            </div>
-
-            <div class="cm-product__actions cm-product__actions--otc">
-              <button type="submit" class="cm-btn cm-btn--accent" data-cm-add-cart {% unless current_variant.available %}disabled{% endunless %}>
-                {{ section.settings.order_cta | default: 'Add to order' | escape }}
-              </button>
-              <a class="cm-btn cm-btn--secondary" href="{{ section.settings.contact_link | default: '/pages/contact' }}">
-                {{ section.settings.ask_cta | default: 'Ask a pharmacist' | escape }}
-              </a>
-            </div>
+            <input
+              id="cm-s3-phone-{{ section.id }}"
+              class="cm-product__input"
+              type="tel"
+              name="properties[Phone]"
+              autocomplete="tel"
+              placeholder="{{ section.settings.s3_phone_placeholder | default: '04xx xxx xxx' | escape }}"
+              data-cm-s3-phone
+            >
           </div>
         {% endif %}
+
+        {% if tier == 'otc' %}
+          <div class="cm-product__nearest" data-cm-nearest>
+            <p class="cm-mono-caption">{{ section.settings.nearest_label | default: 'Find your nearest dispensary' | escape }}</p>
+            <div class="cm-product__s3-row">
+              <input
+                class="cm-product__input"
+                type="text"
+                inputmode="numeric"
+                pattern="[0-9]{4}"
+                maxlength="4"
+                placeholder="{{ section.settings.postcode_placeholder | default: 'Postcode' | escape }}"
+                aria-label="Australian postcode"
+                data-cm-postcode
+              >
+              <button type="button" class="cm-btn cm-btn--secondary" data-cm-nearest-btn>
+                {{ section.settings.nearest_cta | default: 'Check availability' | escape }}
+              </button>
+            </div>
+            <div class="cm-product__nearest-result" data-cm-nearest-result hidden></div>
+          </div>
+        {% endif %}
+
+        <div class="cm-product__actions">
+          <button type="submit" class="cm-btn cm-btn--accent" data-cm-add-cart name="add" {% unless current_variant.available %}disabled{% endunless %}>
+            {{ section.settings.order_cta | default: 'Add to cart' | escape }}
+          </button>
+          <a class="cm-btn cm-btn--secondary" href="{{ section.settings.contact_link | default: '/pages/contact' }}">
+            {{ section.settings.ask_cta | default: 'Ask a pharmacist' | escape }}
+          </a>
+        </div>
+        <p class="cm-mono-data" style="margin-top:1rem;color:var(--cm-muted);">
+          Need a compounded script?
+          <a href="{{ section.settings.prescriptions_link | default: '/pages/prescriptions' }}">Send a prescription</a>
+        </p>
       {% endform %}
     </div>
   </div>

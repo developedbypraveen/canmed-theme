@@ -1281,6 +1281,21 @@ body:has(.cm-hero) {
   max-width: 40rem;
   color: var(--cm-muted);
 }
+.cm-shop__rx-banner {
+  margin-top: 1.5rem;
+  max-width: 40rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--cm-hairline);
+  border-radius: 12px;
+  color: var(--cm-muted);
+  background: var(--cm-secondary);
+}
+.cm-shop__rx-banner a {
+  color: var(--cm-amber) !important;
+  text-decoration: none !important;
+  font-weight: 600;
+}
+.cm-shop__rx-banner a:hover { text-decoration: underline !important; }
 .cm-shop__bar {
   position: sticky;
   top: var(--header-group-height, var(--header-height, 68px));

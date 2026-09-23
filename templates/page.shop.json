@@ -5,14 +5,14 @@
       "settings": {
         "eyebrow": "Shop",
         "heading": "Everything we make, sorted by how you can get it.",
-        "lede": "Access differs by schedule, so we lead with that rather than hiding it at checkout.",
-        "label_rx": "Prescription Only",
+        "lede": "Browse pharmacist-only and over-the-counter lines. Compounded scripts use the Prescriptions form.",
+        "rx_banner": "Need a compounded medicine from a script?",
+        "rx_banner_cta": "Send your prescription →",
+        "prescriptions_link": "/pages/prescriptions",
         "label_s3": "S3 Pharmacist Only",
         "label_otc": "Over the Counter",
-        "note_rx": "Requires a valid script from your prescriber before we dispense.",
         "note_s3": "No script needed — a pharmacist speaks with you before supply.",
         "note_otc": "Available to order directly, no consultation required.",
-        "collection_rx": "prescription-only",
         "collection_s3": "s3-pharmacist-only",
         "collection_otc": "over-the-counter",
         "sort_latest": "Latest"

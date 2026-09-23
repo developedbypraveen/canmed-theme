@@ -185,7 +185,8 @@
         'Delivery address': method === 'delivery' ? address.trim() : 'Pickup — ' + locName,
         Notes: notes.trim() || '—',
         'Script file': file ? file.name + ' (' + Math.round(file.size / 1024) + ' KB)' : 'Not attached',
-        Status: 'received',
+        Status: 'pending_review',
+        Payment: 'Awaiting pharmacist approval + payment link',
       };
 
       try {
@@ -216,16 +217,18 @@
             attributes: {
               rx_location: locationId,
               rx_type: rxType,
-              rx_status: 'received',
+              rx_status: 'pending_review',
               rx_script_file: file ? file.name : '',
+              rx_payment: 'awaiting_invoice',
             },
             note:
-              'Prescription intake — ' +
+              'PRESCRIPTION REQUEST — pending pharmacist review — ' +
               locName +
               ' — ' +
               rxType +
               (file ? ' — file: ' + file.name : '') +
-              (notes ? ' — notes: ' + notes : ''),
+              (notes ? ' — notes: ' + notes : '') +
+              ' — After approval: create Draft Order with medicines and Send invoice (payment link).',
           }),
         });
 
@@ -239,18 +242,16 @@
               (pharmacist || 'A pharmacist') +
               ' at ' +
               locName +
-              ' reviews it next. You will get an email at ' +
-              email +
-              ' when the status changes — finish checkout to lock in the order, then track it under My Prescriptions.';
+              ' will review your details. After approval you will receive an email with a payment link and the approved medicine details.';
           }
           if (ref) {
             ref.textContent =
-              'Continue to checkout to confirm. Attach/email your script if needed: ' +
+              'Complete the next step to lodge your request in our system (no medicine charge yet). Email your script if needed: ' +
               (root.getAttribute('data-fallback-email') || 'scripts@canmed.com.au');
           }
         }
 
-        // Works like an order: send to checkout
+        // Creates a $0 order in Shopify Admin for staff to review, then they send a payment invoice
         window.location.href = '/checkout';
       } catch (err) {
         if (submitErr) {

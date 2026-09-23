@@ -1,5 +1,5 @@
 {% comment %}
-  CanMed Shop — Lovable layout; photos when present; tier panels isolated
+  CanMed Shop — S3 + OTC products only. Prescriptions are a separate form page.
 {% endcomment %}
 
 <section class="cm-shop" data-cm-shop {{ section.shopify_attributes }}>
@@ -19,16 +19,18 @@
       {% if section.settings.lede != blank %}
         <p class="cm-body-l cm-shop__lede">{{ section.settings.lede | escape }}</p>
       {% endif %}
+      <p class="cm-shop__rx-banner cm-mono-data">
+        {{ section.settings.rx_banner | default: 'Need a compounded medicine from a script?' | escape }}
+        <a href="{{ section.settings.prescriptions_link | default: '/pages/prescriptions' }}">
+          {{ section.settings.rx_banner_cta | default: 'Send your prescription →' | escape }}
+        </a>
+      </p>
     </div>
   </header>
 
   {% liquid
-    assign col_rx = section.settings.collection_rx
     assign col_s3 = section.settings.collection_s3
     assign col_otc = section.settings.collection_otc
-    if col_rx == blank
-      assign col_rx = collections['prescription-only']
-    endif
     if col_s3 == blank
       assign col_s3 = collections['s3-pharmacist-only']
     endif
@@ -40,11 +42,7 @@
   <div class="cm-shop__bar">
     <div class="cm-shell cm-shop__bar-inner">
       <div class="cm-shop__tabs" role="tablist" aria-label="{{ section.settings.tabs_label | default: 'Access tier' | escape }}">
-        <button type="button" class="cm-shop__tab is-active" role="tab" aria-selected="true" data-cm-shop-tier="prescription">
-          <span class="cm-shop__tab-dot cm-shop__tab-dot--rx" aria-hidden="true"></span>
-          {{ section.settings.label_rx | default: 'Prescription Only' | escape }}
-        </button>
-        <button type="button" class="cm-shop__tab" role="tab" aria-selected="false" data-cm-shop-tier="s3">
+        <button type="button" class="cm-shop__tab is-active" role="tab" aria-selected="true" data-cm-shop-tier="s3">
           <span class="cm-shop__tab-dot cm-shop__tab-dot--s3" aria-hidden="true"></span>
           {{ section.settings.label_s3 | default: 'S3 Pharmacist Only' | escape }}
         </button>
@@ -65,19 +63,11 @@
   </div>
 
   <div class="cm-shell cm-shop__panels">
-    {% comment %} Prescription {% endcomment %}
-    <div class="cm-shop__panel" role="tabpanel" data-cm-shop-panel="prescription">
-      <p class="cm-mono-data cm-shop__note">{{ section.settings.note_rx | default: 'Requires a valid script from your prescriber before we dispense.' | escape }}</p>
-      {% render 'canmed-shop-grid', collection: col_rx, tier_tag: 'access-prescription', media_tier: 'prescription', empty_heading: section.settings.empty_heading, empty_body: section.settings.empty_body, empty_cta: section.settings.empty_cta, empty_link: section.settings.empty_link %}
-    </div>
-
-    {% comment %} S3 {% endcomment %}
-    <div class="cm-shop__panel" role="tabpanel" data-cm-shop-panel="s3" hidden>
+    <div class="cm-shop__panel" role="tabpanel" data-cm-shop-panel="s3">
       <p class="cm-mono-data cm-shop__note">{{ section.settings.note_s3 | default: 'No script needed — a pharmacist speaks with you before supply.' | escape }}</p>
       {% render 'canmed-shop-grid', collection: col_s3, tier_tag: 'access-s3', media_tier: 's3', empty_heading: section.settings.empty_heading, empty_body: section.settings.empty_body, empty_cta: section.settings.empty_cta, empty_link: section.settings.empty_link %}
     </div>
 
-    {% comment %} OTC {% endcomment %}
     <div class="cm-shop__panel" role="tabpanel" data-cm-shop-panel="otc" hidden>
       <p class="cm-mono-data cm-shop__note">{{ section.settings.note_otc | default: 'Available to order directly, no consultation required.' | escape }}</p>
       {% render 'canmed-shop-grid', collection: col_otc, tier_tag: 'access-otc', media_tier: 'otc', empty_heading: section.settings.empty_heading, empty_body: section.settings.empty_body, empty_cta: section.settings.empty_cta, empty_link: section.settings.empty_link %}
@@ -95,15 +85,15 @@
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Shop" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Everything we make, sorted by how you can get it." },
-    { "type": "textarea", "id": "lede", "label": "Lede", "default": "Access differs by schedule, so we lead with that rather than hiding it at checkout." },
+    { "type": "textarea", "id": "lede", "label": "Lede", "default": "Browse pharmacist-only and over-the-counter lines. Compounded scripts use the Prescriptions form." },
+    { "type": "text", "id": "rx_banner", "label": "Prescriptions banner", "default": "Need a compounded medicine from a script?" },
+    { "type": "text", "id": "rx_banner_cta", "label": "Prescriptions banner CTA", "default": "Send your prescription →" },
+    { "type": "url", "id": "prescriptions_link", "label": "Prescriptions page" },
     { "type": "text", "id": "tabs_label", "label": "Tabs aria label", "default": "Access tier" },
-    { "type": "text", "id": "label_rx", "label": "Tab — Prescription", "default": "Prescription Only" },
     { "type": "text", "id": "label_s3", "label": "Tab — S3", "default": "S3 Pharmacist Only" },
     { "type": "text", "id": "label_otc", "label": "Tab — OTC", "default": "Over the Counter" },
-    { "type": "textarea", "id": "note_rx", "label": "Note — Prescription", "default": "Requires a valid script from your prescriber before we dispense." },
     { "type": "textarea", "id": "note_s3", "label": "Note — S3", "default": "No script needed — a pharmacist speaks with you before supply." },
     { "type": "textarea", "id": "note_otc", "label": "Note — OTC", "default": "Available to order directly, no consultation required." },
-    { "type": "collection", "id": "collection_rx", "label": "Collection — Prescription Only" },
     { "type": "collection", "id": "collection_s3", "label": "Collection — S3 Pharmacist Only" },
     { "type": "collection", "id": "collection_otc", "label": "Collection — Over the Counter" },
     { "type": "text", "id": "sort_label", "label": "Sort label", "default": "Sort" },

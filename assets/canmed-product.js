@@ -96,27 +96,10 @@
       });
     });
 
-    // S3: require phone before submit
+    // S3 phone is optional — no block on submit
     var s3Phone = root.querySelector('[data-cm-s3-phone]');
     var s3Msg = root.querySelector('[data-cm-s3-msg]');
-    if (form && s3Phone) {
-      form.addEventListener('submit', function (e) {
-        var phone = (s3Phone.value || '').trim();
-        if (phone.length < 8) {
-          e.preventDefault();
-          if (s3Msg) {
-            s3Msg.hidden = false;
-            s3Msg.textContent = 'Please enter a phone number so a pharmacist can call you.';
-          }
-          s3Phone.focus();
-          return;
-        }
-        if (s3Msg) {
-          s3Msg.hidden = false;
-          s3Msg.textContent = 'Adding to order — a pharmacist will call you before supply.';
-        }
-      });
-    }
+    if (s3Msg) s3Msg.hidden = true;
 
     // OTC nearest store
     var postcodeInput = root.querySelector('[data-cm-postcode]');
