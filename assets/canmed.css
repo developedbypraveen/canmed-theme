@@ -1802,6 +1802,44 @@ body:has(.cm-hero) {
 .cm-product__pickup-meta { margin-top: 0.5rem; color: var(--cm-muted); }
 .cm-product__pickup[hidden] { display: none !important; }
 
+/* —— Product rail (cart / related — same cards as Shop) —— */
+.cm-product-rail {
+  padding-block: 2.5rem 4rem;
+  background: var(--cm-ivory);
+}
+.cm-product-rail__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.cm-product-rail__head .cm-display-m {
+  margin: 0;
+}
+.cm-product-rail__all {
+  color: var(--cm-amber) !important;
+  text-decoration: none !important;
+  white-space: nowrap;
+}
+.cm-product-rail__all:hover {
+  text-decoration: underline !important;
+}
+.cm-product-rail__grid {
+  margin-top: 0;
+}
+.cm-product-card-wrap {
+  height: 100%;
+  display: flex;
+}
+.cm-product-card-wrap .cm-shop-card {
+  width: 100%;
+}
+.product-grid__item .cm-product-card-wrap,
+.resource-list__item .cm-product-card-wrap {
+  width: 100%;
+}
+
 /* —— Shared product imagery (shop cards, Horizon cards, cart) —— */
 .product-card,
 .product-grid__card,

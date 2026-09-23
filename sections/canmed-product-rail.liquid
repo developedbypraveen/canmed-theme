@@ -1,0 +1,84 @@
+{% comment %}
+  CanMed product rail — same cards as Shop (canmed-shop-card).
+  Use on cart, homepage, etc. for related / featured products.
+{% endcomment %}
+
+{% liquid
+  assign source = section.settings.collection
+  if source == blank
+    assign source = collections.all
+  endif
+  assign limit = section.settings.limit | default: 4
+  assign shop_link = section.settings.shop_link | default: '/pages/shop'
+  assign skip_handles = 'prescription-submission'
+  assign shown = 0
+%}
+
+<section class="cm-product-rail" data-cm-product-rail {{ section.shopify_attributes }}>
+  <div class="cm-shell">
+    <header class="cm-product-rail__head">
+      {% if section.settings.heading != blank %}
+        <h2 class="cm-display-m">{{ section.settings.heading | escape }}</h2>
+      {% endif %}
+      {% if section.settings.view_all_label != blank %}
+        <a class="cm-mono-data cm-product-rail__all" href="{{ shop_link }}">
+          {{ section.settings.view_all_label | escape }}
+        </a>
+      {% endif %}
+    </header>
+
+    <div class="cm-shop__grid cm-product-rail__grid" data-cm-shop-grid>
+      {% if source != blank %}
+        {% for product in source.products limit: 24 %}
+          {% if shown >= limit %}
+            {% break %}
+          {% endif %}
+          {% if product.handle == skip_handles %}
+            {% continue %}
+          {% endif %}
+          {% if product.tags contains 'access-prescription' or product.type == 'Prescription Only' or product.type == 'Prescription Intake' %}
+            {% continue %}
+          {% endif %}
+          {% comment %} Skip items already in cart when possible {% endcomment %}
+          {% assign in_cart = false %}
+          {% for item in cart.items %}
+            {% if item.product_id == product.id %}
+              {% assign in_cart = true %}
+              {% break %}
+            {% endif %}
+          {% endfor %}
+          {% if in_cart %}
+            {% continue %}
+          {% endif %}
+
+          {% liquid
+            assign card_tier = 'otc'
+            if product.tags contains 'access-s3' or product.type == 'S3 Pharmacist Only'
+              assign card_tier = 's3'
+            elsif product.tags contains 'access-otc' or product.type == 'Over the Counter'
+              assign card_tier = 'otc'
+            endif
+            assign shown = shown | plus: 1
+          %}
+          {% render 'canmed-shop-card', product: product, media_tier: card_tier, index: shown %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CanMed — Product rail",
+  "tag": "section",
+  "class": "cm-section-product-rail",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "You may also like" },
+    { "type": "text", "id": "view_all_label", "label": "View all label", "default": "View all" },
+    { "type": "url", "id": "shop_link", "label": "View all link" },
+    { "type": "collection", "id": "collection", "label": "Collection (blank = all)" },
+    { "type": "range", "id": "limit", "label": "Products to show", "min": 2, "max": 12, "step": 1, "default": 4 }
+  ],
+  "presets": [{ "name": "CanMed — Product rail" }]
+}
+{% endschema %}
