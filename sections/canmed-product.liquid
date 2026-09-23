@@ -51,7 +51,7 @@
   <div class="cm-shell cm-product__grid">
     <div class="cm-product__media-col">
       <a class="cm-mono-data cm-product__back" href="{{ section.settings.shop_link | default: '/pages/shop' }}">← Shop</a>
-      <div class="cm-product__media cm-product__media--{{ tier }}">
+      <div class="cm-product__media cm-product__media--{{ tier }}{% if product.featured_media %} cm-product__media--photo{% endif %}">
         {% if product.featured_media %}
           {{
             product.featured_media
