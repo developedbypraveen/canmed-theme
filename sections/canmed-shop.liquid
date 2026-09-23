@@ -1,20 +1,26 @@
 {% comment %}
-  CanMed Shop — tier tabs (Prescription / S3 / OTC) matching Lovable /shop
-  Pulls products from the three smart collections created in Admin.
+  CanMed Shop — match Lovable /shop: hero + glass tier bar + gradient cards
 {% endcomment %}
 
 <section class="cm-shop" data-cm-shop {{ section.shopify_attributes }}>
-  <div class="cm-shell cm-shop__intro">
-    {% if section.settings.eyebrow != blank %}
-      <p class="cm-eyebrow">{{ section.settings.eyebrow | escape }}</p>
-    {% endif %}
-    {% if section.settings.heading != blank %}
-      <h1 class="cm-display-l">{{ section.settings.heading | escape }}</h1>
-    {% endif %}
-    {% if section.settings.lede != blank %}
-      <p class="cm-body-l cm-shop__lede">{{ section.settings.lede | escape }}</p>
-    {% endif %}
-  </div>
+  <header class="cm-shop__hero">
+    <div class="cm-shop__particles" aria-hidden="true">
+      {% for i in (1..20) %}
+        <span class="cm-shop__particle" style="--i: {{ i }};"></span>
+      {% endfor %}
+    </div>
+    <div class="cm-shell cm-shop__hero-inner">
+      {% if section.settings.eyebrow != blank %}
+        <p class="cm-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {% endif %}
+      {% if section.settings.heading != blank %}
+        <h1 class="cm-display-l">{{ section.settings.heading | escape }}</h1>
+      {% endif %}
+      {% if section.settings.lede != blank %}
+        <p class="cm-body-l cm-shop__lede">{{ section.settings.lede | escape }}</p>
+      {% endif %}
+    </div>
+  </header>
 
   {% liquid
     assign col_rx = section.settings.collection_rx
@@ -35,15 +41,15 @@
     <div class="cm-shell cm-shop__bar-inner">
       <div class="cm-shop__tabs" role="tablist" aria-label="{{ section.settings.tabs_label | default: 'Access tier' | escape }}">
         <button type="button" class="cm-shop__tab is-active" role="tab" aria-selected="true" data-cm-shop-tier="prescription">
-          <span class="cm-shop__tab-dot cm-shop__tab-dot--rx"></span>
+          <span class="cm-shop__tab-dot cm-shop__tab-dot--rx" aria-hidden="true"></span>
           {{ section.settings.label_rx | default: 'Prescription Only' | escape }}
         </button>
         <button type="button" class="cm-shop__tab" role="tab" aria-selected="false" data-cm-shop-tier="s3">
-          <span class="cm-shop__tab-dot cm-shop__tab-dot--s3"></span>
+          <span class="cm-shop__tab-dot cm-shop__tab-dot--s3" aria-hidden="true"></span>
           {{ section.settings.label_s3 | default: 'S3 Pharmacist Only' | escape }}
         </button>
         <button type="button" class="cm-shop__tab" role="tab" aria-selected="false" data-cm-shop-tier="otc">
-          <span class="cm-shop__tab-dot cm-shop__tab-dot--otc"></span>
+          <span class="cm-shop__tab-dot cm-shop__tab-dot--otc" aria-hidden="true"></span>
           {{ section.settings.label_otc | default: 'Over the Counter' | escape }}
         </button>
       </div>
@@ -52,7 +58,7 @@
         <select data-cm-shop-sort>
           <option value="manual">{{ section.settings.sort_popularity | default: 'Popularity' | escape }}</option>
           <option value="price-asc">{{ section.settings.sort_price | default: 'Price' | escape }}</option>
-          <option value="title-asc">{{ section.settings.sort_latest | default: 'Name' | escape }}</option>
+          <option value="latest">{{ section.settings.sort_latest | default: 'Latest' | escape }}</option>
         </select>
       </label>
     </div>
@@ -66,13 +72,17 @@
           when 'prescription'
             assign panel_col = col_rx
             assign panel_note = section.settings.note_rx | default: 'Requires a valid script from your prescriber before we dispense.'
+            assign media_tier = 'prescription'
           when 's3'
             assign panel_col = col_s3
             assign panel_note = section.settings.note_s3 | default: 'No script needed — a pharmacist speaks with you before supply.'
+            assign media_tier = 's3'
           else
             assign panel_col = col_otc
-            assign panel_note = section.settings.note_otc | default: 'Order online or check availability at your nearest CanMed dispensary.'
+            assign panel_note = section.settings.note_otc | default: 'Available to order directly, no consultation required.'
+            assign media_tier = 'otc'
         endcase
+        assign product_list = panel_col.products
       %}
       <div
         class="cm-shop__panel"
@@ -82,7 +92,7 @@
       >
         <p class="cm-mono-data cm-shop__note">{{ panel_note | escape }}</p>
 
-        {% if panel_col == blank or panel_col.products_count == 0 %}
+        {% if panel_col == blank or product_list.size == 0 %}
           <div class="cm-shop__empty">
             <h3 class="cm-display-m">{{ section.settings.empty_heading | default: 'Nothing in this tier yet.' | escape }}</h3>
             <p>{{ section.settings.empty_body | default: "Try another access tier, or tell us what you need and we'll quote a compound." | escape }}</p>
@@ -92,41 +102,34 @@
           </div>
         {% else %}
           <div class="cm-shop__grid" data-cm-shop-grid>
-            {% for product in panel_col.products %}
+            {% for product in product_list %}
               {% liquid
-                assign tier_key = tier
-                assign mf_tier = product.metafields.canmed.access_tier.value | default: product.metafields.canmed.access_tier
-                if mf_tier != blank
-                  assign tier_key = mf_tier
+                assign descriptor = product.metafields.canmed.descriptor.value | default: product.metafields.canmed.descriptor
+                if descriptor == blank
+                  assign descriptor = product.description | strip_html | truncate: 120
                 endif
-                assign descriptor = product.metafields.canmed.descriptor.value | default: product.metafields.canmed.descriptor | default: product.description | strip_html | truncate: 120
-                assign form_label = product.metafields.canmed.form.value | default: product.metafields.canmed.form | default: product.type
-                assign base_sku = product.metafields.canmed.base_sku.value | default: product.metafields.canmed.base_sku | default: product.selected_or_first_available_variant.sku
-                assign price_cents = product.price
+                assign form_label = product.metafields.canmed.form.value | default: product.metafields.canmed.form
+                if form_label == blank
+                  assign form_label = product.type
+                endif
+                assign base_sku = product.metafields.canmed.base_sku.value | default: product.metafields.canmed.base_sku
+                if base_sku == blank
+                  assign base_sku = product.selected_or_first_available_variant.sku
+                endif
+                assign variant_count = product.variants.size
               %}
               <a
                 class="cm-shop-card"
                 href="{{ product.url }}"
                 data-cm-shop-card
-                data-price="{{ price_cents }}"
+                data-price="{{ product.price }}"
                 data-title="{{ product.title | escape }}"
+                data-created="{{ product.created_at | date: '%s' }}"
+                style="--cm-shop-reveal: {{ forloop.index0 | times: 0.05 }}s;"
               >
-                <div class="cm-shop-card__media cm-shop-card__media--{{ tier_key }}">
-                  {% if product.featured_media %}
-                    {{
-                      product.featured_media
-                      | image_url: width: 900
-                      | image_tag:
-                        loading: 'lazy',
-                        widths: '400, 600, 900',
-                        sizes: '(min-width: 768px) 30vw, 100vw',
-                        class: 'cm-shop-card__img',
-                        alt: product.featured_media.alt | default: product.title
-                    }}
-                  {% else %}
-                    <span class="cm-mono-caption">{{ form_label | escape }}</span>
-                    <span class="cm-mono-data">{{ base_sku | escape }}</span>
-                  {% endif %}
+                <div class="cm-shop-card__media cm-shop-card__media--{{ media_tier }}">
+                  <span class="cm-mono-caption">{{ form_label | escape }}</span>
+                  <span class="cm-mono-data">{{ base_sku | escape }}</span>
                 </div>
                 <div class="cm-shop-card__body">
                   <h3 class="cm-shop-card__title">{{ product.title | escape }}</h3>
@@ -135,11 +138,16 @@
                   {% endif %}
                   <div class="cm-shop-card__meta">
                     <span class="cm-mono-data">{{ product.price | money }}</span>
-                    <span class="cm-mono-data cm-shop-card__muted">{{ product.variants.size }} {% if product.variants.size == 1 %}size{% else %}sizes{% endif %}</span>
+                    <span class="cm-mono-data cm-shop-card__muted">
+                      {{ variant_count }}
+                      {% if variant_count == 1 %}size{% else %}sizes{% endif %}
+                    </span>
                   </div>
                   <div class="cm-shop-card__variants">
-                    {% for variant in product.variants limit: 6 %}
-                      <span class="cm-shop-card__pill">{{ variant.title | escape }}</span>
+                    {% for variant in product.variants limit: 8 %}
+                      {% unless variant.title == 'Default Title' %}
+                        <span class="cm-shop-card__pill">{{ variant.title | escape }}</span>
+                      {% endunless %}
                     {% endfor %}
                   </div>
                 </div>
@@ -169,14 +177,14 @@
     { "type": "text", "id": "label_otc", "label": "Tab — OTC", "default": "Over the Counter" },
     { "type": "textarea", "id": "note_rx", "label": "Note — Prescription", "default": "Requires a valid script from your prescriber before we dispense." },
     { "type": "textarea", "id": "note_s3", "label": "Note — S3", "default": "No script needed — a pharmacist speaks with you before supply." },
-    { "type": "textarea", "id": "note_otc", "label": "Note — OTC", "default": "Order online or check availability at your nearest CanMed dispensary." },
+    { "type": "textarea", "id": "note_otc", "label": "Note — OTC", "default": "Available to order directly, no consultation required." },
     { "type": "collection", "id": "collection_rx", "label": "Collection — Prescription Only" },
     { "type": "collection", "id": "collection_s3", "label": "Collection — S3 Pharmacist Only" },
     { "type": "collection", "id": "collection_otc", "label": "Collection — Over the Counter" },
     { "type": "text", "id": "sort_label", "label": "Sort label", "default": "Sort" },
     { "type": "text", "id": "sort_popularity", "label": "Sort option — popularity", "default": "Popularity" },
     { "type": "text", "id": "sort_price", "label": "Sort option — price", "default": "Price" },
-    { "type": "text", "id": "sort_latest", "label": "Sort option — name", "default": "Name" },
+    { "type": "text", "id": "sort_latest", "label": "Sort option — latest", "default": "Latest" },
     { "type": "text", "id": "empty_heading", "label": "Empty heading", "default": "Nothing in this tier yet." },
     { "type": "textarea", "id": "empty_body", "label": "Empty body", "default": "Try another access tier, or tell us what you need and we'll quote a compound." },
     { "type": "text", "id": "empty_cta", "label": "Empty CTA", "default": "Ask a pharmacist →" },

@@ -5,6 +5,17 @@
     var tabs = root.querySelectorAll('[data-cm-shop-tier]');
     var panels = root.querySelectorAll('[data-cm-shop-panel]');
     var sort = root.querySelector('[data-cm-shop-sort]');
+    var originalOrder = new WeakMap();
+
+    panels.forEach(function (panel) {
+      var grid = panel.querySelector('[data-cm-shop-grid]');
+      if (grid) {
+        originalOrder.set(
+          grid,
+          Array.prototype.slice.call(grid.querySelectorAll('[data-cm-shop-card]')),
+        );
+      }
+    });
 
     function activate(tier) {
       tabs.forEach(function (t) {
@@ -25,14 +36,21 @@
         var grid = panel.querySelector('[data-cm-shop-grid]');
         if (!grid) return;
         var cards = Array.prototype.slice.call(grid.querySelectorAll('[data-cm-shop-card]'));
+        if (mode === 'manual') {
+          var orig = originalOrder.get(grid) || cards;
+          orig.forEach(function (c) {
+            if (c.parentNode === grid || grid.contains(c)) grid.appendChild(c);
+          });
+          return;
+        }
         cards.sort(function (a, b) {
           if (mode === 'price-asc') {
             return (Number(a.dataset.price) || 0) - (Number(b.dataset.price) || 0);
           }
-          if (mode === 'title-asc') {
-            return (a.dataset.title || '').localeCompare(b.dataset.title || '');
+          if (mode === 'latest') {
+            return (Number(b.dataset.created) || 0) - (Number(a.dataset.created) || 0);
           }
-          return 0;
+          return (a.dataset.title || '').localeCompare(b.dataset.title || '');
         });
         cards.forEach(function (c) {
           grid.appendChild(c);
