@@ -1,0 +1,298 @@
+{% comment %}
+  CanMed product detail — access-tier CTAs
+  prescription → Send script | s3 → phone capture | otc → nearest store + add to cart
+{% endcomment %}
+
+{% liquid
+  assign product = product
+  assign tier = product.metafields.canmed.access_tier.value | default: product.metafields.canmed.access_tier
+  if tier == blank
+    if product.tags contains 'access-prescription' or product.type == 'Prescription Only'
+      assign tier = 'prescription'
+    elsif product.tags contains 'access-s3' or product.type == 'S3 Pharmacist Only'
+      assign tier = 's3'
+    elsif product.tags contains 'access-otc' or product.type == 'Over the Counter'
+      assign tier = 'otc'
+    else
+      assign tier = 'otc'
+    endif
+  endif
+  if tier == 's4'
+    assign tier = 'prescription'
+  endif
+
+  assign descriptor = product.metafields.canmed.descriptor.value | default: product.metafields.canmed.descriptor
+  assign form_label = product.metafields.canmed.form.value | default: product.metafields.canmed.form | default: product.type
+  assign base_label = product.metafields.canmed.base.value | default: product.metafields.canmed.base
+  assign access_note = product.metafields.canmed.access_note.value | default: product.metafields.canmed.access_note
+  assign base_sku = product.metafields.canmed.base_sku.value | default: product.metafields.canmed.base_sku | default: product.selected_or_first_available_variant.sku
+  assign current_variant = product.selected_or_first_available_variant
+
+  case tier
+    when 'prescription'
+      assign tier_label = section.settings.label_rx | default: 'Prescription Only'
+      assign tier_note = access_note | default: section.settings.note_rx | default: 'Requires a valid script from your prescriber before we dispense.'
+    when 's3'
+      assign tier_label = section.settings.label_s3 | default: 'S3 Pharmacist Only'
+      assign tier_note = access_note | default: section.settings.note_s3 | default: 'No script needed — a pharmacist speaks with you before supply.'
+    else
+      assign tier_label = section.settings.label_otc | default: 'Over the Counter'
+      assign tier_note = access_note | default: section.settings.note_otc | default: 'Order online or collect from your nearest CanMed dispensary.'
+  endcase
+%}
+
+<section
+  class="cm-product"
+  data-cm-product
+  data-cm-tier="{{ tier }}"
+  data-product-title="{{ product.title | escape }}"
+  {{ section.shopify_attributes }}
+>
+  <div class="cm-shell cm-product__grid">
+    <div class="cm-product__media-col">
+      <a class="cm-mono-data cm-product__back" href="{{ section.settings.shop_link | default: '/pages/shop' }}">← Shop</a>
+      <div class="cm-product__media cm-product__media--{{ tier }}">
+        {% if product.featured_media %}
+          {{
+            product.featured_media
+            | image_url: width: 1400
+            | image_tag:
+              loading: 'eager',
+              widths: '600, 900, 1200, 1400',
+              sizes: '(min-width: 768px) 40vw, 100vw',
+              class: 'cm-product__img',
+              alt: product.featured_media.alt | default: product.title
+          }}
+        {% else %}
+          <span class="cm-mono-caption">{{ form_label | escape }}</span>
+          <span class="cm-mono-data">{{ base_sku | escape }}</span>
+        {% endif %}
+      </div>
+      {% if product.variants.size > 1 %}
+        <div class="cm-product__variant-thumbs">
+          {% for variant in product.variants %}
+            <div class="cm-product__variant-thumb cm-mono-data">{{ variant.title | escape }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="cm-product__info">
+      <p class="cm-eyebrow">{{ tier_label | escape }}</p>
+      <h1 class="cm-display-l">{{ product.title | escape }}</h1>
+      {% if product.description != blank %}
+        <div class="cm-body-l cm-product__desc">{{ product.description }}</div>
+      {% elsif descriptor != blank %}
+        <p class="cm-body-l cm-product__desc">{{ descriptor | escape }}</p>
+      {% endif %}
+
+      <dl class="cm-product__facts cm-mono-data">
+        <div>
+          <dt>Price</dt>
+          <dd data-cm-product-price>{{ current_variant.price | money }}</dd>
+        </div>
+        {% if base_label != blank %}
+          <div>
+            <dt>Base</dt>
+            <dd>{{ base_label | escape }}</dd>
+          </div>
+        {% endif %}
+        <div>
+          <dt>SKU</dt>
+          <dd data-cm-product-sku>{{ current_variant.sku | default: base_sku | escape }}</dd>
+        </div>
+      </dl>
+
+      {% form 'product', product, data-cm-product-form: '' %}
+        <input type="hidden" name="id" value="{{ current_variant.id }}" data-cm-variant-id>
+
+        {% unless product.has_only_default_variant %}
+          <fieldset class="cm-product__options">
+            <legend class="cm-mono-caption">{{ section.settings.variant_legend | default: 'Size / strength' | escape }}</legend>
+            <div class="cm-product__option-pills">
+              {% for variant in product.variants %}
+                <button
+                  type="button"
+                  class="cm-product__option-pill{% if variant == current_variant %} is-active{% endif %}"
+                  data-cm-variant-btn
+                  data-variant-id="{{ variant.id }}"
+                  data-variant-price="{{ variant.price | money }}"
+                  data-variant-sku="{{ variant.sku | escape }}"
+                  data-variant-available="{{ variant.available }}"
+                  {% unless variant.available %}disabled{% endunless %}
+                >
+                  {{ variant.title | escape }}
+                </button>
+              {% endfor %}
+            </div>
+          </fieldset>
+        {% endunless %}
+
+        <p class="cm-product__note cm-mono-data">{{ tier_note | escape }}</p>
+
+        {% if tier == 'prescription' %}
+          <div class="cm-product__actions">
+            <a class="cm-btn cm-btn--accent" href="{{ section.settings.prescriptions_link | default: '/pages/prescriptions' }}">
+              {{ section.settings.rx_cta | default: 'Send your script' | escape }}
+            </a>
+            <a class="cm-btn cm-btn--secondary" href="{{ section.settings.contact_link | default: '/pages/contact' }}">
+              {{ section.settings.ask_cta | default: 'Ask a pharmacist' | escape }}
+            </a>
+          </div>
+
+        {% elsif tier == 's3' %}
+          <div class="cm-product__s3" data-cm-s3>
+            <label class="cm-mono-caption" for="cm-s3-phone-{{ section.id }}">
+              {{ section.settings.s3_phone_label | default: 'Your phone number' | escape }}
+            </label>
+            <div class="cm-product__s3-row">
+              <input
+                id="cm-s3-phone-{{ section.id }}"
+                class="cm-product__input"
+                type="tel"
+                name="properties[Phone]"
+                autocomplete="tel"
+                required
+                placeholder="{{ section.settings.s3_phone_placeholder | default: '04xx xxx xxx' | escape }}"
+                data-cm-s3-phone
+              >
+              <button type="submit" class="cm-btn cm-btn--accent" data-cm-s3-submit>
+                {{ section.settings.s3_cta | default: 'Request pharmacist call' | escape }}
+              </button>
+            </div>
+            <p class="cm-mono-data cm-product__s3-hint">
+              {{ section.settings.s3_hint | default: 'A pharmacist will call before supply. You can also ring us directly:' | escape }}
+              <a href="{{ section.settings.s3_phone_link | default: 'tel:+61393762140' }}">{{ section.settings.s3_phone_display | default: '(03) 9376 2140' | escape }}</a>
+            </p>
+            <p class="cm-mono-data cm-product__s3-msg" data-cm-s3-msg hidden></p>
+          </div>
+          <div class="cm-product__actions">
+            <a class="cm-btn cm-btn--secondary" href="{{ section.settings.contact_link | default: '/pages/contact' }}">
+              {{ section.settings.ask_cta | default: 'Ask a pharmacist' | escape }}
+            </a>
+          </div>
+
+        {% else %}
+          <div class="cm-product__otc" data-cm-otc>
+            <div class="cm-product__nearest" data-cm-nearest>
+              <p class="cm-mono-caption">{{ section.settings.nearest_label | default: 'Find your nearest dispensary' | escape }}</p>
+              <div class="cm-product__s3-row">
+                <input
+                  class="cm-product__input"
+                  type="text"
+                  inputmode="numeric"
+                  pattern="[0-9]{4}"
+                  maxlength="4"
+                  placeholder="{{ section.settings.postcode_placeholder | default: 'Postcode' | escape }}"
+                  aria-label="Australian postcode"
+                  data-cm-postcode
+                >
+                <button type="button" class="cm-btn cm-btn--secondary" data-cm-nearest-btn>
+                  {{ section.settings.nearest_cta | default: 'Check availability' | escape }}
+                </button>
+              </div>
+              <div class="cm-product__nearest-result" data-cm-nearest-result hidden></div>
+            </div>
+
+            <div class="cm-product__actions cm-product__actions--otc">
+              <button type="submit" class="cm-btn cm-btn--accent" data-cm-add-cart {% unless current_variant.available %}disabled{% endunless %}>
+                {{ section.settings.order_cta | default: 'Add to order' | escape }}
+              </button>
+              <a class="cm-btn cm-btn--secondary" href="{{ section.settings.contact_link | default: '/pages/contact' }}">
+                {{ section.settings.ask_cta | default: 'Ask a pharmacist' | escape }}
+              </a>
+            </div>
+          </div>
+        {% endif %}
+      {% endform %}
+    </div>
+  </div>
+
+  <script type="application/json" data-cm-stores>
+    [
+      {
+        "id": "kensington",
+        "name": {{ section.settings.store_1_name | default: 'Kensington' | json }},
+        "address": {{ section.settings.store_1_address | default: '412 Macaulay Road, Kensington VIC 3031' | json }},
+        "phone": {{ section.settings.store_1_phone | default: '(03) 9376 2140' | json }},
+        "phoneHref": {{ section.settings.store_1_phone_link | default: 'tel:+61393762140' | json }},
+        "lat": {{ section.settings.store_1_lat | default: -37.7942 }},
+        "lng": {{ section.settings.store_1_lng | default: 144.9275 }}
+      },
+      {
+        "id": "hawthorn",
+        "name": {{ section.settings.store_2_name | default: 'Hawthorn' | json }},
+        "address": {{ section.settings.store_2_address | default: '88 Burwood Road, Hawthorn VIC 3122' | json }},
+        "phone": {{ section.settings.store_2_phone | default: '(03) 9818 7752' | json }},
+        "phoneHref": {{ section.settings.store_2_phone_link | default: 'tel:+61398187752' | json }},
+        "lat": {{ section.settings.store_2_lat | default: -37.8221 }},
+        "lng": {{ section.settings.store_2_lng | default: 145.0358 }}
+      },
+      {
+        "id": "geelong",
+        "name": {{ section.settings.store_3_name | default: 'Geelong' | json }},
+        "address": {{ section.settings.store_3_address | default: '27 Malop Street, Geelong VIC 3220' | json }},
+        "phone": {{ section.settings.store_3_phone | default: '(03) 5229 4418' | json }},
+        "phoneHref": {{ section.settings.store_3_phone_link | default: 'tel:+61352294418' | json }},
+        "lat": {{ section.settings.store_3_lat | default: -38.1471 }},
+        "lng": {{ section.settings.store_3_lng | default: 144.3607 }}
+      }
+    ]
+  </script>
+</section>
+
+<script src="{{ 'canmed-product.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "CanMed — Product",
+  "tag": "section",
+  "class": "cm-section-product",
+  "settings": [
+    { "type": "url", "id": "shop_link", "label": "Back to shop link" },
+    { "type": "url", "id": "prescriptions_link", "label": "Prescriptions page" },
+    { "type": "url", "id": "contact_link", "label": "Contact page" },
+    { "type": "text", "id": "label_rx", "label": "Eyebrow — Prescription", "default": "Prescription Only" },
+    { "type": "text", "id": "label_s3", "label": "Eyebrow — S3", "default": "S3 Pharmacist Only" },
+    { "type": "text", "id": "label_otc", "label": "Eyebrow — OTC", "default": "Over the Counter" },
+    { "type": "textarea", "id": "note_rx", "label": "Fallback note — Prescription", "default": "Requires a valid script from your prescriber before we dispense." },
+    { "type": "textarea", "id": "note_s3", "label": "Fallback note — S3", "default": "No script needed — a pharmacist speaks with you before supply." },
+    { "type": "textarea", "id": "note_otc", "label": "Fallback note — OTC", "default": "Order online or collect from your nearest CanMed dispensary." },
+    { "type": "text", "id": "variant_legend", "label": "Variant legend", "default": "Size / strength" },
+    { "type": "text", "id": "rx_cta", "label": "Prescription CTA", "default": "Send your script" },
+    { "type": "text", "id": "ask_cta", "label": "Ask pharmacist CTA", "default": "Ask a pharmacist" },
+    { "type": "text", "id": "s3_phone_label", "label": "S3 phone label", "default": "Your phone number" },
+    { "type": "text", "id": "s3_phone_placeholder", "label": "S3 phone placeholder", "default": "04xx xxx xxx" },
+    { "type": "text", "id": "s3_cta", "label": "S3 CTA", "default": "Request pharmacist call" },
+    { "type": "textarea", "id": "s3_hint", "label": "S3 hint", "default": "A pharmacist will call before supply. You can also ring us directly:" },
+    { "type": "text", "id": "s3_phone_display", "label": "S3 display phone", "default": "(03) 9376 2140" },
+    { "type": "text", "id": "s3_phone_link", "label": "S3 phone tel link", "default": "tel:+61393762140" },
+    { "type": "text", "id": "nearest_label", "label": "Nearest store label", "default": "Find your nearest dispensary" },
+    { "type": "text", "id": "postcode_placeholder", "label": "Postcode placeholder", "default": "Postcode" },
+    { "type": "text", "id": "nearest_cta", "label": "Check availability CTA", "default": "Check availability" },
+    { "type": "text", "id": "order_cta", "label": "Add to order CTA", "default": "Add to order" },
+    { "type": "header", "content": "Store 1 — Kensington" },
+    { "type": "text", "id": "store_1_name", "label": "Name", "default": "Kensington" },
+    { "type": "text", "id": "store_1_address", "label": "Address", "default": "412 Macaulay Road, Kensington VIC 3031" },
+    { "type": "text", "id": "store_1_phone", "label": "Phone", "default": "(03) 9376 2140" },
+    { "type": "text", "id": "store_1_phone_link", "label": "Phone link", "default": "tel:+61393762140" },
+    { "type": "text", "id": "store_1_lat", "label": "Latitude", "default": "-37.7942" },
+    { "type": "text", "id": "store_1_lng", "label": "Longitude", "default": "144.9275" },
+    { "type": "header", "content": "Store 2 — Hawthorn" },
+    { "type": "text", "id": "store_2_name", "label": "Name", "default": "Hawthorn" },
+    { "type": "text", "id": "store_2_address", "label": "Address", "default": "88 Burwood Road, Hawthorn VIC 3122" },
+    { "type": "text", "id": "store_2_phone", "label": "Phone", "default": "(03) 9818 7752" },
+    { "type": "text", "id": "store_2_phone_link", "label": "Phone link", "default": "tel:+61398187752" },
+    { "type": "text", "id": "store_2_lat", "label": "Latitude", "default": "-37.8221" },
+    { "type": "text", "id": "store_2_lng", "label": "Longitude", "default": "145.0358" },
+    { "type": "header", "content": "Store 3 — Geelong" },
+    { "type": "text", "id": "store_3_name", "label": "Name", "default": "Geelong" },
+    { "type": "text", "id": "store_3_address", "label": "Address", "default": "27 Malop Street, Geelong VIC 3220" },
+    { "type": "text", "id": "store_3_phone", "label": "Phone", "default": "(03) 5229 4418" },
+    { "type": "text", "id": "store_3_phone_link", "label": "Phone link", "default": "tel:+61352294418" },
+    { "type": "text", "id": "store_3_lat", "label": "Latitude", "default": "-38.1471" },
+    { "type": "text", "id": "store_3_lng", "label": "Longitude", "default": "144.3607" }
+  ],
+  "presets": [{ "name": "CanMed — Product" }]
+}
+{% endschema %}

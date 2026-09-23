@@ -46,7 +46,7 @@
           </a>
         {% endfor %}
       {% else %}
-        <a class="cm-header__link" href="{{ routes.all_products_collection_url }}">Shop</a>
+        <a class="cm-header__link" href="{{ section.settings.link_shop | default: '/pages/shop' }}">Shop</a>
         <a class="cm-header__link" href="{{ section.settings.link_prescriptions | default: '/pages/prescriptions' }}">Prescriptions</a>
         <a class="cm-header__link" href="{{ section.settings.link_patients | default: '/pages/patients' }}">For Patients</a>
         <a class="cm-header__link" href="{{ section.settings.link_professionals | default: '/pages/professionals' }}">For Professionals</a>
@@ -100,7 +100,7 @@
           <a href="{{ link.url }}" class="cm-header__drawer-link">{{ link.title | escape }}</a>
         {% endfor %}
       {% else %}
-        <a class="cm-header__drawer-link" href="{{ routes.all_products_collection_url }}">Shop</a>
+        <a class="cm-header__drawer-link" href="{{ section.settings.link_shop | default: '/pages/shop' }}">Shop</a>
         <a class="cm-header__drawer-link" href="{{ section.settings.link_prescriptions | default: '/pages/prescriptions' }}">Prescriptions</a>
         <a class="cm-header__drawer-link" href="{{ section.settings.link_patients | default: '/pages/patients' }}">For Patients</a>
         <a class="cm-header__drawer-link" href="{{ section.settings.link_professionals | default: '/pages/professionals' }}">For Professionals</a>
@@ -190,6 +190,7 @@
       "type": "header",
       "content": "Fallback nav links (when no menu selected)"
     },
+    { "type": "url", "id": "link_shop", "label": "Shop" },
     { "type": "url", "id": "link_prescriptions", "label": "Prescriptions" },
     { "type": "url", "id": "link_patients", "label": "For Patients" },
     { "type": "url", "id": "link_professionals", "label": "For Professionals" },
