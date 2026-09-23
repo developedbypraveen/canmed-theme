@@ -1,0 +1,98 @@
+{
+  "sections": {
+    "prescriptions": {
+      "type": "canmed-prescriptions",
+      "blocks": {
+        "kensington": {
+          "type": "location",
+          "settings": {
+            "id": "kensington",
+            "name": "Kensington",
+            "address": "412 Macaulay Road, Kensington VIC 3031",
+            "phone": "(03) 9376 2140",
+            "pharmacist": "Priya Raman"
+          }
+        },
+        "hawthorn": {
+          "type": "location",
+          "settings": {
+            "id": "hawthorn",
+            "name": "Hawthorn",
+            "address": "88 Burwood Road, Hawthorn VIC 3122",
+            "phone": "(03) 9818 7752",
+            "pharmacist": "Daniel Okoye"
+          }
+        },
+        "geelong": {
+          "type": "location",
+          "settings": {
+            "id": "geelong",
+            "name": "Geelong",
+            "address": "27 Malop Street, Geelong VIC 3220",
+            "phone": "(03) 5229 4418",
+            "pharmacist": "Alice Whitmore"
+          }
+        },
+        "paediatric": {
+          "type": "rx_type",
+          "settings": {
+            "id": "paediatric",
+            "label": "Paediatric",
+            "note": "Child-scaled doses and flavours"
+          }
+        },
+        "geriatric": {
+          "type": "rx_type",
+          "settings": {
+            "id": "geriatric",
+            "label": "Geriatric",
+            "note": "Swallowing and polypharmacy support"
+          }
+        },
+        "veterinary": {
+          "type": "rx_type",
+          "settings": {
+            "id": "veterinary",
+            "label": "Veterinary",
+            "note": "Species-specific formulations"
+          }
+        },
+        "phytocannabinoid": {
+          "type": "rx_type",
+          "settings": {
+            "id": "phytocannabinoid",
+            "label": "Phytocannabinoid",
+            "note": "Approved prescriptions only"
+          }
+        },
+        "other": {
+          "type": "rx_type",
+          "settings": {
+            "id": "other",
+            "label": "Something else",
+            "note": "Tell us and we'll route it"
+          }
+        }
+      },
+      "block_order": [
+        "kensington",
+        "hawthorn",
+        "geelong",
+        "paediatric",
+        "geriatric",
+        "veterinary",
+        "phytocannabinoid",
+        "other"
+      ],
+      "settings": {
+        "eyebrow": "Start a prescription",
+        "heading": "We build your formulation as you go.",
+        "intake_product": "prescription-submission",
+        "intake_variant_id": "50665717465320",
+        "fallback_email": "scripts@canmed.com.au",
+        "shop_link": "/pages/shop"
+      }
+    }
+  },
+  "order": ["prescriptions"]
+}

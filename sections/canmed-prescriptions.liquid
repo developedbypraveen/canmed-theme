@@ -1,0 +1,252 @@
+{% comment %}
+  CanMed Prescriptions — 4-step intake → cart/order with location + rx properties
+{% endcomment %}
+
+{% liquid
+  assign intake = all_products[section.settings.intake_product]
+  if intake == blank
+    assign intake = all_products['prescription-submission']
+  endif
+  assign variant_id = section.settings.intake_variant_id | default: intake.selected_or_first_available_variant.id
+%}
+
+<section
+  class="cm-rx"
+  data-cm-rx
+  data-variant-id="{{ variant_id }}"
+  data-fallback-email="{{ section.settings.fallback_email | default: 'scripts@canmed.com.au' | escape }}"
+  {{ section.shopify_attributes }}
+>
+  <div class="cm-shell cm-rx__grid" data-cm-rx-wizard>
+    <aside class="cm-rx__aside">
+      {% if section.settings.eyebrow != blank %}
+        <p class="cm-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {% endif %}
+      <h1 class="cm-display-m">{{ section.settings.heading | default: 'We build your formulation as you go.' | escape }}</h1>
+
+      <div class="cm-rx__progress">
+        <div class="cm-rx__vessel" aria-hidden="true" data-cm-rx-vessel>
+          <span class="cm-rx__vessel-fill" data-cm-rx-fill style="--cm-rx-fill: 8%"></span>
+        </div>
+        <ol class="cm-rx__steps cm-mono-data" data-cm-rx-steps>
+          <li class="is-current" data-step-label="0"><span></span>01 · Your details</li>
+          <li data-step-label="1"><span></span>02 · Delivery + dispensary</li>
+          <li data-step-label="2"><span></span>03 · Prescription type</li>
+          <li data-step-label="3"><span></span>04 · Notes + upload</li>
+        </ol>
+      </div>
+
+      <p class="cm-rx__fallback cm-mono-data">
+        {{ section.settings.fallback_copy | default: 'Prefer email? Send your script to' | escape }}
+        <a href="mailto:{{ section.settings.fallback_email | default: 'scripts@canmed.com.au' }}">{{ section.settings.fallback_email | default: 'scripts@canmed.com.au' }}</a>
+        {{ section.settings.fallback_suffix | default: 'and name your dispensary in the subject line.' | escape }}
+      </p>
+    </aside>
+
+    <div class="cm-rx__main">
+      <div class="cm-rx__card" data-cm-rx-card>
+        <p class="cm-mono-caption cm-rx__step-caption" data-cm-rx-caption>Step 01 / 04 — Your details</p>
+
+        <!-- Step 0 -->
+        <div class="cm-rx__step" data-cm-rx-step="0">
+          <div class="cm-rx__fields">
+            <label class="cm-rx__field">
+              <span class="cm-mono-caption">Full name</span>
+              <input class="cm-product__input" type="text" name="name" autocomplete="name" data-cm-rx-name placeholder="Jordan Alvarez">
+              <span class="cm-rx__error cm-mono-data" data-err="name" hidden></span>
+            </label>
+            <label class="cm-rx__field">
+              <span class="cm-mono-caption">Date of birth</span>
+              <input class="cm-product__input" type="date" name="dob" data-cm-rx-dob>
+              <span class="cm-rx__error cm-mono-data" data-err="dob" hidden></span>
+            </label>
+            <label class="cm-rx__field">
+              <span class="cm-mono-caption">Email</span>
+              <input class="cm-product__input" type="email" name="email" autocomplete="email" data-cm-rx-email placeholder="you@example.com">
+              <span class="cm-rx__error cm-mono-data" data-err="email" hidden></span>
+            </label>
+            <label class="cm-rx__field">
+              <span class="cm-mono-caption">Phone</span>
+              <input class="cm-product__input" type="tel" name="phone" autocomplete="tel" data-cm-rx-phone placeholder="04XX XXX XXX">
+              <span class="cm-rx__error cm-mono-data" data-err="phone" hidden></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="cm-rx__step" data-cm-rx-step="1" hidden>
+          <p class="cm-mono-caption">How you'll receive it</p>
+          <div class="cm-rx__pills" role="group" aria-label="Fulfilment method">
+            <button type="button" class="cm-loc-pill is-active" data-cm-rx-method="delivery">Courier delivery</button>
+            <button type="button" class="cm-loc-pill" data-cm-rx-method="pickup">Collect in store</button>
+          </div>
+
+          <p class="cm-mono-caption" style="margin-top:1.5rem;">Dispensary</p>
+          <div class="cm-loc-pills" role="radiogroup" aria-label="Dispensary" data-cm-rx-locations>
+            {% for block in section.blocks %}
+              {% if block.type == 'location' %}
+                <button
+                  type="button"
+                  class="cm-loc-pill{% if forloop.first %} is-active{% endif %}"
+                  role="radio"
+                  aria-checked="{% if forloop.first %}true{% else %}false{% endif %}"
+                  data-cm-rx-location="{{ block.settings.id | default: block.settings.name | handleize }}"
+                  data-pharmacist="{{ block.settings.pharmacist | escape }}"
+                  data-address="{{ block.settings.address | escape }}"
+                  data-phone="{{ block.settings.phone | escape }}"
+                  {{ block.shopify_attributes }}
+                >
+                  {{ block.settings.name | escape }}
+                </button>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <p class="cm-mono-data cm-rx__loc-meta" data-cm-rx-loc-meta></p>
+
+          <div class="cm-rx__fields cm-rx__fields--delivery" data-cm-rx-delivery>
+            <label class="cm-rx__field cm-rx__field--full">
+              <span class="cm-mono-caption">Delivery address</span>
+              <input class="cm-product__input" type="text" data-cm-rx-address placeholder="Unit 4, 21 Rathdowne Street, Carlton VIC 3053">
+              <span class="cm-rx__error cm-mono-data" data-err="address" hidden></span>
+            </label>
+            <label class="cm-rx__field">
+              <span class="cm-mono-caption">State</span>
+              <select class="cm-product__input" data-cm-rx-state>
+                <option value="">Select state</option>
+                <option value="VIC">VIC</option>
+                <option value="NSW">NSW</option>
+                <option value="QLD">QLD</option>
+                <option value="SA">SA</option>
+                <option value="WA">WA</option>
+                <option value="TAS">TAS</option>
+                <option value="NT">NT</option>
+                <option value="ACT">ACT</option>
+              </select>
+              <span class="cm-rx__error cm-mono-data" data-err="state" hidden></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="cm-rx__step" data-cm-rx-step="2" hidden>
+          <div class="cm-rx__types" data-cm-rx-types>
+            {% assign types = section.blocks | where: 'type', 'rx_type' %}
+            {% if types.size == 0 %}
+              {% assign default_types = 'paediatric|Paediatric|Child-scaled doses and flavours,geriatric|Geriatric|Swallowing and polypharmacy support,veterinary|Veterinary|Species-specific formulations,phytocannabinoid|Phytocannabinoid|Approved prescriptions only,other|Something else|Tell us and we will route it' | split: ',' %}
+              {% for t in default_types %}
+                {% assign parts = t | split: '|' %}
+                <button type="button" class="cm-rx__type" data-cm-rx-type="{{ parts[0] }}">
+                  <strong>{{ parts[1] }}</strong>
+                  <span class="cm-mono-data">{{ parts[2] }}</span>
+                </button>
+              {% endfor %}
+            {% else %}
+              {% for block in types %}
+                <button type="button" class="cm-rx__type" data-cm-rx-type="{{ block.settings.id | escape }}" {{ block.shopify_attributes }}>
+                  <strong>{{ block.settings.label | escape }}</strong>
+                  <span class="cm-mono-data">{{ block.settings.note | escape }}</span>
+                </button>
+              {% endfor %}
+            {% endif %}
+          </div>
+          <span class="cm-rx__error cm-mono-data" data-err="rxType" hidden></span>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="cm-rx__step" data-cm-rx-step="3" hidden>
+          <label class="cm-rx__field cm-rx__field--full">
+            <span class="cm-mono-caption">Notes for the pharmacist</span>
+            <textarea class="cm-product__input cm-rx__textarea" rows="3" data-cm-rx-notes placeholder="Allergies, flavour preference, timing, animal species/weight…"></textarea>
+          </label>
+
+          <p class="cm-mono-caption" style="margin-top:1.5rem;">Script upload</p>
+          <p class="cm-mono-data" style="color:var(--cm-muted);">JPG, PNG, HEIC or PDF · up to 10 MB · both sides if it's a paper script</p>
+          <div class="cm-rx__drop" data-cm-rx-drop>
+            <p>Drop your script here, or <button type="button" class="cm-rx__choose" data-cm-rx-choose>choose a file</button></p>
+            <input type="file" class="cm-rx__file-input" accept="image/jpeg,image/png,image/heic,image/heif,application/pdf" data-cm-rx-file hidden>
+            <p class="cm-mono-data cm-rx__file-name" data-cm-rx-file-name hidden></p>
+          </div>
+          <span class="cm-rx__error cm-mono-data" data-err="file" hidden></span>
+          <p class="cm-mono-data" style="margin-top:0.75rem;color:var(--cm-muted);">
+            {{ section.settings.file_note | default: 'Your script file name is attached to the order for the pharmacist. If upload fails, email the file with your order number.' | escape }}
+          </p>
+        </div>
+
+        <div class="cm-rx__nav">
+          <button type="button" class="cm-mono-data cm-rx__back" data-cm-rx-back disabled>← Back</button>
+          <button type="button" class="cm-btn cm-btn--accent" data-cm-rx-next>Continue</button>
+        </div>
+        <p class="cm-rx__submit-error cm-mono-data" data-cm-rx-submit-error hidden></p>
+      </div>
+
+      <div class="cm-rx__success" data-cm-rx-success hidden>
+        <div class="cm-rx__vessel cm-rx__vessel--lg" aria-hidden="true"><span class="cm-rx__vessel-fill" style="--cm-rx-fill:100%"></span></div>
+        <h2 class="cm-display-l">Your script is with a pharmacist.</h2>
+        <p class="cm-body-l" data-cm-rx-success-copy></p>
+        <p class="cm-mono-data" data-cm-rx-ref></p>
+        <div class="cm-btn-row" style="justify-content:center;margin-top:2rem;">
+          <a class="cm-btn cm-btn--accent" href="{{ routes.account_url }}">My Prescriptions</a>
+          <a class="cm-btn cm-btn--secondary" href="{{ section.settings.shop_link | default: '/pages/shop' }}">Back to shop</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'canmed-prescriptions.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "CanMed — Prescriptions",
+  "tag": "section",
+  "class": "cm-section-prescriptions",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Start a prescription" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "We build your formulation as you go." },
+    { "type": "product", "id": "intake_product", "label": "Intake product", "info": "Use the hidden “Prescription submission” product ($0)." },
+    { "type": "text", "id": "intake_variant_id", "label": "Intake variant ID (optional override)" },
+    { "type": "text", "id": "fallback_email", "label": "Fallback email", "default": "scripts@canmed.com.au" },
+    { "type": "text", "id": "fallback_copy", "label": "Fallback intro", "default": "Prefer email? Send your script to" },
+    { "type": "text", "id": "fallback_suffix", "label": "Fallback suffix", "default": "and name your dispensary in the subject line." },
+    { "type": "textarea", "id": "file_note", "label": "File note", "default": "Your script file name is attached to the order for the pharmacist. If upload fails, email the file with your order number." },
+    { "type": "url", "id": "shop_link", "label": "Shop link" }
+  ],
+  "blocks": [
+    {
+      "type": "location",
+      "name": "Location",
+      "settings": [
+        { "type": "text", "id": "id", "label": "ID", "default": "kensington" },
+        { "type": "text", "id": "name", "label": "Name", "default": "Kensington" },
+        { "type": "text", "id": "address", "label": "Address", "default": "412 Macaulay Road, Kensington VIC 3031" },
+        { "type": "text", "id": "phone", "label": "Phone", "default": "(03) 9376 2140" },
+        { "type": "text", "id": "pharmacist", "label": "Pharmacist", "default": "Priya Raman" }
+      ]
+    },
+    {
+      "type": "rx_type",
+      "name": "Prescription type",
+      "settings": [
+        { "type": "text", "id": "id", "label": "ID", "default": "paediatric" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Paediatric" },
+        { "type": "text", "id": "note", "label": "Note", "default": "Child-scaled doses and flavours" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CanMed — Prescriptions",
+      "blocks": [
+        { "type": "location", "settings": { "id": "kensington", "name": "Kensington", "address": "412 Macaulay Road, Kensington VIC 3031", "phone": "(03) 9376 2140", "pharmacist": "Priya Raman" } },
+        { "type": "location", "settings": { "id": "hawthorn", "name": "Hawthorn", "address": "88 Burwood Road, Hawthorn VIC 3122", "phone": "(03) 9818 7752", "pharmacist": "Daniel Okoye" } },
+        { "type": "location", "settings": { "id": "geelong", "name": "Geelong", "address": "27 Malop Street, Geelong VIC 3220", "phone": "(03) 5229 4418", "pharmacist": "Alice Whitmore" } },
+        { "type": "rx_type", "settings": { "id": "paediatric", "label": "Paediatric", "note": "Child-scaled doses and flavours" } },
+        { "type": "rx_type", "settings": { "id": "geriatric", "label": "Geriatric", "note": "Swallowing and polypharmacy support" } },
+        { "type": "rx_type", "settings": { "id": "veterinary", "label": "Veterinary", "note": "Species-specific formulations" } },
+        { "type": "rx_type", "settings": { "id": "phytocannabinoid", "label": "Phytocannabinoid", "note": "Approved prescriptions only" } },
+        { "type": "rx_type", "settings": { "id": "other", "label": "Something else", "note": "Tell us and we'll route it" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
