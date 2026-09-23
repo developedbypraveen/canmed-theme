@@ -1,41 +1,42 @@
 {% comment %}
-  Shop product grid for one access tier.
+  Shop product grid.
+  Pass show_all: true to list every product (no tier tag filter).
+  Pass tier_tag to limit to one access tier.
 {% endcomment %}
 
 {% liquid
+  assign show_all = show_all | default: false
   assign media_tier = media_tier | default: 'otc'
-  assign tier_tag = tier_tag | default: 'access-otc'
+  assign tier_tag = tier_tag | default: ''
   assign shown = 0
 %}
 
 <div class="cm-shop__grid" data-cm-shop-grid>
-  {% if collection != blank and collection.products.size > 0 %}
-    {% for product in collection.products %}
-      {% if product.tags contains tier_tag %}
-        {% assign shown = shown | plus: 1 %}
-        {% render 'canmed-shop-card', product: product, media_tier: media_tier, index: shown %}
+  {% if collection != blank %}
+    {% for product in collection.products limit: 50 %}
+      {% if product.handle == 'prescription-submission' %}
+        {% continue %}
       {% endif %}
-    {% endfor %}
-  {% endif %}
+      {% if product.tags contains 'access-prescription' or product.type == 'Prescription Only' or product.type == 'Prescription Intake' %}
+        {% continue %}
+      {% endif %}
 
-  {% if shown == 0 %}
-    {% for product in collections['prescription-only'].products %}
-      {% if product.tags contains tier_tag %}
-        {% assign shown = shown | plus: 1 %}
-        {% render 'canmed-shop-card', product: product, media_tier: media_tier, index: shown %}
+      {% if show_all != true and tier_tag != blank %}
+        {% unless product.tags contains tier_tag %}
+          {% continue %}
+        {% endunless %}
       {% endif %}
-    {% endfor %}
-    {% for product in collections['s3-pharmacist-only'].products %}
-      {% if product.tags contains tier_tag %}
-        {% assign shown = shown | plus: 1 %}
-        {% render 'canmed-shop-card', product: product, media_tier: media_tier, index: shown %}
-      {% endif %}
-    {% endfor %}
-    {% for product in collections['over-the-counter'].products %}
-      {% if product.tags contains tier_tag %}
-        {% assign shown = shown | plus: 1 %}
-        {% render 'canmed-shop-card', product: product, media_tier: media_tier, index: shown %}
-      {% endif %}
+
+      {% liquid
+        assign card_tier = media_tier
+        if product.tags contains 'access-s3' or product.type == 'S3 Pharmacist Only'
+          assign card_tier = 's3'
+        elsif product.tags contains 'access-otc' or product.type == 'Over the Counter'
+          assign card_tier = 'otc'
+        endif
+        assign shown = shown | plus: 1
+      %}
+      {% render 'canmed-shop-card', product: product, media_tier: card_tier, index: shown %}
     {% endfor %}
   {% endif %}
 </div>
