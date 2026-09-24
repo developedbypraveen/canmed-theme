@@ -1,6 +1,5 @@
 {% comment %}
-  CanMed product detail — Add to cart for all products (phone collected at checkout).
-  S3: optional pharmacist note | OTC: optional nearest-store check
+  CanMed product detail — Add to cart for all products.
 {% endcomment %}
 
 {% liquid
@@ -132,28 +131,6 @@
           <p class="cm-product__note cm-mono-data">{{ access_note | default: tier_note | escape }}</p>
         {% endif %}
 
-        {% if tier == 'otc' %}
-          <div class="cm-product__nearest" data-cm-nearest>
-            <p class="cm-mono-caption">{{ section.settings.nearest_label | default: 'Find your nearest dispensary' | escape }}</p>
-            <div class="cm-product__s3-row">
-              <input
-                class="cm-product__input"
-                type="text"
-                inputmode="numeric"
-                pattern="[0-9]{4}"
-                maxlength="4"
-                placeholder="{{ section.settings.postcode_placeholder | default: 'Postcode' | escape }}"
-                aria-label="Australian postcode"
-                data-cm-postcode
-              >
-              <button type="button" class="cm-btn cm-btn--secondary" data-cm-nearest-btn>
-                {{ section.settings.nearest_cta | default: 'Check availability' | escape }}
-              </button>
-            </div>
-            <div class="cm-product__nearest-result" data-cm-nearest-result hidden></div>
-          </div>
-        {% endif %}
-
         <div class="cm-product__actions">
           <button type="submit" class="cm-btn cm-btn--accent" data-cm-add-cart name="add" {% unless current_variant.available %}disabled{% endunless %}>
             {{ section.settings.order_cta | default: 'Add to cart' | escape }}
@@ -169,38 +146,6 @@
       {% endform %}
     </div>
   </div>
-
-  <script type="application/json" data-cm-stores>
-    [
-      {
-        "id": "kensington",
-        "name": {{ section.settings.store_1_name | default: 'Kensington' | json }},
-        "address": {{ section.settings.store_1_address | default: '412 Macaulay Road, Kensington VIC 3031' | json }},
-        "phone": {{ section.settings.store_1_phone | default: '(03) 9376 2140' | json }},
-        "phoneHref": {{ section.settings.store_1_phone_link | default: 'tel:+61393762140' | json }},
-        "lat": {{ section.settings.store_1_lat | default: -37.7942 }},
-        "lng": {{ section.settings.store_1_lng | default: 144.9275 }}
-      },
-      {
-        "id": "hawthorn",
-        "name": {{ section.settings.store_2_name | default: 'Hawthorn' | json }},
-        "address": {{ section.settings.store_2_address | default: '88 Burwood Road, Hawthorn VIC 3122' | json }},
-        "phone": {{ section.settings.store_2_phone | default: '(03) 9818 7752' | json }},
-        "phoneHref": {{ section.settings.store_2_phone_link | default: 'tel:+61398187752' | json }},
-        "lat": {{ section.settings.store_2_lat | default: -37.8221 }},
-        "lng": {{ section.settings.store_2_lng | default: 145.0358 }}
-      },
-      {
-        "id": "geelong",
-        "name": {{ section.settings.store_3_name | default: 'Geelong' | json }},
-        "address": {{ section.settings.store_3_address | default: '27 Malop Street, Geelong VIC 3220' | json }},
-        "phone": {{ section.settings.store_3_phone | default: '(03) 5229 4418' | json }},
-        "phoneHref": {{ section.settings.store_3_phone_link | default: 'tel:+61352294418' | json }},
-        "lat": {{ section.settings.store_3_lat | default: -38.1471 }},
-        "lng": {{ section.settings.store_3_lng | default: 144.3607 }}
-      }
-    ]
-  </script>
 </section>
 
 <script src="{{ 'canmed-product.js' | asset_url }}" defer></script>
@@ -223,31 +168,7 @@
     { "type": "text", "id": "variant_legend", "label": "Variant legend", "default": "Size / strength" },
     { "type": "text", "id": "rx_cta", "label": "Prescription CTA", "default": "Send your script" },
     { "type": "text", "id": "ask_cta", "label": "Ask pharmacist CTA", "default": "Ask a pharmacist" },
-    { "type": "text", "id": "nearest_label", "label": "Nearest store label", "default": "Find your nearest dispensary" },
-    { "type": "text", "id": "postcode_placeholder", "label": "Postcode placeholder", "default": "Postcode" },
-    { "type": "text", "id": "nearest_cta", "label": "Check availability CTA", "default": "Check availability" },
-    { "type": "text", "id": "order_cta", "label": "Add to order CTA", "default": "Add to order" },
-    { "type": "header", "content": "Store 1 — Kensington" },
-    { "type": "text", "id": "store_1_name", "label": "Name", "default": "Kensington" },
-    { "type": "text", "id": "store_1_address", "label": "Address", "default": "412 Macaulay Road, Kensington VIC 3031" },
-    { "type": "text", "id": "store_1_phone", "label": "Phone", "default": "(03) 9376 2140" },
-    { "type": "text", "id": "store_1_phone_link", "label": "Phone link", "default": "tel:+61393762140" },
-    { "type": "text", "id": "store_1_lat", "label": "Latitude", "default": "-37.7942" },
-    { "type": "text", "id": "store_1_lng", "label": "Longitude", "default": "144.9275" },
-    { "type": "header", "content": "Store 2 — Hawthorn" },
-    { "type": "text", "id": "store_2_name", "label": "Name", "default": "Hawthorn" },
-    { "type": "text", "id": "store_2_address", "label": "Address", "default": "88 Burwood Road, Hawthorn VIC 3122" },
-    { "type": "text", "id": "store_2_phone", "label": "Phone", "default": "(03) 9818 7752" },
-    { "type": "text", "id": "store_2_phone_link", "label": "Phone link", "default": "tel:+61398187752" },
-    { "type": "text", "id": "store_2_lat", "label": "Latitude", "default": "-37.8221" },
-    { "type": "text", "id": "store_2_lng", "label": "Longitude", "default": "145.0358" },
-    { "type": "header", "content": "Store 3 — Geelong" },
-    { "type": "text", "id": "store_3_name", "label": "Name", "default": "Geelong" },
-    { "type": "text", "id": "store_3_address", "label": "Address", "default": "27 Malop Street, Geelong VIC 3220" },
-    { "type": "text", "id": "store_3_phone", "label": "Phone", "default": "(03) 5229 4418" },
-    { "type": "text", "id": "store_3_phone_link", "label": "Phone link", "default": "tel:+61352294418" },
-    { "type": "text", "id": "store_3_lat", "label": "Latitude", "default": "-38.1471" },
-    { "type": "text", "id": "store_3_lng", "label": "Longitude", "default": "144.3607" }
+    { "type": "text", "id": "order_cta", "label": "Add to order CTA", "default": "Add to order" }
   ],
   "presets": [{ "name": "CanMed — Product" }]
 }
