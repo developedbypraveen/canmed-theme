@@ -3,44 +3,30 @@
     "contact": {
       "type": "canmed-contact",
       "blocks": {
-        "kensington": {
+        "west_lakes": {
           "type": "location",
           "settings": {
-            "name": "Kensington",
-            "address": "412 Macaulay Road",
-            "suburb": "Kensington VIC 3031",
-            "phone": "(03) 9376 2140",
-            "phone_link": "tel:+61393762140",
-            "hours_summary": "Mon – Fri 08:30 – 18:00",
-            "pharmacist": "Priya Raman"
+            "name": "CanMED West Lakes Clinic",
+            "address": "Unit 5, 151 Brebner Drive",
+            "suburb": "West Lakes SA 5021",
+            "phone": "(08) 8450 3978",
+            "phone_link": "tel:+61884503978",
+            "hours_summary": "Mon–Fri 9:00 AM – 6:00 PM | Sat 9:30 AM – 5:00 PM | Sun & Public Holidays Closed"
           }
         },
-        "hawthorn": {
+        "adelaide": {
           "type": "location",
           "settings": {
-            "name": "Hawthorn",
-            "address": "88 Burwood Road",
-            "suburb": "Hawthorn VIC 3122",
-            "phone": "(03) 9818 7752",
-            "phone_link": "tel:+61398187752",
-            "hours_summary": "Mon – Fri 08:00 – 19:00",
-            "pharmacist": "Daniel Okoye"
-          }
-        },
-        "geelong": {
-          "type": "location",
-          "settings": {
-            "name": "Geelong",
-            "address": "27 Malop Street",
-            "suburb": "Geelong VIC 3220",
-            "phone": "(03) 5229 4418",
-            "phone_link": "tel:+61352294418",
-            "hours_summary": "Mon – Fri 08:30 – 17:30",
-            "pharmacist": "Alice Whitmore"
+            "name": "CanMED Adelaide Clinic (King William Street)",
+            "address": "Ground Floor, 90 King William Street",
+            "suburb": "Adelaide SA 5000",
+            "phone": "(08) 7094 2268",
+            "phone_link": "tel:+61870942268",
+            "hours_summary": "Mon–Fri 9:00 AM – 6:00 PM | Sat–Sun & Public Holidays Closed"
           }
         }
       },
-      "block_order": ["kensington", "hawthorn", "geelong"],
+      "block_order": ["west_lakes", "adelaide"],
       "settings": {}
     }
   },

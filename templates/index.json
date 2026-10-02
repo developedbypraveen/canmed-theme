@@ -14,7 +14,7 @@
       "settings": {
         "eyebrow": "Compounded for you",
         "heading": "Medicine, formulated to the person taking it.",
-        "body": "Three Victorian dispensaries compounding paediatric, geriatric, veterinary and phytocannabinoid medicines — one patient, one batch, at a time.",
+        "body": "Two South Australian clinics compounding paediatric, geriatric, veterinary and phytocannabinoid medicines — one patient, one batch, at a time.",
         "primary_label": "Start a prescription",
         "secondary_label": "Browse the shop",
         "image_alt": "A glass amber tincture vessel"
@@ -26,8 +26,8 @@
         "trust_1": {
           "type": "trust_item",
           "settings": {
-            "label": "Three dispensaries",
-            "value": "Kensington · Hawthorn · Geelong"
+            "label": "Two clinics",
+            "value": "West Lakes · Adelaide"
           }
         },
         "trust_2": {
@@ -138,41 +138,33 @@
     "canmed_locations": {
       "type": "canmed-locations",
       "blocks": {
-        "loc_kensington": {
+        "loc_west_lakes": {
           "type": "location",
           "settings": {
-            "name": "Kensington",
-            "address": "412 Macaulay Road",
-            "suburb": "Kensington VIC 3031",
-            "phone": "(03) 9376 2140",
-            "phone_link": "tel:+61393762140"
+            "name": "CanMED West Lakes Clinic",
+            "address": "Unit 5, 151 Brebner Drive",
+            "suburb": "West Lakes SA 5021",
+            "phone": "(08) 8450 3978",
+            "phone_link": "tel:+61884503978",
+            "hours": "Mon–Fri 9:00 AM – 6:00 PM | Sat 9:30 AM – 5:00 PM | Sun & Public Holidays Closed"
           }
         },
-        "loc_hawthorn": {
+        "loc_adelaide": {
           "type": "location",
           "settings": {
-            "name": "Hawthorn",
-            "address": "88 Burwood Road",
-            "suburb": "Hawthorn VIC 3122",
-            "phone": "(03) 9818 7752",
-            "phone_link": "tel:+61398187752"
-          }
-        },
-        "loc_geelong": {
-          "type": "location",
-          "settings": {
-            "name": "Geelong",
-            "address": "27 Malop Street",
-            "suburb": "Geelong VIC 3220",
-            "phone": "(03) 5229 4418",
-            "phone_link": "tel:+61352294418"
+            "name": "CanMED Adelaide Clinic (King William Street)",
+            "address": "Ground Floor, 90 King William Street",
+            "suburb": "Adelaide SA 5000",
+            "phone": "(08) 7094 2268",
+            "phone_link": "tel:+61870942268",
+            "hours": "Mon–Fri 9:00 AM – 6:00 PM | Sat–Sun & Public Holidays Closed"
           }
         }
       },
-      "block_order": ["loc_kensington", "loc_hawthorn", "loc_geelong"],
+      "block_order": ["loc_west_lakes", "loc_adelaide"],
       "settings": {
         "eyebrow": "Find us",
-        "heading": "Three dispensaries, one formulary.",
+        "heading": "Two clinics, one formulary.",
         "lede": "Every location compounds to the same standard operating procedures and shares your record.",
         "cta_label": "Location details",
         "show_compliance": true,

@@ -106,7 +106,7 @@
           <div class="cm-rx__fields cm-rx__fields--delivery" data-cm-rx-delivery>
             <label class="cm-rx__field cm-rx__field--full">
               <span class="cm-mono-caption">Delivery address</span>
-              <input class="cm-product__input" type="text" data-cm-rx-address placeholder="Unit 4, 21 Rathdowne Street, Carlton VIC 3053">
+              <input class="cm-product__input" type="text" data-cm-rx-address placeholder="Unit 5, 151 Brebner Drive, West Lakes SA 5021">
               <span class="cm-rx__error cm-mono-data" data-err="address" hidden></span>
             </label>
             <label class="cm-rx__field">
@@ -216,11 +216,11 @@
       "type": "location",
       "name": "Location",
       "settings": [
-        { "type": "text", "id": "id", "label": "ID", "default": "kensington" },
-        { "type": "text", "id": "name", "label": "Name", "default": "Kensington" },
-        { "type": "text", "id": "address", "label": "Address", "default": "412 Macaulay Road, Kensington VIC 3031" },
-        { "type": "text", "id": "phone", "label": "Phone", "default": "(03) 9376 2140" },
-        { "type": "text", "id": "pharmacist", "label": "Pharmacist", "default": "Priya Raman" }
+        { "type": "text", "id": "id", "label": "ID", "default": "west-lakes" },
+        { "type": "text", "id": "name", "label": "Name", "default": "CanMED West Lakes Clinic" },
+        { "type": "text", "id": "address", "label": "Address", "default": "Unit 5, 151 Brebner Drive, West Lakes SA 5021" },
+        { "type": "text", "id": "phone", "label": "Phone", "default": "(08) 8450 3978" },
+        { "type": "text", "id": "pharmacist", "label": "Pharmacist" }
       ]
     },
     {
@@ -237,9 +237,8 @@
     {
       "name": "CanMed — Prescriptions",
       "blocks": [
-        { "type": "location", "settings": { "id": "kensington", "name": "Kensington", "address": "412 Macaulay Road, Kensington VIC 3031", "phone": "(03) 9376 2140", "pharmacist": "Priya Raman" } },
-        { "type": "location", "settings": { "id": "hawthorn", "name": "Hawthorn", "address": "88 Burwood Road, Hawthorn VIC 3122", "phone": "(03) 9818 7752", "pharmacist": "Daniel Okoye" } },
-        { "type": "location", "settings": { "id": "geelong", "name": "Geelong", "address": "27 Malop Street, Geelong VIC 3220", "phone": "(03) 5229 4418", "pharmacist": "Alice Whitmore" } },
+        { "type": "location", "settings": { "id": "west-lakes", "name": "CanMED West Lakes Clinic", "address": "Unit 5, 151 Brebner Drive, West Lakes SA 5021", "phone": "(08) 8450 3978" } },
+        { "type": "location", "settings": { "id": "adelaide", "name": "CanMED Adelaide Clinic (King William Street)", "address": "Ground Floor, 90 King William Street, Adelaide SA 5000", "phone": "(08) 7094 2268" } },
         { "type": "rx_type", "settings": { "id": "paediatric", "label": "Paediatric", "note": "Child-scaled doses and flavours" } },
         { "type": "rx_type", "settings": { "id": "geriatric", "label": "Geriatric", "note": "Swallowing and polypharmacy support" } },
         { "type": "rx_type", "settings": { "id": "veterinary", "label": "Veterinary", "note": "Species-specific formulations" } },

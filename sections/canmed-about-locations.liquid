@@ -73,7 +73,7 @@
 
           {% liquid
             assign media_mode = block.settings.media_mode | default: 'placeholder'
-            assign map_note = block.settings.map_note | default: 'Parking on site · Tram + rail within 400 m · Step-free entry'
+            assign map_note = block.settings.map_note
             assign map_alt = block.settings.map_image.alt | default: block.settings.name | append: ' dispensary'
           %}
           <div class="cm-about-detail__map{% if media_mode == 'image' and block.settings.map_image != blank %} cm-about-detail__map--image{% elsif media_mode == 'map' and block.settings.map_embed != blank %} cm-about-detail__map--embed{% endif %}">
@@ -106,7 +106,9 @@
               {% endif %}
             {% else %}
               <p class="cm-mono-caption" style="color:rgb(74 63 82 / 0.6);">{{ block.settings.suburb | escape }}</p>
-              <p class="cm-mono-data" style="color:rgb(74 63 82 / 0.6);">{{ map_note | escape }}</p>
+              {% if map_note != blank %}
+                <p class="cm-mono-data" style="color:rgb(74 63 82 / 0.6);">{{ map_note | escape }}</p>
+              {% endif %}
             {% endif %}
           </div>
         </div>
@@ -133,18 +135,18 @@
       "type": "location",
       "name": "Location",
       "settings": [
-        { "type": "text", "id": "name", "label": "Name", "default": "Kensington" },
-        { "type": "text", "id": "address", "label": "Address", "default": "412 Macaulay Road" },
-        { "type": "text", "id": "suburb", "label": "Suburb", "default": "Kensington VIC 3031" },
-        { "type": "text", "id": "phone", "label": "Phone", "default": "(03) 9376 2140" },
-        { "type": "text", "id": "phone_link", "label": "Phone link", "default": "tel:+61393762140" },
+        { "type": "text", "id": "name", "label": "Name", "default": "CanMED West Lakes Clinic" },
+        { "type": "text", "id": "address", "label": "Address", "default": "Unit 5, 151 Brebner Drive" },
+        { "type": "text", "id": "suburb", "label": "Suburb", "default": "West Lakes SA 5021" },
+        { "type": "text", "id": "phone", "label": "Phone", "default": "(08) 8450 3978" },
+        { "type": "text", "id": "phone_link", "label": "Phone link", "default": "tel:+61884503978" },
         { "type": "text", "id": "hours_1_days", "label": "Hours 1 days", "default": "Mon – Fri" },
-        { "type": "text", "id": "hours_1_time", "label": "Hours 1 time", "default": "08:30 – 18:00" },
+        { "type": "text", "id": "hours_1_time", "label": "Hours 1 time", "default": "9:00 AM – 6:00 PM" },
         { "type": "text", "id": "hours_2_days", "label": "Hours 2 days", "default": "Saturday" },
-        { "type": "text", "id": "hours_2_time", "label": "Hours 2 time", "default": "09:00 – 13:00" },
-        { "type": "text", "id": "hours_3_days", "label": "Hours 3 days", "default": "Sunday" },
+        { "type": "text", "id": "hours_2_time", "label": "Hours 2 time", "default": "9:30 AM – 5:00 PM" },
+        { "type": "text", "id": "hours_3_days", "label": "Hours 3 days", "default": "Sunday & public holidays" },
         { "type": "text", "id": "hours_3_time", "label": "Hours 3 time", "default": "Closed" },
-        { "type": "text", "id": "pharmacist", "label": "Pharmacist", "default": "Priya Raman" },
+        { "type": "text", "id": "pharmacist", "label": "Pharmacist" },
         { "type": "text", "id": "credential", "label": "Credential", "default": "B.Pharm, MPS — Compounding lead" },
         {
           "type": "select",
@@ -174,8 +176,7 @@
         {
           "type": "text",
           "id": "map_note",
-          "label": "Caption / note",
-          "default": "Parking on site · Tram + rail within 400 m · Step-free entry"
+          "label": "Caption / note"
         }
       ]
     }

@@ -3,34 +3,22 @@
     "prescriptions": {
       "type": "canmed-prescriptions",
       "blocks": {
-        "kensington": {
+        "west_lakes": {
           "type": "location",
           "settings": {
-            "id": "kensington",
-            "name": "Kensington",
-            "address": "412 Macaulay Road, Kensington VIC 3031",
-            "phone": "(03) 9376 2140",
-            "pharmacist": "Priya Raman"
+            "id": "west-lakes",
+            "name": "CanMED West Lakes Clinic",
+            "address": "Unit 5, 151 Brebner Drive, West Lakes SA 5021",
+            "phone": "(08) 8450 3978"
           }
         },
-        "hawthorn": {
+        "adelaide": {
           "type": "location",
           "settings": {
-            "id": "hawthorn",
-            "name": "Hawthorn",
-            "address": "88 Burwood Road, Hawthorn VIC 3122",
-            "phone": "(03) 9818 7752",
-            "pharmacist": "Daniel Okoye"
-          }
-        },
-        "geelong": {
-          "type": "location",
-          "settings": {
-            "id": "geelong",
-            "name": "Geelong",
-            "address": "27 Malop Street, Geelong VIC 3220",
-            "phone": "(03) 5229 4418",
-            "pharmacist": "Alice Whitmore"
+            "id": "adelaide",
+            "name": "CanMED Adelaide Clinic (King William Street)",
+            "address": "Ground Floor, 90 King William Street, Adelaide SA 5000",
+            "phone": "(08) 7094 2268"
           }
         },
         "paediatric": {
@@ -75,9 +63,8 @@
         }
       },
       "block_order": [
-        "kensington",
-        "hawthorn",
-        "geelong",
+        "west_lakes",
+        "adelaide",
         "paediatric",
         "geriatric",
         "veterinary",

@@ -14,60 +14,42 @@
     "canmed_footer": {
       "type": "canmed-footer",
       "blocks": {
-        "loc_kensington": {
+        "loc_west_lakes": {
           "type": "location",
           "settings": {
-            "name": "Kensington",
-            "address": "412 Macaulay Road",
-            "suburb": "Kensington VIC 3031",
-            "phone": "(03) 9376 2140",
-            "phone_link": "tel:+61393762140",
+            "name": "CanMED West Lakes Clinic",
+            "address": "Unit 5, 151 Brebner Drive",
+            "suburb": "West Lakes SA 5021",
+            "phone": "(08) 8450 3978",
+            "phone_link": "tel:+61884503978",
             "hours_1_days": "Mon – Fri",
-            "hours_1_time": "08:30 – 18:00",
+            "hours_1_time": "9:00 AM – 6:00 PM",
             "hours_2_days": "Saturday",
-            "hours_2_time": "09:00 – 13:00",
-            "hours_3_days": "Sunday",
+            "hours_2_time": "9:30 AM – 5:00 PM",
+            "hours_3_days": "Sunday & public holidays",
             "hours_3_time": "Closed"
           }
         },
-        "loc_hawthorn": {
+        "loc_adelaide": {
           "type": "location",
           "settings": {
-            "name": "Hawthorn",
-            "address": "88 Burwood Road",
-            "suburb": "Hawthorn VIC 3122",
-            "phone": "(03) 9818 7752",
-            "phone_link": "tel:+61398187752",
+            "name": "CanMED Adelaide Clinic (King William Street)",
+            "address": "Ground Floor, 90 King William Street",
+            "suburb": "Adelaide SA 5000",
+            "phone": "(08) 7094 2268",
+            "phone_link": "tel:+61870942268",
             "hours_1_days": "Mon – Fri",
-            "hours_1_time": "08:00 – 19:00",
-            "hours_2_days": "Saturday",
-            "hours_2_time": "09:00 – 15:00",
-            "hours_3_days": "Sunday",
-            "hours_3_time": "10:00 – 14:00"
-          }
-        },
-        "loc_geelong": {
-          "type": "location",
-          "settings": {
-            "name": "Geelong",
-            "address": "27 Malop Street",
-            "suburb": "Geelong VIC 3220",
-            "phone": "(03) 5229 4418",
-            "phone_link": "tel:+61352294418",
-            "hours_1_days": "Mon – Fri",
-            "hours_1_time": "08:30 – 17:30",
-            "hours_2_days": "Saturday",
-            "hours_2_time": "Closed",
-            "hours_3_days": "Sunday",
-            "hours_3_time": "Closed"
+            "hours_1_time": "9:00 AM – 6:00 PM",
+            "hours_2_days": "Sat – Sun & public holidays",
+            "hours_2_time": "Closed"
           }
         }
       },
-      "block_order": ["loc_kensington", "loc_hawthorn", "loc_geelong"],
+      "block_order": ["loc_west_lakes", "loc_adelaide"],
       "settings": {
         "brand_name": "CanMed",
         "brand_tagline": "Compounding Chemist",
-        "tagline": "Medicines compounded to the person taking them, from three Victorian dispensaries.",
+        "tagline": "Medicines compounded to the person taking them, from our West Lakes and Adelaide clinics.",
         "show_compliance": true,
         "compliance_eyebrow": "Regulatory notice",
         "compliance_body": "Compounded medicines are prepared for an individual patient and are not evaluated by the TGA in the way registered products are. Nothing on this site is medical advice. Schedule 4 and Schedule 8 items are supplied only against a valid Australian prescription.",

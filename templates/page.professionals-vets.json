@@ -7,7 +7,7 @@
         "show_icon": true,
         "eyebrow": "For veterinary practice",
         "heading": "The dose the animal will actually take.",
-        "body": "Compounded at Geelong under veterinary SOPs. Species-appropriate excipients only — we exclude xylitol, benzyl alcohol and propylene glycol from feline preparations by default, and note every exclusion on the batch record."
+        "body": "Compounded at our clinics under veterinary SOPs. Species-appropriate excipients only — we exclude xylitol, benzyl alcohol and propylene glycol from feline preparations by default, and note every exclusion on the batch record."
       }
     },
     "content": {
@@ -19,7 +19,7 @@
         "r4": { "type": "row", "settings": { "c1": "Avian / exotic", "c2": "Micro-dose suspension", "c3": "Compounded to 0.01 mg accuracy" } },
         "c1": { "type": "card", "settings": { "title": "Practice ordering", "body": "Bulk practice orders accepted against a written direction. Minimum batch 5 units." } },
         "c2": { "type": "card", "settings": { "title": "Turnaround", "body": "48 hours from approval. Courier to metro practices next business day." } },
-        "c3": { "type": "card", "settings": { "title": "Compounding lead", "body": "Alice Whitmore — B.Pharm, AACP — Veterinary compounding\n(03) 5229 4418" } }
+        "c3": { "type": "card", "settings": { "title": "Clinic contact", "body": "West Lakes (08) 8450 3978\nAdelaide (08) 7094 2268" } }
       },
       "block_order": ["r1", "r2", "r3", "r4", "c1", "c2", "c3"],
       "settings": {

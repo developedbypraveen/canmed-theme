@@ -25,6 +25,7 @@ body:has(.cm-hero) {
   background: var(--cm-ivory) !important;
   color: var(--cm-charcoal);
   font-family: var(--cm-font-body);
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -56,7 +57,7 @@ body:has(.cm-hero) {
   align-items: center;
   gap: 0.5rem;
   font-family: var(--cm-font-mono);
-  font-size: 0.8125rem;
+  font-size: 1rem;
   line-height: 1.4;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -113,7 +114,7 @@ body:has(.cm-hero) {
 
 .cm-mono-caption {
   font-family: var(--cm-font-mono);
-  font-size: 0.8125rem;
+  font-size: 1rem;
   line-height: 1.4;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -123,7 +124,7 @@ body:has(.cm-hero) {
 
 .cm-mono-data {
   font-family: var(--cm-font-mono);
-  font-size: 0.8125rem;
+  font-size: 1rem;
   line-height: 1.4;
   letter-spacing: 0.01em;
   color: rgb(74 63 82 / 0.75);
@@ -139,7 +140,7 @@ body:has(.cm-hero) {
   padding: 0.75rem 1.35rem;
   border-radius: 999px;
   font-family: var(--cm-font-body);
-  font-size: 0.9375rem;
+  font-size: 1rem;
   font-weight: 600;
   line-height: 1;
   text-decoration: none !important;
@@ -205,7 +206,7 @@ body:has(.cm-hero) {
 .cm-announce__text {
   margin: 0;
   font-family: var(--cm-font-mono);
-  font-size: 0.72rem;
+  font-size: 1rem;
   line-height: 1.4;
   letter-spacing: 0.01em;
   color: rgb(255 255 255 / 0.85);
@@ -288,7 +289,7 @@ body:has(.cm-hero) {
 .cm-header__tagline {
   margin-top: 0.25rem;
   font-family: var(--cm-font-mono);
-  font-size: 0.6rem;
+  font-size: 1rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--cm-muted);
@@ -315,7 +316,7 @@ body:has(.cm-hero) {
 
 .cm-header__link {
   font-family: var(--cm-font-mono);
-  font-size: 0.78rem;
+  font-size: 1rem;
   letter-spacing: 0.01em;
   color: rgb(74 63 82 / 0.75);
   text-decoration: none !important;
@@ -340,7 +341,7 @@ body:has(.cm-hero) {
 .cm-header__account {
   display: none;
   font-family: var(--cm-font-mono);
-  font-size: 0.78rem;
+  font-size: 1rem;
   color: rgb(74 63 82 / 0.75);
   text-decoration: none !important;
 }
@@ -410,7 +411,7 @@ body:has(.cm-hero) {
 
 .cm-header__drawer-link {
   font-family: var(--cm-font-mono);
-  font-size: 0.8125rem;
+  font-size: 1rem;
   color: rgb(74 63 82 / 0.8);
   text-decoration: none !important;
   padding-block: 0.75rem;
@@ -465,7 +466,7 @@ body:has(.cm-hero) {
 .cm-footer__tagline {
   margin: 0.5rem 0 0;
   font-family: var(--cm-font-mono);
-  font-size: 0.8125rem;
+  font-size: 1rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: rgb(255 255 255 / 0.6);
@@ -485,14 +486,14 @@ body:has(.cm-hero) {
 
 @media (min-width: 640px) {
   .cm-footer__locations {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 .cm-footer__loc-name {
   margin: 0;
   font-family: var(--cm-font-mono);
-  font-size: 0.8125rem;
+  font-size: 1rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--cm-amber-light);
@@ -501,7 +502,7 @@ body:has(.cm-hero) {
 .cm-footer__address {
   margin: 0.75rem 0 0;
   font-family: var(--cm-font-mono);
-  font-size: 0.8125rem;
+  font-size: 1rem;
   font-style: normal;
   line-height: 1.6;
   color: rgb(255 255 255 / 0.75);
@@ -519,7 +520,7 @@ body:has(.cm-hero) {
 .cm-footer__hours {
   margin: 0.75rem 0 0;
   font-family: var(--cm-font-mono);
-  font-size: 0.8125rem;
+  font-size: 1rem;
   color: rgb(255 255 255 / 0.6);
 }
 
@@ -546,7 +547,7 @@ body:has(.cm-hero) {
 .cm-footer__compliance-eyebrow {
   margin: 0;
   font-family: var(--cm-font-mono);
-  font-size: 0.8125rem;
+  font-size: 1rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: rgb(255 255 255 / 0.6);
@@ -555,7 +556,7 @@ body:has(.cm-hero) {
 .cm-footer__compliance-body {
   margin: 0.75rem 0 0;
   font-family: var(--cm-font-mono);
-  font-size: 0.8125rem;
+  font-size: 1rem;
   line-height: 1.6;
 }
 
@@ -579,7 +580,7 @@ body:has(.cm-hero) {
 .cm-footer__copy {
   margin: 0;
   font-family: var(--cm-font-mono);
-  font-size: 0.8125rem;
+  font-size: 1rem;
   color: rgb(255 255 255 / 0.55);
 }
 
@@ -587,7 +588,7 @@ body:has(.cm-hero) {
   display: flex;
   gap: 1.5rem;
   font-family: var(--cm-font-mono);
-  font-size: 0.8125rem;
+  font-size: 1rem;
 }
 
 .cm-footer__legal-links a {
@@ -760,7 +761,7 @@ body:has(.cm-hero) {
 
 .cm-how__num {
   font-family: var(--cm-font-mono);
-  font-size: 0.8125rem;
+  font-size: 1rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--cm-muted);
@@ -866,7 +867,7 @@ body:has(.cm-hero) {
   margin-top: 1.5rem;
   display: inline-block;
   font-family: var(--cm-font-mono);
-  font-size: 0.8125rem;
+  font-size: 1rem;
   letter-spacing: 0.01em;
   color: var(--cm-amber);
 }
@@ -904,7 +905,7 @@ body:has(.cm-hero) {
 
 @media (min-width: 640px) {
   .cm-locations__cards {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -934,7 +935,11 @@ body:has(.cm-hero) {
   color: var(--cm-pine) !important;
   text-decoration: none !important;
   font-family: var(--cm-font-mono);
-  font-size: 0.8125rem;
+  font-size: 1rem;
+}
+
+.cm-locations__hours {
+  margin-top: 0.75rem;
 }
 
 .cm-locations__phone:hover {
@@ -947,7 +952,7 @@ body:has(.cm-hero) {
   color: var(--cm-pine);
   text-decoration: none;
   font-family: var(--cm-font-mono);
-  font-size: 0.8125rem;
+  font-size: 1rem;
 }
 
 .cm-btn:focus-visible,
@@ -1023,7 +1028,7 @@ body:has(.cm-hero) {
 .cm-loc-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .cm-loc-pill {
   font-family: var(--cm-font-mono);
-  font-size: 0.8125rem;
+  font-size: 1rem;
   border-radius: 999px;
   border: 1px solid var(--cm-hairline);
   padding: 0.5rem 1rem;
@@ -1102,10 +1107,10 @@ body:has(.cm-hero) {
 .cm-about-detail__hours { margin-top: 1.5rem; max-width: 20rem; border-top: 1px solid var(--cm-hairline); padding-top: 1rem; }
 .cm-about-detail__hours div { display: flex; justify-content: space-between; gap: 1.5rem; margin-top: 0.5rem; }
 .cm-about-detail__hours dt,
-.cm-about-detail__hours dd { margin: 0; font-family: var(--cm-font-mono); font-size: 0.8125rem; color: rgb(74 63 82 / 0.75); }
+.cm-about-detail__hours dd { margin: 0; font-family: var(--cm-font-mono); font-size: 1rem; color: rgb(74 63 82 / 0.75); }
 .cm-about-detail__pharmacist { margin-top: 1.5rem; }
 .cm-about-detail__pharmacist-name { margin: 0.5rem 0 0; font-weight: 600; color: var(--cm-pine); }
-.cm-about-phone { display: block; margin-top: 0.75rem; color: var(--cm-amber) !important; text-decoration: none !important; font-family: var(--cm-font-mono); font-size: 0.8125rem; }
+.cm-about-phone { display: block; margin-top: 0.75rem; color: var(--cm-amber) !important; text-decoration: none !important; font-family: var(--cm-font-mono); font-size: 1rem; }
 .cm-about-phone:hover { text-decoration: underline !important; }
 
 .cm-team-grid { margin-top: 3rem; display: grid; gap: 2rem; }
@@ -1133,7 +1138,7 @@ body:has(.cm-hero) {
 .cm-contact-card { border: 1px solid var(--cm-hairline); border-radius: 12px; padding: 1.5rem; background: var(--cm-ivory); }
 @media (min-width: 768px) { .cm-contact-card { padding: 2.5rem; margin-left: 2rem; } }
 .cm-field { display: flex; flex-direction: column; gap: 0.5rem; }
-.cm-field__label { font-family: var(--cm-font-mono); font-size: 0.8125rem; color: var(--cm-muted); letter-spacing: 0.06em; text-transform: uppercase; }
+.cm-field__label { font-family: var(--cm-font-mono); font-size: 1rem; color: var(--cm-muted); letter-spacing: 0.06em; text-transform: uppercase; }
 .cm-input {
   width: 100%;
   background: transparent;
@@ -1156,9 +1161,9 @@ body:has(.cm-hero) {
   justify-content: space-between;
   gap: 1rem;
 }
-.cm-form-note { margin: 0; font-family: var(--cm-font-mono); font-size: 0.8125rem; color: var(--cm-muted); }
+.cm-form-note { margin: 0; font-family: var(--cm-font-mono); font-size: 1rem; color: var(--cm-muted); }
 .cm-form-success { text-align: center; padding-block: 2.5rem; }
-.cm-contact-hint { margin-top: 0.75rem; font-family: var(--cm-font-mono); font-size: 0.8125rem; color: var(--cm-muted); }
+.cm-contact-hint { margin-top: 0.75rem; font-family: var(--cm-font-mono); font-size: 1rem; color: var(--cm-muted); }
 
 .cm-rx-grid { margin-top: 3rem; display: grid; gap: 2rem; }
 @media (min-width: 768px) { .cm-rx-grid { grid-template-columns: repeat(5, 1fr); } }
@@ -1186,7 +1191,7 @@ body:has(.cm-hero) {
 .cm-otc-card .cm-mono-caption { color: var(--cm-sage); }
 .cm-otc-card h3 { margin: 1rem 0 0; font-weight: 600; color: var(--cm-pine); }
 .cm-otc-card p { margin: 0.5rem 0 0; color: var(--cm-muted); }
-.cm-otc-card__price { margin-top: 1.25rem; font-family: var(--cm-font-mono); font-size: 0.8125rem; color: var(--cm-charcoal); }
+.cm-otc-card__price { margin-top: 1.25rem; font-family: var(--cm-font-mono); font-size: 1rem; color: var(--cm-charcoal); }
 
 .cm-faq { margin-top: 2.5rem; border-block: 1px solid var(--cm-hairline); }
 .cm-faq__item { display: grid; gap: 0.75rem; padding-block: 1.75rem; border-bottom: 1px solid var(--cm-hairline); }
@@ -1205,16 +1210,16 @@ body:has(.cm-hero) {
 }
 .cm-pro-banner .cm-mono-caption { color: var(--cm-amber-light); }
 .cm-pro-banner .cm-display-l { color: #fff; margin-top: 1rem; }
-.cm-pro-banner__lede { margin-top: 1rem; max-width: 36rem; font-family: var(--cm-font-mono); font-size: 0.8125rem; color: rgb(255 255 255 / 0.75); }
+.cm-pro-banner__lede { margin-top: 1rem; max-width: 36rem; font-family: var(--cm-font-mono); font-size: 1rem; color: rgb(255 255 255 / 0.75); }
 .cm-pro-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; }
-.cm-pro-fact { border-top: 1px solid rgb(255 255 255 / 0.2); padding-top: 0.75rem; font-family: var(--cm-font-mono); font-size: 0.8125rem; color: rgb(255 255 255 / 0.75); }
+.cm-pro-fact { border-top: 1px solid rgb(255 255 255 / 0.2); padding-top: 0.75rem; font-family: var(--cm-font-mono); font-size: 1rem; color: rgb(255 255 255 / 0.75); }
 .cm-pro-fact span { display: block; color: rgb(255 255 255 / 0.5); }
 .cm-pro-fact strong { display: block; margin-top: 0.25rem; color: #fff; font-weight: 500; }
 .cm-pro-banner__icon { width: 7rem; height: 7rem; color: var(--cm-amber-light); align-self: end; }
 .cm-pro-banner__icon svg { width: 100%; height: 100%; }
 
 .cm-table-wrap { margin-top: 2rem; overflow-x: auto; }
-.cm-table { width: 100%; min-width: 720px; border-collapse: collapse; text-align: left; font-family: var(--cm-font-mono); font-size: 0.8125rem; }
+.cm-table { width: 100%; min-width: 720px; border-collapse: collapse; text-align: left; font-family: var(--cm-font-mono); font-size: 1rem; }
 .cm-table th { padding: 0.75rem 1.5rem 0.75rem 0; font-weight: 400; text-transform: uppercase; letter-spacing: 0.06em; color: var(--cm-muted); border-block: 1px solid var(--cm-hairline); }
 .cm-table td { padding: 0.75rem 1.5rem 0.75rem 0; color: rgb(74 63 82 / 0.85); border-bottom: 1px solid var(--cm-hairline); }
 .cm-pro-toolbar { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1rem; }
@@ -1224,7 +1229,7 @@ body:has(.cm-hero) {
 @media (min-width: 768px) { .cm-info-cards { grid-template-columns: repeat(3, 1fr); } }
 .cm-info-card { padding: 1.25rem; border: 1px solid var(--cm-hairline); border-radius: 12px; background: var(--cm-ivory); }
 .cm-pro-locs { margin-top: 3rem; display: grid; gap: 1.5rem; }
-@media (min-width: 768px) { .cm-pro-locs { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 768px) { .cm-pro-locs { grid-template-columns: repeat(2, 1fr); } }
 
 .cm-legal { padding-block: 3.5rem; }
 @media (min-width: 768px) { .cm-legal { padding-block: 6rem; } }
@@ -1316,7 +1321,7 @@ body:has(.cm-hero) {
 .cm-shop__tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .cm-shop__tab {
   font-family: var(--cm-font-mono);
-  font-size: 0.75rem;
+  font-size: 1rem;
   border-radius: 999px;
   border: 1px solid var(--cm-hairline);
   padding: 0.5rem 1rem;
@@ -1475,7 +1480,7 @@ body:has(.cm-hero) {
 }
 .cm-shop-card__pill {
   font-family: var(--cm-font-mono);
-  font-size: 0.7rem;
+  font-size: 1rem;
   border: 1px solid var(--cm-hairline);
   border-radius: 999px;
   padding: 0.25rem 0.65rem;
@@ -1579,7 +1584,7 @@ body:has(.cm-hero) {
 .cm-product__option-pills { margin-top: 0.75rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
 .cm-product__option-pill {
   font-family: var(--cm-font-mono);
-  font-size: 0.8125rem;
+  font-size: 1rem;
   border-radius: 999px;
   border: 1px solid var(--cm-hairline);
   padding: 0.5rem 1rem;
@@ -1613,7 +1618,7 @@ body:has(.cm-hero) {
   border-radius: 10px;
   padding: 0.75rem 1rem;
   font-family: var(--cm-font-mono);
-  font-size: 0.875rem;
+  font-size: 1rem;
   color: var(--cm-charcoal);
   background: var(--cm-ivory);
 }
