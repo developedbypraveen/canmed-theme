@@ -43,7 +43,12 @@
       <div class="cm-hero__glow" aria-hidden="true"></div>
 
       {%- comment -%} Same WebGL Vessel3D on all viewports {% endcomment -%}
-      <div class="cm-hero__canvas-wrap" data-cm-vessel data-particles="72"></div>
+      <div
+        class="cm-hero__canvas-wrap"
+        data-cm-vessel
+        data-particles="72"
+        data-logo="{{ 'canmed-bottle-logo.png' | asset_url }}"
+      ></div>
     </div>
   </div>
 </section>
