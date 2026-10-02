@@ -206,7 +206,7 @@ body:has(.cm-hero) {
 .cm-announce__text {
   margin: 0;
   font-family: var(--cm-font-mono);
-  font-size: 1rem;
+  font-size: 0.72rem;
   line-height: 1.4;
   letter-spacing: 0.01em;
   color: rgb(255 255 255 / 0.85);
@@ -289,7 +289,7 @@ body:has(.cm-hero) {
 .cm-header__tagline {
   margin-top: 0.25rem;
   font-family: var(--cm-font-mono);
-  font-size: 1rem;
+  font-size: 0.6rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--cm-muted);
@@ -306,6 +306,7 @@ body:has(.cm-hero) {
   display: none;
   align-items: center;
   gap: 1.75rem;
+  min-width: 0;
 }
 
 @media (min-width: 1024px) {
@@ -316,7 +317,8 @@ body:has(.cm-hero) {
 
 .cm-header__link {
   font-family: var(--cm-font-mono);
-  font-size: 1rem;
+  font-size: 0.78rem;
+  white-space: nowrap;
   letter-spacing: 0.01em;
   color: rgb(74 63 82 / 0.75);
   text-decoration: none !important;
@@ -341,7 +343,8 @@ body:has(.cm-hero) {
 .cm-header__account {
   display: none;
   font-family: var(--cm-font-mono);
-  font-size: 1rem;
+  font-size: 0.78rem;
+  white-space: nowrap;
   color: rgb(74 63 82 / 0.75);
   text-decoration: none !important;
 }
@@ -360,6 +363,8 @@ body:has(.cm-hero) {
   display: none !important;
   min-height: 0;
   padding: 0.625rem 1.25rem;
+  font-size: 0.9375rem;
+  white-space: nowrap;
 }
 
 @media (min-width: 768px) {
@@ -411,7 +416,7 @@ body:has(.cm-hero) {
 
 .cm-header__drawer-link {
   font-family: var(--cm-font-mono);
-  font-size: 1rem;
+  font-size: 0.8125rem;
   color: rgb(74 63 82 / 0.8);
   text-decoration: none !important;
   padding-block: 0.75rem;
@@ -466,7 +471,7 @@ body:has(.cm-hero) {
 .cm-footer__tagline {
   margin: 0.5rem 0 0;
   font-family: var(--cm-font-mono);
-  font-size: 1rem;
+  font-size: 0.8125rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: rgb(255 255 255 / 0.6);
