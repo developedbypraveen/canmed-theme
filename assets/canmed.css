@@ -617,12 +617,23 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 
 /* ---------- Hero ---------- */
 .cm-hero {
-  padding: 2.5rem 0 4rem;
+  padding: 2.5rem 0;
 }
 
 @media (min-width: 768px) {
   .cm-hero {
-    padding: 4rem 0 7rem;
+    padding: 4rem 0;
+  }
+}
+
+/* Equal gap into the next homepage section after the trust strip was removed */
+.shopify-section:has(.cm-hero) + .shopify-section > .cm-section {
+  padding-top: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .shopify-section:has(.cm-hero) + .shopify-section > .cm-section {
+    padding-top: 4rem;
   }
 }
 
