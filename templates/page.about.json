@@ -20,6 +20,7 @@
         "primary_link": "#locations",
         "secondary_label": "Start a prescription",
         "secondary_link": "/pages/prescriptions",
+        "aside_label": "CanMed at a glance",
         "aside_kicker": "Two clinics · one standard",
         "aside_title": "West Lakes & Adelaide",
         "aside_note": "Compounded on site. Reviewed by a pharmacist. Explained to the patient."
@@ -35,7 +36,7 @@
             "name": "Read properly",
             "hint": "Dose, form, clinical sense",
             "copy": "Every script is checked for dose, form, and clinical sense before anything is weighed.",
-            "icon_paths": "<path d=\"M4 6h16\"/><path d=\"M4 12h10\"/><path d=\"M4 18h14\"/><path d=\"m15 10 2 2 4-4\"/>"
+            "icon_paths": "<path d=\"M4 6h16\"></path><path d=\"M4 12h10\"></path><path d=\"M4 18h14\"></path><path d=\"m15 10 2 2 4-4\"></path>"
           }
         },
         "step_2": {
@@ -45,7 +46,7 @@
             "name": "Weigh accurately",
             "hint": "Calibrated balances, on site",
             "copy": "Measured on calibrated balances — not scooped, guessed, or batched off-site.",
-            "icon_paths": "<path d=\"M12 3v14\"/><path d=\"M8 21h8\"/><path d=\"M5 7h14\"/><path d=\"M7 7 4.8 12.2a2.2 2.2 0 0 0 2 3.1H8\"/><path d=\"M17 7l2.2 5.2a2.2 2.2 0 0 1-2 3.1H16\"/>"
+            "icon_paths": "<path d=\"M12 3v14\"></path><path d=\"M8 21h8\"></path><path d=\"M5 7h14\"></path><path d=\"M7 7 4.8 12.2a2.2 2.2 0 0 0 2 3.1H8\"></path><path d=\"M17 7l2.2 5.2a2.2 2.2 0 0 1-2 3.1H16\"></path>"
           }
         },
         "step_3": {
@@ -55,7 +56,7 @@
             "name": "Label clearly",
             "hint": "Plain language directions",
             "copy": "Directions a person can follow at home — strength, timing, and storage in plain language.",
-            "icon_paths": "<rect x=\"4\" y=\"5\" width=\"16\" height=\"14\" rx=\"2\"/><path d=\"M8 9h8\"/><path d=\"M8 13h5\"/>"
+            "icon_paths": "<rect x=\"4\" y=\"5\" width=\"16\" height=\"14\" rx=\"2\"></rect><path d=\"M8 9h8\"></path><path d=\"M8 13h5\"></path>"
           }
         },
         "step_4": {
@@ -65,11 +66,16 @@
             "name": "Explain personally",
             "hint": "Pharmacist to patient",
             "copy": "A pharmacist reviews the finished medicine and talks it through with the person taking it.",
-            "icon_paths": "<path d=\"M4 19c2-4 5-6 8-6s6 2 8 6\"/><circle cx=\"12\" cy=\"8\" r=\"3.5\"/>"
+            "icon_paths": "<path d=\"M4 19c2-4 5-6 8-6s6 2 8 6\"></path><circle cx=\"12\" cy=\"8\" r=\"3.5\"></circle>"
           }
         }
       },
-      "block_order": ["step_1", "step_2", "step_3", "step_4"],
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4"
+      ],
       "settings": {
         "eyebrow": "Our standard",
         "heading": "The same care, every script.",
@@ -103,8 +109,8 @@
         "adelaide": {
           "type": "location",
           "settings": {
-            "tab_label": "Adelaide",
-            "pin_label": "Adelaide CBD",
+            "tab_label": "King William Street",
+            "pin_label": "King William Street",
             "name": "CanMED Adelaide Clinic (King William Street)",
             "address": "Ground Floor, 90 King William Street",
             "suburb": "Adelaide SA 5000",
@@ -121,7 +127,10 @@
           }
         }
       },
-      "block_order": ["west_lakes", "adelaide"],
+      "block_order": [
+        "west_lakes",
+        "adelaide"
+      ],
       "settings": {
         "eyebrow": "Locations",
         "heading": "Pick a dispensary.",
@@ -142,5 +151,10 @@
       }
     }
   },
-  "order": ["hero", "standards", "locations", "cta"]
+  "order": [
+    "hero",
+    "standards",
+    "locations",
+    "cta"
+  ]
 }
