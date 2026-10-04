@@ -13,8 +13,8 @@
   --cm-hairline: rgb(74 63 82 / 0.14);
   --cm-glass: rgb(255 255 255 / 0.78);
   --cm-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
-  --cm-font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --cm-font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --cm-font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --cm-font-body: "Poppins", ui-sans-serif, system-ui, sans-serif;
   --cm-font-mono: "Poppins", ui-sans-serif, system-ui, sans-serif;
   --cm-shell: 1240px;
 }
@@ -22,32 +22,21 @@
 body.cm-brand,
 body:has(.cm-header),
 body:has(.cm-hero) {
+  --font-body--family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-heading--family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-subheading--family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-accent--family: "Poppins", ui-sans-serif, system-ui, sans-serif;
   background: var(--cm-ivory) !important;
   color: var(--cm-charcoal);
-  font-family: var(--cm-font-body);
+  font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
 }
 
-body.cm-brand h1,
-body.cm-brand h2,
-body.cm-brand h3,
-body.cm-brand h4,
-body.cm-brand h5,
-body.cm-brand h6,
-body:has(.cm-header) h1,
-body:has(.cm-header) h2,
-body:has(.cm-header) h3,
-body:has(.cm-header) h4,
-body:has(.cm-header) h5,
-body:has(.cm-header) h6,
-body:has(.cm-hero) h1,
-body:has(.cm-hero) h2,
-body:has(.cm-hero) h3,
-body:has(.cm-hero) h4,
-body:has(.cm-hero) h5,
-body:has(.cm-hero) h6 {
-  font-family: var(--cm-font-body);
+body.cm-brand :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, textarea, label, span, li, td, th, dd, dt, div, section, nav, footer, header, summary, figcaption),
+body:has(.cm-header) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, textarea, label, span, li, td, th, dd, dt, div, section, nav, footer, header, summary, figcaption),
+body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, textarea, label, span, li, td, th, dd, dt, div, section, nav, footer, header, summary, figcaption) {
+  font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
 }
 
 .cm-shell {
