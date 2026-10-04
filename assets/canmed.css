@@ -1182,83 +1182,7 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 }
 
 /* ---------- Ways in ---------- */
-.cm-ways {
-  background: var(--cm-secondary);
-  position: relative;
-  overflow: hidden;
-}
-
-.cm-ways__particles {
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  opacity: 0.07;
-}
-
-.cm-ways__particle {
-  position: absolute;
-  border-radius: 999px;
-  background: var(--cm-amber);
-  animation: cm-drift 14s ease-in-out infinite;
-}
-
-.cm-ways__head .cm-display-l {
-  margin-top: 1rem;
-}
-
-.cm-ways__grid {
-  margin-top: 3rem;
-  display: grid;
-  gap: 1.5rem;
-}
-
-@media (min-width: 768px) {
-  .cm-ways__grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-.cm-ways__card {
-  display: block;
-  height: 100%;
-  padding: 1.75rem;
-  border: 1px solid var(--cm-hairline);
-  border-radius: 12px;
-  background: var(--cm-ivory);
-  text-decoration: none !important;
-  color: inherit;
-  transition:
-    transform 200ms var(--cm-ease),
-    box-shadow 200ms var(--cm-ease);
-}
-
-.cm-ways__card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 18px 40px -24px rgb(74 63 82 / 0.45);
-}
-
-.cm-ways__card .cm-mono-caption {
-  color: var(--cm-muted);
-}
-
-.cm-ways__card .cm-display-m {
-  margin-top: 1rem;
-}
-
-.cm-ways__card .cm-body-l {
-  margin-top: 0.75rem;
-  font-size: 1rem;
-}
-
-.cm-ways__open {
-  margin-top: 1.5rem;
-  display: inline-block;
-  font-family: var(--cm-font-mono);
-  font-size: 1rem;
-  letter-spacing: 0.01em;
-  color: var(--cm-amber);
-}
+/* Styles + animations live in sections/canmed-ways-in.liquid (HTML parity). */
 
 /* ---------- Locations ---------- */
 .cm-locations__grid {
@@ -1304,8 +1228,7 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
   background: var(--cm-ivory);
 }
 
-.cm-how__head,
-.cm-ways__head {
+.cm-how__head {
   max-width: 42rem;
 }
 
@@ -1348,7 +1271,6 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 .cm-header__account:focus-visible,
 .cm-header__menu-btn:focus-visible,
 .cm-announce__dismiss:focus-visible,
-.cm-ways__card:focus-visible,
 .cm-locations__phone:focus-visible,
 .cm-footer__legal-links a:focus-visible {
   outline: 2px solid var(--cm-amber);
@@ -1374,8 +1296,7 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cm-echo-dot,
-  .cm-ways__particle {
+  .cm-echo-dot {
     animation: none !important;
   }
 }

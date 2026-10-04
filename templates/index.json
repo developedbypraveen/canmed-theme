@@ -73,31 +73,31 @@
         "card_shop": {
           "type": "card",
           "settings": {
-            "accent": "amber",
+            "illustration": "shop",
             "label": "Shop",
             "title": "Compounded and stocked lines",
-            "body": "Browse by access tier — prescription only, pharmacist only, or over the counter.",
-            "link_label": "Open →"
+            "body": "Browse by access tier: prescription only, pharmacist only, or over the counter.",
+            "link_label": "Open"
           }
         },
         "card_rx": {
           "type": "card",
           "settings": {
-            "accent": "pine",
+            "illustration": "rx",
             "label": "Prescriptions",
             "title": "Send us your script",
             "body": "A four-step intake. Upload, choose your dispensary, and track it from there.",
-            "link_label": "Open →"
+            "link_label": "Open"
           }
         },
         "card_patients": {
           "type": "card",
           "settings": {
-            "accent": "sage",
-            "label": "For Patients",
+            "illustration": "patients",
+            "label": "For patients",
             "title": "What compounding actually is",
             "body": "Plain-language answers before you commit to anything.",
-            "link_label": "Open →"
+            "link_label": "Open"
           }
         }
       },
