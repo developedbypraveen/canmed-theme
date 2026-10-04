@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "banner": {
@@ -13,20 +22,80 @@
     "content": {
       "type": "canmed-vets",
       "blocks": {
-        "r1": { "type": "row", "settings": { "c1": "Feline", "c2": "Transdermal PLO, oral liquid", "c3": "Avoid: xylitol, benzyl alcohol, propylene glycol" } },
-        "r2": { "type": "row", "settings": { "c1": "Canine", "c2": "Flavoured chew, oral suspension", "c3": "Avoid: xylitol, chocolate-derived flavours" } },
-        "r3": { "type": "row", "settings": { "c1": "Equine", "c2": "Oral paste, bulk powder", "c3": "Excipient volume capped at 60 mL/dose" } },
-        "r4": { "type": "row", "settings": { "c1": "Avian / exotic", "c2": "Micro-dose suspension", "c3": "Compounded to 0.01 mg accuracy" } },
-        "c1": { "type": "card", "settings": { "title": "Practice ordering", "body": "Bulk practice orders accepted against a written direction. Minimum batch 5 units." } },
-        "c2": { "type": "card", "settings": { "title": "Turnaround", "body": "48 hours from approval. Courier to metro practices next business day." } },
-        "c3": { "type": "card", "settings": { "title": "Clinic contact", "body": "West Lakes (08) 8450 3978\nAdelaide (08) 7094 2268" } }
+        "r1": {
+          "type": "row",
+          "settings": {
+            "c1": "Feline",
+            "c2": "Transdermal PLO, oral liquid",
+            "c3": "Avoid: xylitol, benzyl alcohol, propylene glycol"
+          }
+        },
+        "r2": {
+          "type": "row",
+          "settings": {
+            "c1": "Canine",
+            "c2": "Flavoured chew, oral suspension",
+            "c3": "Avoid: xylitol, chocolate-derived flavours"
+          }
+        },
+        "r3": {
+          "type": "row",
+          "settings": {
+            "c1": "Equine",
+            "c2": "Oral paste, bulk powder",
+            "c3": "Excipient volume capped at 60 mL/dose"
+          }
+        },
+        "r4": {
+          "type": "row",
+          "settings": {
+            "c1": "Avian / exotic",
+            "c2": "Micro-dose suspension",
+            "c3": "Compounded to 0.01 mg accuracy"
+          }
+        },
+        "c1": {
+          "type": "card",
+          "settings": {
+            "title": "Practice ordering",
+            "body": "Bulk practice orders accepted against a written direction. Minimum batch 5 units."
+          }
+        },
+        "c2": {
+          "type": "card",
+          "settings": {
+            "title": "Turnaround",
+            "body": "48 hours from approval. Courier to metro practices next business day."
+          }
+        },
+        "c3": {
+          "type": "card",
+          "settings": {
+            "title": "Clinic contact",
+            "body": "West Lakes (08) 8450 3978\nAdelaide (08) 7094 2268"
+          }
+        }
       },
-      "block_order": ["r1", "r2", "r3", "r4", "c1", "c2", "c3"],
+      "block_order": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "c1",
+        "c2",
+        "c3"
+      ],
       "settings": {
+        "columns": "Species,Preferred forms,Excipient rules",
         "primary_label": "Open a practice account",
-        "secondary_label": "Human formulary"
+        "primary_link": "",
+        "secondary_label": "Human formulary",
+        "secondary_link": "shopify://pages/for-professionals"
       }
     }
   },
-  "order": ["banner", "content"]
+  "order": [
+    "banner",
+    "content"
+  ]
 }
