@@ -84,7 +84,7 @@
             "title": "Compounded and stocked lines",
             "body": "Browse by access tier — prescription only, pharmacist only, or over the counter.",
             "link_label": "Open →",
-            "link": ""
+            "link": "shopify://pages/shop"
           }
         },
         "card_rx": {
@@ -94,7 +94,7 @@
             "title": "Send us your script",
             "body": "A four-step intake. Upload, choose your dispensary, and track it from there.",
             "link_label": "Open →",
-            "link": ""
+            "link": "shopify://pages/prescriptions"
           }
         },
         "card_patients": {
