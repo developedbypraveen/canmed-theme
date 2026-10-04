@@ -395,6 +395,15 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
   cursor: pointer;
 }
 
+.cm-header__menu-btn svg {
+  display: block;
+  flex: none;
+}
+
+.cm-header__menu-btn svg[hidden] {
+  display: none !important;
+}
+
 @media (min-width: 1024px) {
   .cm-header__menu-btn {
     display: none;
