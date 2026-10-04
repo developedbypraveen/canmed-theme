@@ -41,21 +41,32 @@
             "hours_1_days": "Mon – Fri",
             "hours_1_time": "9:00 AM – 6:00 PM",
             "hours_2_days": "Sat – Sun & public holidays",
-            "hours_2_time": "Closed"
+            "hours_2_time": "Closed",
+            "hours_3_days": "Sunday & public holidays",
+            "hours_3_time": "Closed"
           }
         }
       },
-      "block_order": ["loc_west_lakes", "loc_adelaide"],
+      "block_order": [
+        "loc_west_lakes",
+        "loc_adelaide"
+      ],
       "settings": {
+        "logo": "shopify://shop_images/CanMed_Compounding_Chemist_Emblem_1.png",
         "brand_name": "CanMed",
         "brand_tagline": "Compounding Chemist",
         "tagline": "Medicines compounded to the person taking them, from our West Lakes and Adelaide clinics.",
         "show_compliance": true,
         "compliance_eyebrow": "Regulatory notice",
         "compliance_body": "Compounded medicines are prepared for an individual patient and are not evaluated by the TGA in the way registered products are. Nothing on this site is medical advice. Schedule 4 and Schedule 8 items are supplied only against a valid Australian prescription.",
-        "copyright": "CanMed Compounding Chemist. Pharmacy licence VIC-2291."
+        "copyright": "CanMed Compounding Chemist. Pharmacy licence VIC-2291.",
+        "link_privacy": "",
+        "link_terms": "",
+        "link_admin": ""
       }
     }
   },
-  "order": ["canmed_footer"]
+  "order": [
+    "canmed_footer"
+  ]
 }
