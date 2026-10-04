@@ -1,4 +1,4 @@
-{% comment %} CanMed — How it works (animated step route from HTML reference) {% endcomment %}
+{% comment %} CanMed — How it works (exact HTML reference + theme purple / Poppins) {% endcomment %}
 {%- liquid
   assign hiw_title = section.settings.heading | default: 'Four steps, and a pharmacist at every one.'
   assign hiw_line_1 = hiw_title
@@ -10,8 +10,174 @@
   endif
 -%}
 
+<style>
+/* ===== CanMed | How it works (scoped) — HTML parity, theme color + Poppins ===== */
+.cm-hiw{
+  --cm-plum:#9d3ec6;
+  --cm-plum-deep:#7a28a0;
+  --cm-plum-soft:#b96fd9;
+  --cm-lilac:#fae8f8;
+  --cm-line:#e4c4f0;
+  --cm-ink:#4a3f52;
+  --cm-muted:#6f6379;
+  --cm-bg:#ffffff;
+  --cm-display:'Poppins',ui-sans-serif,system-ui,sans-serif;
+  --cm-body:'Poppins',ui-sans-serif,system-ui,sans-serif;
+  --cm-move:1100ms;
+  --cm-ease:cubic-bezier(.65,0,.35,1);
+
+  position:relative;
+  background:var(--cm-bg);
+  color:var(--cm-ink);
+  font-family:var(--cm-body);
+  padding:clamp(56px,8vw,120px) clamp(20px,5vw,64px);
+  overflow:hidden;
+}
+.cm-hiw *,.cm-hiw *::before,.cm-hiw *::after{box-sizing:border-box}
+.cm-hiw h2,.cm-hiw h3,.cm-hiw p,.cm-hiw ol{margin:0;padding:0}
+.cm-hiw__inner{max-width:1240px;margin:0 auto}
+
+.cm-hiw__eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--cm-display);font-weight:500;font-size:15px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--cm-plum);
+  margin-bottom:22px;
+}
+.cm-hiw__eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--cm-plum)}
+
+.cm-hiw__title{
+  font-family:var(--cm-display);font-weight:600;
+  font-size:clamp(38px,5.6vw,78px);line-height:1.02;letter-spacing:-.03em;
+  color:var(--cm-plum) !important;
+}
+.cm-hiw__line{display:block;overflow:hidden;padding-bottom:.08em}
+.cm-hiw__line > span{display:block;transform:translateY(105%);transition:transform 900ms var(--cm-ease)}
+.cm-hiw__line:nth-child(2) > span{transition-delay:120ms}
+.cm-hiw.is-in .cm-hiw__line > span{transform:none}
+
+.cm-hiw__lead{
+  margin-top:22px !important;max-width:46ch;
+  font-size:clamp(17px,1.35vw,20px);line-height:1.55;color:var(--cm-muted);
+  opacity:0;transition:opacity 700ms ease 350ms;
+}
+.cm-hiw.is-in .cm-hiw__lead{opacity:1}
+
+.cm-hiw__steps{
+  position:relative;list-style:none;
+  margin-top:clamp(56px,6vw,88px) !important;
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  column-gap:clamp(24px,3vw,48px);
+}
+
+.cm-hiw__track{position:absolute;z-index:0;pointer-events:none;list-style:none}
+.cm-hiw__track-base,.cm-hiw__track-fill{position:absolute;inset:0}
+.cm-hiw__track-base{
+  background:repeating-linear-gradient(90deg,var(--cm-line) 0 7px,transparent 7px 13px);
+  transform-origin:left center;transform:scaleX(var(--cm-draw,0));
+  transition:transform 1300ms var(--cm-ease) 250ms;
+}
+.cm-hiw__track-fill{
+  background:var(--cm-plum);border-radius:2px;
+  transform-origin:left center;transform:scaleX(var(--cm-p,0));
+  transition:transform var(--cm-move) var(--cm-ease),opacity 500ms ease;
+}
+.cm-hiw.is-in{--cm-draw:1}
+.cm-hiw.is-vertical .cm-hiw__track-base{
+  background:repeating-linear-gradient(180deg,var(--cm-line) 0 7px,transparent 7px 13px);
+  transform-origin:center top;transform:scaleY(var(--cm-draw,0));
+}
+.cm-hiw.is-vertical .cm-hiw__track-fill{transform-origin:center top;transform:scaleY(var(--cm-p,0))}
+
+.cm-hiw__capsule{
+  position:absolute;top:0;left:0;z-index:1;
+  width:36px;height:16px;border-radius:99px;
+  background:linear-gradient(90deg,var(--cm-plum-deep) 0 50%,#fff 50% 100%);
+  border:2px solid var(--cm-plum-deep);
+  box-shadow:0 6px 14px -6px rgba(122,40,160,.55);
+  opacity:0;pointer-events:none;
+  transition:transform var(--cm-move) var(--cm-ease),opacity 500ms ease;
+}
+.cm-hiw.is-running .cm-hiw__capsule{opacity:1}
+.cm-hiw.is-resetting .cm-hiw__capsule,
+.cm-hiw.is-resetting .cm-hiw__track-fill{opacity:0}
+.cm-hiw.no-anim .cm-hiw__capsule,
+.cm-hiw.no-anim .cm-hiw__track-fill{transition:none !important}
+
+.cm-hiw__step{position:relative;z-index:2;outline:none;cursor:default;border-radius:14px}
+.cm-hiw__step:focus-visible{box-shadow:0 0 0 2px var(--cm-bg),0 0 0 4px var(--cm-plum)}
+
+.cm-hiw__node{
+  position:relative;display:grid;place-items:center;
+  width:72px;height:72px;border-radius:50%;
+  background:var(--cm-bg);border:1.5px solid var(--cm-line);color:var(--cm-plum);
+  transition:background 500ms ease,border-color 500ms ease,color 500ms ease,transform 500ms var(--cm-ease),box-shadow 500ms ease;
+}
+.cm-hiw__icon{width:32px;height:32px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.cm-hiw__icon *{stroke-dasharray:1;stroke-dashoffset:0}
+
+.cm-hiw__seal{
+  position:absolute;top:-2px;right:-4px;width:24px;height:24px;border-radius:50%;
+  display:grid;place-items:center;background:var(--cm-plum-deep);color:#fff;
+  box-shadow:0 0 0 3px var(--cm-bg);
+  transform:scale(0);transition:transform 450ms cubic-bezier(.34,1.56,.64,1);
+}
+.cm-hiw__seal svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+
+.cm-hiw__num{
+  display:block;margin-top:30px;
+  font-family:var(--cm-display);font-weight:500;font-size:14px;letter-spacing:.1em;
+  color:var(--cm-muted);transition:color 400ms ease;
+}
+.cm-hiw__name{
+  position:relative;display:inline-block;margin-top:10px !important;padding-bottom:10px;
+  font-family:var(--cm-display);font-weight:600;font-size:clamp(20px,1.6vw,23px);line-height:1.25;letter-spacing:-.01em;
+  color:var(--cm-plum) !important;
+}
+.cm-hiw__name::after{
+  content:"";position:absolute;left:0;bottom:0;height:2px;width:100%;
+  background:var(--cm-plum);transform:scaleX(0);transform-origin:left;
+  transition:transform 600ms var(--cm-ease);
+}
+.cm-hiw__text{margin-top:8px !important;max-width:32ch;font-size:16px;line-height:1.65;color:var(--cm-muted)}
+
+.cm-hiw__step.is-done .cm-hiw__node{background:var(--cm-lilac);border-color:var(--cm-plum-soft)}
+.cm-hiw__step.is-done .cm-hiw__seal,
+.cm-hiw__step.is-active .cm-hiw__seal{transform:scale(1)}
+.cm-hiw__step.is-active .cm-hiw__node{
+  background:var(--cm-plum);border-color:var(--cm-plum);color:#fff;transform:scale(1.08);
+  box-shadow:0 0 0 9px var(--cm-lilac),0 18px 34px -14px rgba(157,62,198,.6);
+}
+.cm-hiw__step.is-active .cm-hiw__icon *{animation:cmHiwDraw 1s var(--cm-ease) both}
+.cm-hiw__step.is-active .cm-hiw__num{color:var(--cm-plum)}
+.cm-hiw__step.is-active .cm-hiw__name::after{transform:scaleX(1)}
+@keyframes cmHiwDraw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+
+@media (max-width:900px){
+  .cm-hiw__steps{grid-template-columns:1fr;row-gap:44px}
+  .cm-hiw__step{display:grid;grid-template-columns:64px 1fr;column-gap:22px;align-items:start}
+  .cm-hiw__head{grid-row:1 / span 3}
+  .cm-hiw__node{width:64px;height:64px}
+  .cm-hiw__icon{width:27px;height:27px}
+  .cm-hiw__num{margin-top:4px}
+  .cm-hiw__text{max-width:44ch}
+  .cm-hiw__name{justify-self:start}
+}
+@media (max-width:600px){
+  .cm-hiw__line,.cm-hiw__line > span{display:inline;transform:none}
+  .cm-hiw__title{opacity:0;transition:opacity 700ms ease}
+  .cm-hiw.is-in .cm-hiw__title{opacity:1}
+}
+@media (prefers-reduced-motion:reduce){
+  .cm-hiw *,.cm-hiw *::before,.cm-hiw *::after{transition:none !important;animation:none !important}
+  .cm-hiw__line > span{transform:none}
+  .cm-hiw__lead{opacity:1}
+  .cm-hiw__capsule{display:none}
+}
+</style>
+
 <section
   class="cm-hiw"
+  id="cm-hiw-{{ section.id }}"
   data-cm-hiw
   aria-labelledby="cm-hiw-title-{{ section.id }}"
   {{ section.shopify_attributes }}
@@ -82,7 +248,7 @@
         {% endif %}
       {% endfor %}
 
-      <li class="cm-hiw__track" aria-hidden="true">
+      <li class="cm-hiw__track" aria-hidden="true" style="list-style:none">
         <span class="cm-hiw__track-base"></span>
         <span class="cm-hiw__track-fill"></span>
         <span class="cm-hiw__capsule"></span>
@@ -91,7 +257,145 @@
   </div>
 </section>
 
-<script src="{{ 'canmed-how-it-works.js' | asset_url }}" defer></script>
+<script>
+(function () {
+  var root = document.getElementById('cm-hiw-{{ section.id }}');
+  if (!root || root.dataset.cmHiwReady === '1') return;
+  root.dataset.cmHiwReady = '1';
+
+  var list = root.querySelector('.cm-hiw__steps');
+  var steps = [].slice.call(root.querySelectorAll('.cm-hiw__step'));
+  var nodes = steps.map(function (s) { return s.querySelector('.cm-hiw__node'); });
+  var track = root.querySelector('.cm-hiw__track');
+  var capsule = root.querySelector('.cm-hiw__capsule');
+  if (!list || !track || !capsule || steps.length < 2) return;
+
+  var last = steps.length - 1;
+  var MOVE = 1100, HOLD = 2500, END_HOLD = 3400;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var points = [], vertical = false, current = 0;
+  var loopT = null, arriveT = null, inView = false, held = false, started = false;
+
+  function measure() {
+    var box = list.getBoundingClientRect();
+    points = nodes.map(function (n) {
+      var r = n.getBoundingClientRect();
+      return { x: r.left - box.left + r.width / 2, y: r.top - box.top + r.height / 2 };
+    });
+    vertical = Math.abs(points[1].x - points[0].x) < 4;
+    root.classList.toggle('is-vertical', vertical);
+    var a = points[0], b = points[last];
+    if (vertical) {
+      track.style.cssText = 'list-style:none;left:' + (a.x - 1) + 'px;top:' + a.y + 'px;width:2px;height:' + (b.y - a.y) + 'px';
+    } else {
+      track.style.cssText = 'list-style:none;left:' + a.x + 'px;top:' + (a.y - 1) + 'px;height:2px;width:' + (b.x - a.x) + 'px';
+    }
+    jump(current);
+  }
+
+  function capsuleTransform(i) {
+    var p = points[i], a = points[0];
+    var dx = vertical ? 1 : p.x - a.x;
+    var dy = vertical ? p.y - a.y : 1;
+    return 'translate(' + dx + 'px,' + dy + 'px) translate(-50%,-50%) rotate(' + (vertical ? 90 : 0) + 'deg)';
+  }
+  function setProgress(i) {
+    root.style.setProperty('--cm-p', reduce ? '1' : String(i / last));
+    capsule.style.transform = capsuleTransform(i);
+  }
+  function setState(i) {
+    steps.forEach(function (s, k) {
+      s.classList.toggle('is-done', reduce ? true : k < i);
+      s.classList.toggle('is-active', !reduce && k === i);
+    });
+  }
+  function jump(i) {
+    root.classList.add('no-anim');
+    setProgress(i);
+    void root.offsetWidth;
+    root.classList.remove('no-anim');
+  }
+  function goTo(i) {
+    current = i;
+    setProgress(i);
+    clearTimeout(arriveT);
+    arriveT = setTimeout(function () { setState(i); }, MOVE * 0.8);
+  }
+  function restart() {
+    root.classList.add('is-resetting');
+    setTimeout(function () {
+      setState(-1);
+      current = 0;
+      jump(0);
+      root.classList.remove('is-resetting');
+      setTimeout(function () { setState(0); }, 350);
+    }, 650);
+  }
+  function tick() {
+    if (current >= last) restart();
+    else goTo(current + 1);
+    schedule();
+  }
+  function schedule() {
+    clearTimeout(loopT);
+    if (!inView || held || reduce) return;
+    loopT = setTimeout(tick, current >= last ? END_HOLD : HOLD);
+  }
+
+  steps.forEach(function (s, k) {
+    function pick() {
+      held = true;
+      clearTimeout(loopT);
+      if (k !== current) goTo(k);
+    }
+    s.addEventListener('mouseenter', pick);
+    s.addEventListener('focus', pick);
+    s.addEventListener('click', pick);
+  });
+  list.addEventListener('mouseleave', function () { held = false; schedule(); });
+  list.addEventListener('focusout', function (e) {
+    if (!list.contains(e.relatedTarget)) { held = false; schedule(); }
+  });
+
+  function begin() {
+    if (started) return;
+    started = true;
+    inView = true;
+    root.classList.add('is-in');
+    if (reduce) { setState(0); setProgress(last); return; }
+    setTimeout(function () {
+      root.classList.add('is-running');
+      setState(0);
+      schedule();
+    }, 1200);
+  }
+
+  setState(-1);
+  measure();
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      inView = entries[0].isIntersecting;
+      if (inView && !started) begin();
+      else schedule();
+    }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' }).observe(root);
+  } else {
+    begin();
+  }
+
+  /* Always start even if observer never fires (theme editor / tall hero) */
+  setTimeout(function () {
+    if (!started) begin();
+  }, 800);
+
+  var rT;
+  window.addEventListener('resize', function () {
+    clearTimeout(rT);
+    rT = setTimeout(measure, 120);
+  });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+})();
+</script>
 
 {% schema %}
 {
