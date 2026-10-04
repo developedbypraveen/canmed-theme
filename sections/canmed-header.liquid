@@ -9,11 +9,11 @@
       {% if section.settings.logo != blank %}
         {{
           section.settings.logo
-          | image_url: width: 132
+          | image_url: width: 168
           | image_tag:
             class: 'cm-header__logo',
-            widths: '44, 88, 132',
-            sizes: '44px',
+            widths: '44, 56, 88, 112, 168',
+            sizes: '(max-width: 767px) 56px, 44px',
             loading: 'eager',
             alt: shop.name
         }}
@@ -22,8 +22,8 @@
           class="cm-header__logo"
           src="{{ 'canmed-logo.png' | asset_url }}"
           alt="{{ shop.name | escape }}"
-          width="44"
-          height="44"
+          width="56"
+          height="56"
           loading="eager"
         >
       {% endif %}
