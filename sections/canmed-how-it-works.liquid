@@ -16,7 +16,7 @@
   aria-labelledby="cm-hiw-title-{{ section.id }}"
   {{ section.shopify_attributes }}
 >
-  <div class="cm-hiw__inner cm-shell">
+  <div class="cm-hiw__inner">
     {% if section.settings.eyebrow != blank %}
       <p class="cm-hiw__eyebrow">{{ section.settings.eyebrow | escape }}</p>
     {% endif %}
@@ -96,7 +96,7 @@
 {% schema %}
 {
   "name": "CanMed — How it works",
-  "tag": "section",
+  "tag": "div",
   "class": "cm-section-how",
   "max_blocks": 8,
   "settings": [

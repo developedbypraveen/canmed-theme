@@ -626,16 +626,7 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
   }
 }
 
-/* Equal gap into the next homepage section after the trust strip was removed */
-.shopify-section:has(.cm-hero) + .shopify-section > .cm-hiw {
-  padding-top: 2.5rem;
-}
-
-@media (min-width: 768px) {
-  .shopify-section:has(.cm-hero) + .shopify-section > .cm-hiw {
-    padding-top: 4rem;
-  }
-}
+/* Keep How-it-works padding identical to the HTML reference (no hero crush) */
 
 .cm-hero__grid {
   display: grid;
@@ -751,24 +742,24 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
   margin-top: 0.5rem;
 }
 
-/* ---------- How it works (animated route) ---------- */
+/* ---------- How it works (animated route — HTML parity, theme color + Poppins) ---------- */
 .cm-hiw {
-  --cm-hiw-plum: var(--cm-pine);
-  --cm-hiw-plum-deep: var(--cm-pine-dark);
-  --cm-hiw-plum-soft: var(--cm-sage);
-  --cm-hiw-lilac: var(--cm-amber-light);
-  --cm-hiw-line: color-mix(in oklab, var(--cm-pine) 22%, #ffffff);
-  --cm-hiw-ink: var(--cm-charcoal);
-  --cm-hiw-muted: var(--cm-muted);
-  --cm-hiw-bg: var(--cm-ivory);
-  --cm-hiw-font: var(--cm-font-body);
-  --cm-hiw-move: 1100ms;
-  --cm-hiw-ease: cubic-bezier(0.65, 0, 0.35, 1);
+  --cm-plum: var(--cm-pine);
+  --cm-plum-deep: var(--cm-pine-dark);
+  --cm-plum-soft: var(--cm-sage);
+  --cm-lilac: var(--cm-amber-light);
+  --cm-line: color-mix(in srgb, var(--cm-pine) 28%, #ffffff);
+  --cm-ink: var(--cm-charcoal);
+  --cm-bg: var(--cm-ivory);
+  --cm-display: var(--cm-font-display);
+  --cm-body: var(--cm-font-body);
+  --cm-move: 1100ms;
+  --cm-ease: cubic-bezier(0.65, 0, 0.35, 1);
   position: relative;
-  background: var(--cm-hiw-bg);
-  color: var(--cm-hiw-ink);
-  font-family: var(--cm-hiw-font);
-  padding: clamp(56px, 8vw, 120px) 0;
+  background: var(--cm-bg);
+  color: var(--cm-ink);
+  font-family: var(--cm-body);
+  padding: clamp(56px, 8vw, 120px) clamp(20px, 5vw, 64px);
   overflow: hidden;
 }
 
@@ -787,7 +778,7 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 }
 
 .cm-hiw__inner {
-  max-width: var(--cm-shell);
+  max-width: 1240px;
   margin: 0 auto;
 }
 
@@ -795,12 +786,12 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-family: var(--cm-hiw-font);
+  font-family: var(--cm-display);
   font-weight: 500;
   font-size: 15px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--cm-hiw-plum);
+  color: var(--cm-plum);
   margin-bottom: 22px;
 }
 
@@ -809,16 +800,16 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--cm-hiw-plum);
+  background: var(--cm-plum);
 }
 
 .cm-hiw__title {
-  font-family: var(--cm-hiw-font);
+  font-family: var(--cm-display);
   font-weight: 600;
   font-size: clamp(38px, 5.6vw, 78px);
   line-height: 1.02;
   letter-spacing: -0.03em;
-  color: var(--cm-hiw-plum);
+  color: var(--cm-plum);
 }
 
 .cm-hiw__line {
@@ -830,7 +821,7 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 .cm-hiw__line > span {
   display: block;
   transform: translateY(105%);
-  transition: transform 900ms var(--cm-hiw-ease);
+  transition: transform 900ms var(--cm-ease);
 }
 
 .cm-hiw__line:nth-child(2) > span {
@@ -846,7 +837,7 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
   max-width: 46ch;
   font-size: clamp(17px, 1.35vw, 20px);
   line-height: 1.55;
-  color: var(--cm-hiw-muted);
+  color: var(--cm-muted);
   opacity: 0;
   transition: opacity 700ms ease 350ms;
 }
@@ -868,6 +859,7 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
   position: absolute;
   z-index: 0;
   pointer-events: none;
+  list-style: none;
 }
 
 .cm-hiw__track-base,
@@ -879,21 +871,21 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 .cm-hiw__track-base {
   background: repeating-linear-gradient(
     90deg,
-    var(--cm-hiw-line) 0 7px,
+    var(--cm-line) 0 7px,
     transparent 7px 13px
   );
   transform-origin: left center;
   transform: scaleX(var(--cm-draw, 0));
-  transition: transform 1300ms var(--cm-hiw-ease) 250ms;
+  transition: transform 1300ms var(--cm-ease) 250ms;
 }
 
 .cm-hiw__track-fill {
-  background: var(--cm-hiw-plum);
+  background: var(--cm-plum);
   border-radius: 2px;
   transform-origin: left center;
   transform: scaleX(var(--cm-p, 0));
   transition:
-    transform var(--cm-hiw-move) var(--cm-hiw-ease),
+    transform var(--cm-move) var(--cm-ease),
     opacity 500ms ease;
 }
 
@@ -904,7 +896,7 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 .cm-hiw.is-vertical .cm-hiw__track-base {
   background: repeating-linear-gradient(
     180deg,
-    var(--cm-hiw-line) 0 7px,
+    var(--cm-line) 0 7px,
     transparent 7px 13px
   );
   transform-origin: center top;
@@ -926,15 +918,15 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
   border-radius: 99px;
   background: linear-gradient(
     90deg,
-    var(--cm-hiw-plum-deep) 0 50%,
+    var(--cm-plum-deep) 0 50%,
     #fff 50% 100%
   );
-  border: 2px solid var(--cm-hiw-plum-deep);
-  box-shadow: 0 6px 14px -6px rgb(122 40 160 / 0.55);
+  border: 2px solid var(--cm-plum-deep);
+  box-shadow: 0 6px 14px -6px color-mix(in srgb, var(--cm-plum-deep) 55%, transparent);
   opacity: 0;
   pointer-events: none;
   transition:
-    transform var(--cm-hiw-move) var(--cm-hiw-ease),
+    transform var(--cm-move) var(--cm-ease),
     opacity 500ms ease;
 }
 
@@ -962,8 +954,8 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 
 .cm-hiw__step:focus-visible {
   box-shadow:
-    0 0 0 2px var(--cm-hiw-bg),
-    0 0 0 4px var(--cm-hiw-plum);
+    0 0 0 2px var(--cm-bg),
+    0 0 0 4px var(--cm-plum);
 }
 
 .cm-hiw__node {
@@ -973,14 +965,14 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  background: var(--cm-hiw-bg);
-  border: 1.5px solid var(--cm-hiw-line);
-  color: var(--cm-hiw-plum);
+  background: var(--cm-bg);
+  border: 1.5px solid var(--cm-line);
+  color: var(--cm-plum);
   transition:
     background 500ms ease,
     border-color 500ms ease,
     color 500ms ease,
-    transform 500ms var(--cm-hiw-ease),
+    transform 500ms var(--cm-ease),
     box-shadow 500ms ease;
 }
 
@@ -1008,9 +1000,9 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: var(--cm-hiw-plum-deep);
+  background: var(--cm-plum-deep);
   color: #fff;
-  box-shadow: 0 0 0 3px var(--cm-hiw-bg);
+  box-shadow: 0 0 0 3px var(--cm-bg);
   transform: scale(0);
   transition: transform 450ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -1028,11 +1020,11 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 .cm-hiw__num {
   display: block;
   margin-top: 30px;
-  font-family: var(--cm-hiw-font);
+  font-family: var(--cm-display);
   font-weight: 500;
   font-size: 14px;
   letter-spacing: 0.1em;
-  color: var(--cm-hiw-muted);
+  color: var(--cm-muted);
   transition: color 400ms ease;
 }
 
@@ -1041,12 +1033,12 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
   display: inline-block;
   margin-top: 10px !important;
   padding-bottom: 10px;
-  font-family: var(--cm-hiw-font);
+  font-family: var(--cm-display);
   font-weight: 600;
   font-size: clamp(20px, 1.6vw, 23px);
   line-height: 1.25;
   letter-spacing: -0.01em;
-  color: var(--cm-hiw-plum);
+  color: var(--cm-plum);
 }
 
 .cm-hiw__name::after {
@@ -1056,10 +1048,10 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
   bottom: 0;
   height: 2px;
   width: 100%;
-  background: var(--cm-hiw-plum);
+  background: var(--cm-plum);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 600ms var(--cm-hiw-ease);
+  transition: transform 600ms var(--cm-ease);
 }
 
 .cm-hiw__text {
@@ -1067,12 +1059,12 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
   max-width: 32ch;
   font-size: 16px;
   line-height: 1.65;
-  color: var(--cm-hiw-muted);
+  color: var(--cm-muted);
 }
 
 .cm-hiw__step.is-done .cm-hiw__node {
-  background: var(--cm-hiw-lilac);
-  border-color: var(--cm-hiw-plum-soft);
+  background: var(--cm-lilac);
+  border-color: var(--cm-plum-soft);
 }
 
 .cm-hiw__step.is-done .cm-hiw__seal,
@@ -1081,28 +1073,28 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 }
 
 .cm-hiw__step.is-active .cm-hiw__node {
-  background: var(--cm-hiw-plum);
-  border-color: var(--cm-hiw-plum);
+  background: var(--cm-plum);
+  border-color: var(--cm-plum);
   color: #fff;
   transform: scale(1.08);
   box-shadow:
-    0 0 0 9px var(--cm-hiw-lilac),
-    0 18px 34px -14px rgb(157 62 198 / 0.55);
+    0 0 0 9px var(--cm-lilac),
+    0 18px 34px -14px color-mix(in srgb, var(--cm-plum) 60%, transparent);
 }
 
 .cm-hiw__step.is-active .cm-hiw__icon * {
-  animation: cm-hiw-draw 1s var(--cm-hiw-ease) both;
+  animation: cmDraw 1s var(--cm-ease) both;
 }
 
 .cm-hiw__step.is-active .cm-hiw__num {
-  color: var(--cm-hiw-plum);
+  color: var(--cm-plum);
 }
 
 .cm-hiw__step.is-active .cm-hiw__name::after {
   transform: scaleX(1);
 }
 
-@keyframes cm-hiw-draw {
+@keyframes cmDraw {
   from {
     stroke-dashoffset: 1;
   }
