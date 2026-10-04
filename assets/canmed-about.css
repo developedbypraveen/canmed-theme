@@ -29,9 +29,15 @@
 
 
 /* ---------- HERO ---------- */
+.cm-au-hero,
+.cm-au-std,
+.cm-au-loc,
+.cm-au-cta{
+  --cm-au-gap:clamp(64px,8vw,96px);
+}
 .cm-au-hero{
   position:relative;isolation:isolate;overflow:hidden;
-  padding:clamp(72px,10vw,128px) 0 clamp(56px,7vw,88px);
+  padding:var(--cm-au-gap) 0 calc(var(--cm-au-gap) / 2);
   background:#fff;
 }
 .cm-au-hero__aurora{position:absolute;inset:0;z-index:0;pointer-events:none}
@@ -124,7 +130,7 @@
 /* ---------- STANDARDS ---------- */
 .cm-au-std{
   position:relative;isolation:isolate;overflow:hidden;
-  padding:clamp(64px,8vw,112px) 0;
+  padding:calc(var(--cm-au-gap, clamp(64px,8vw,96px)) / 2) 0;
   background:#fff;border-top:1px solid var(--cm-line);
 }
 .cm-au-std__wash{
@@ -239,7 +245,7 @@
 
 /* ---------- LOCATIONS ---------- */
 .cm-au-loc{
-  position:relative;padding:clamp(64px,8vw,112px) 0;background:#fff;overflow:hidden;
+  position:relative;padding:calc(var(--cm-au-gap, clamp(64px,8vw,96px)) / 2) 0;background:#fff;overflow:hidden;
 }
 .cm-au-loc__aurora{position:absolute;inset:0;pointer-events:none;z-index:0}
 .cm-au-loc__aurora span{position:absolute;border-radius:50%;filter:blur(90px);opacity:.22}
@@ -343,7 +349,7 @@
 
 /* ---------- CTA ---------- */
 .cm-au-cta{
-  position:relative;padding:0 0 clamp(72px,9vw,120px);background:#fff;
+  position:relative;padding:calc(var(--cm-au-gap, clamp(64px,8vw,96px)) / 2) 0 var(--cm-au-gap, clamp(64px,8vw,96px));background:#fff;
 }
 .cm-au-cta__band{
   position:relative;overflow:hidden;border-radius:32px;
