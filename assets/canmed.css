@@ -13,7 +13,7 @@
   --cm-hairline: rgb(74 63 82 / 0.14);
   --cm-glass: rgb(255 255 255 / 0.78);
   --cm-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
-  --cm-font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --cm-font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
   --cm-font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
   --cm-font-mono: "Poppins", ui-sans-serif, system-ui, sans-serif;
   --cm-shell: 1240px;
@@ -27,6 +27,27 @@ body:has(.cm-hero) {
   font-family: var(--cm-font-body);
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
+}
+
+body.cm-brand h1,
+body.cm-brand h2,
+body.cm-brand h3,
+body.cm-brand h4,
+body.cm-brand h5,
+body.cm-brand h6,
+body:has(.cm-header) h1,
+body:has(.cm-header) h2,
+body:has(.cm-header) h3,
+body:has(.cm-header) h4,
+body:has(.cm-header) h5,
+body:has(.cm-header) h6,
+body:has(.cm-hero) h1,
+body:has(.cm-hero) h2,
+body:has(.cm-hero) h3,
+body:has(.cm-hero) h4,
+body:has(.cm-hero) h5,
+body:has(.cm-hero) h6 {
+  font-family: var(--cm-font-body);
 }
 
 .cm-shell {
