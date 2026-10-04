@@ -20,34 +20,6 @@
         "image_alt": "A glass amber tincture vessel"
       }
     },
-    "canmed_trust": {
-      "type": "canmed-trust-strip",
-      "blocks": {
-        "trust_1": {
-          "type": "trust_item",
-          "settings": {
-            "label": "Two clinics",
-            "value": "West Lakes · Adelaide"
-          }
-        },
-        "trust_2": {
-          "type": "trust_item",
-          "settings": {
-            "label": "Pharmacist compounded",
-            "value": "AACP-trained, PSA registered"
-          }
-        },
-        "trust_3": {
-          "type": "trust_item",
-          "settings": {
-            "label": "Compliance",
-            "value": "Pharmacy licence VIC-2291"
-          }
-        }
-      },
-      "block_order": ["trust_1", "trust_2", "trust_3"],
-      "settings": {}
-    },
     "canmed_how": {
       "type": "canmed-how-it-works",
       "blocks": {
@@ -175,7 +147,6 @@
   },
   "order": [
     "canmed_hero",
-    "canmed_trust",
     "canmed_how",
     "canmed_ways",
     "canmed_locations"
