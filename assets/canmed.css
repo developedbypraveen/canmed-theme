@@ -642,6 +642,13 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 
 .cm-hero__copy .cm-display-xl {
   margin-top: 1.5rem;
+  line-height: 1.16;
+}
+
+@media (min-width: 768px) {
+  .cm-hero__copy .cm-display-xl {
+    line-height: 1.05;
+  }
 }
 
 .cm-hero__lede {
