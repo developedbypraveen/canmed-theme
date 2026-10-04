@@ -1,46 +1,97 @@
-<section class="cm-how cm-section" {{ section.shopify_attributes }}>
-  <div class="cm-shell">
-    <div class="cm-how__head">
-      {% if section.settings.eyebrow != blank %}
-        <p class="cm-eyebrow">{{ section.settings.eyebrow | escape }}</p>
-      {% endif %}
-      {% if section.settings.heading != blank %}
-        <h2 class="cm-display-l">{{ section.settings.heading | escape }}</h2>
-      {% endif %}
-      {% if section.settings.lede != blank %}
-        <p class="cm-body-l">{{ section.settings.lede | escape }}</p>
-      {% endif %}
-    </div>
+{% comment %} CanMed — How it works (animated step route from HTML reference) {% endcomment %}
+{%- liquid
+  assign hiw_title = section.settings.heading | default: 'Four steps, and a pharmacist at every one.'
+  assign hiw_line_1 = hiw_title
+  assign hiw_line_2 = ''
+  if hiw_title contains ', and a '
+    assign hiw_parts = hiw_title | split: ', and a '
+    assign hiw_line_1 = hiw_parts[0] | append: ', and a'
+    assign hiw_line_2 = hiw_parts[1]
+  endif
+-%}
 
-    <ol class="cm-how__steps">
+<section
+  class="cm-hiw"
+  data-cm-hiw
+  aria-labelledby="cm-hiw-title-{{ section.id }}"
+  {{ section.shopify_attributes }}
+>
+  <div class="cm-hiw__inner cm-shell">
+    {% if section.settings.eyebrow != blank %}
+      <p class="cm-hiw__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+    {% endif %}
+
+    {% if hiw_title != blank %}
+      <h2 class="cm-hiw__title" id="cm-hiw-title-{{ section.id }}">
+        {% if hiw_line_2 != blank %}
+          <span class="cm-hiw__line"><span>{{ hiw_line_1 | escape }}</span></span>
+          <span class="cm-hiw__line"><span>{{ hiw_line_2 | escape }}</span></span>
+        {% else %}
+          <span class="cm-hiw__line"><span>{{ hiw_title | escape }}</span></span>
+        {% endif %}
+      </h2>
+    {% endif %}
+
+    {% if section.settings.lede != blank %}
+      <p class="cm-hiw__lead">{{ section.settings.lede | escape }}</p>
+    {% endif %}
+
+    <ol class="cm-hiw__steps">
       {% for block in section.blocks %}
-        <li class="cm-how__step" {{ block.shopify_attributes }}>
-          <div class="cm-how__step-top">
-            <span class="cm-how__num">{{ block.settings.number | escape }}</span>
-            <span class="cm-how__icon" aria-hidden="true">
-              {% case block.settings.icon %}
-                {% when 'review' %}
-                  {% render 'canmed-icon-review' %}
-                {% when 'flask' %}
-                  {% render 'canmed-icon-flask' %}
-                {% when 'delivery' %}
-                  {% render 'canmed-icon-delivery' %}
-                {% else %}
-                  {% render 'canmed-icon-script' %}
-              {% endcase %}
-            </span>
-          </div>
-          {% if block.settings.title != blank %}
-            <h3 class="cm-how__step-title">{{ block.settings.title | escape }}</h3>
-          {% endif %}
-          {% if block.settings.body != blank %}
-            <p class="cm-how__step-body">{{ block.settings.body | escape }}</p>
-          {% endif %}
-        </li>
+        {% if block.type == 'step' %}
+          <li class="cm-hiw__step" tabindex="0" {{ block.shopify_attributes }}>
+            <div class="cm-hiw__head">
+              <span class="cm-hiw__node">
+                <svg class="cm-hiw__icon" viewBox="0 0 24 24" aria-hidden="true">
+                  {% case block.settings.icon %}
+                    {% when 'review' %}
+                      <circle pathLength="1" cx="10.5" cy="10.5" r="6.5"></circle>
+                      <path pathLength="1" d="M15.5 15.5 20.5 20.5"></path>
+                      <path pathLength="1" d="M7.8 10.6l1.9 1.9 3.6-3.8"></path>
+                    {% when 'flask' %}
+                      <path pathLength="1" d="M9 3h6"></path>
+                      <path pathLength="1" d="M10 3v6.2l-4.9 8.4A2 2 0 0 0 6.8 20.6h10.4a2 2 0 0 0 1.7-3L14 9.2V3"></path>
+                      <path pathLength="1" d="M7.6 14.6h8.8"></path>
+                    {% when 'delivery' %}
+                      <path pathLength="1" d="M2.5 6h11.5v10H2.5z"></path>
+                      <path pathLength="1" d="M14 9h4l3.5 3.8V16H14"></path>
+                      <circle pathLength="1" cx="6.5" cy="17.6" r="1.9"></circle>
+                      <circle pathLength="1" cx="17.5" cy="17.6" r="1.9"></circle>
+                    {% else %}
+                      <path pathLength="1" d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path>
+                      <path pathLength="1" d="M14 3v5h5"></path>
+                      <path pathLength="1" d="M12 17.5v-6"></path>
+                      <path pathLength="1" d="M9.5 14 12 11.5l2.5 2.5"></path>
+                  {% endcase %}
+                </svg>
+                <span class="cm-hiw__seal" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+                </span>
+              </span>
+            </div>
+            {% if block.settings.number != blank %}
+              <span class="cm-hiw__num">{{ block.settings.number | escape }}</span>
+            {% endif %}
+            {% if block.settings.title != blank %}
+              <h3 class="cm-hiw__name">{{ block.settings.title | escape }}</h3>
+            {% endif %}
+            {% if block.settings.body != blank %}
+              <p class="cm-hiw__text">{{ block.settings.body | escape }}</p>
+            {% endif %}
+          </li>
+        {% endif %}
       {% endfor %}
+
+      <li class="cm-hiw__track" aria-hidden="true">
+        <span class="cm-hiw__track-base"></span>
+        <span class="cm-hiw__track-fill"></span>
+        <span class="cm-hiw__capsule"></span>
+      </li>
     </ol>
   </div>
 </section>
+
+<script src="{{ 'canmed-how-it-works.js' | asset_url }}" defer></script>
 
 {% schema %}
 {
@@ -59,7 +110,8 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Four steps, and a pharmacist at every one."
+      "default": "Four steps, and a pharmacist at every one.",
+      "info": "If the heading includes “, and a ”, it splits onto two lines for the entrance animation."
     },
     {
       "type": "textarea",
