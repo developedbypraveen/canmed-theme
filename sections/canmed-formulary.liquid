@@ -1,123 +1,519 @@
-<section class="cm-section" {{ section.shopify_attributes }}>
-  <div class="cm-shell">
-    <div class="cm-pro-toolbar">
+{% comment %} CanMed — Base formulary (exact HTML dark cards + theme purple / Poppins) {% endcomment %}
+
+<style>
+/* ===== CanMed | Base formulary (scoped) — HTML parity, theme color + Poppins ===== */
+.cm-bf{
+  --cm-night:#24092F;
+  --cm-deep:#7a28a0;
+  --cm-plum:#9d3ec6;
+  --cm-orchid:#c850d1;
+  --cm-pink:#e08af2;
+  --cm-soft:#e0b8f0;
+  --cm-lilac:#fae8f8;
+  --cm-text:#FFFFFF;
+  --cm-sub:#DCC7E8;
+  --cm-wl:#E08AF2;
+  --cm-adl:#B9A2FF;
+  --cm-display:'Poppins',ui-sans-serif,system-ui,sans-serif;
+  --cm-body:'Poppins',ui-sans-serif,system-ui,sans-serif;
+  --cm-ease:cubic-bezier(.22,1,.36,1);
+
+  position:relative;overflow:hidden;isolation:isolate;
+  background:radial-gradient(120% 90% at 0% 0%,#3B0F52 0%,var(--cm-night) 55%,#1A0723 100%);
+  color:var(--cm-text);font-family:var(--cm-body);
+  padding:clamp(64px,8vw,120px) clamp(20px,5vw,64px);
+}
+.cm-bf *,.cm-bf *::before,.cm-bf *::after{box-sizing:border-box}
+.cm-bf :where(h2,h3,p){margin:0;padding:0}
+.cm-bf__inner{position:relative;z-index:1;max-width:1240px;margin:0 auto}
+
+.cm-bf__aurora{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.cm-bf__aurora span{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;animation:cmBfDrift 22s ease-in-out infinite alternate}
+.cm-bf__aurora span:nth-child(1){width:520px;height:520px;left:-120px;top:-160px;background:#9d3ec6}
+.cm-bf__aurora span:nth-child(2){width:460px;height:460px;right:-140px;top:30%;background:#c850d1;animation-duration:26s;animation-delay:-8s;opacity:.4}
+.cm-bf__aurora span:nth-child(3){width:420px;height:420px;left:35%;bottom:-220px;background:#7a28a0;animation-duration:30s;animation-delay:-14s;opacity:.45}
+@keyframes cmBfDrift{0%{transform:translate(0,0) scale(1)}50%{transform:translate(80px,40px) scale(1.12)}100%{transform:translate(-40px,90px) scale(.95)}}
+.cm-bf__grain{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1px);background-size:22px 22px;
+  -webkit-mask-image:linear-gradient(180deg,#000,transparent 85%);mask-image:linear-gradient(180deg,#000,transparent 85%)}
+
+.cm-bf__top{display:flex;align-items:flex-end;justify-content:space-between;gap:28px;flex-wrap:wrap}
+.cm-bf__eyebrow{
+  display:inline-flex;align-items:center;gap:10px;margin-bottom:16px;
+  font-family:var(--cm-display);font-weight:500;font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:var(--cm-pink);
+}
+.cm-bf__eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--cm-pink);box-shadow:0 0 12px var(--cm-pink)}
+.cm-bf__title{
+  font-family:var(--cm-display);font-weight:600;font-size:clamp(36px,4.6vw,64px);line-height:1.02;letter-spacing:-.035em;
+  overflow:hidden;padding-bottom:.08em;color:#fff !important;
+}
+.cm-bf__title span{display:block;transform:translateY(105%);transition:transform 1000ms var(--cm-ease)}
+.cm-bf.is-in .cm-bf__title span{transform:none}
+
+.cm-bf__actions{display:flex;gap:12px;flex-wrap:wrap}
+.cm-bf__btn{
+  position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  height:56px;padding:0 28px;border-radius:999px;text-decoration:none !important;
+  font-weight:600;font-size:16px;transition:transform 400ms var(--cm-ease),background 300ms ease,box-shadow 400ms ease;
+}
+.cm-bf__btn--ghost{color:#fff !important;border:1.5px solid rgba(255,255,255,.28);background:rgba(255,255,255,.06);backdrop-filter:blur(8px)}
+.cm-bf__btn--ghost:hover{background:rgba(255,255,255,.14);color:#fff !important}
+.cm-bf__btn--solid{color:var(--cm-deep) !important;background:#fff;box-shadow:0 14px 40px -12px rgba(224,138,242,.7)}
+.cm-bf__btn--solid::after{
+  content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;
+  background:linear-gradient(100deg,transparent,rgba(200,80,209,.35),transparent);transform:skewX(-20deg);
+  animation:cmBfShine 4.5s ease-in-out infinite 2s;
+}
+@keyframes cmBfShine{0%,70%{left:-60%}100%{left:130%}}
+.cm-bf__btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform 400ms var(--cm-ease)}
+.cm-bf__btn:hover{transform:translateY(-2px)}
+.cm-bf__btn:hover svg{transform:translateX(4px)}
+.cm-bf__btn:focus-visible{outline:2px solid #fff;outline-offset:3px}
+
+.cm-bf__grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.8vw,22px);
+  margin-top:clamp(40px,5vw,64px);perspective:1200px;
+}
+.cm-bf__card{
+  --mx:50%;--my:50%;--rx:0deg;--ry:0deg;
+  position:relative;border-radius:26px;padding:24px 24px 22px;
+  background:linear-gradient(160deg,rgba(255,255,255,.11),rgba(255,255,255,.035));
+  border:1px solid rgba(255,255,255,.14);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  transform-style:preserve-3d;outline:none;
+  opacity:0;transform:translateY(40px) rotateX(10deg);
+  transition:opacity 700ms ease,transform 900ms var(--cm-ease),border-color 400ms ease,box-shadow 400ms ease,filter 400ms ease;
+  transition-delay:calc(var(--i) * 90ms + 300ms),calc(var(--i) * 90ms + 300ms),0s,0s,0s;
+}
+.cm-bf.is-in .cm-bf__card{opacity:1;transform:rotateX(var(--rx)) rotateY(var(--ry))}
+.cm-bf.is-in .cm-bf__card.is-tilting{transition:opacity 0s,transform 120ms linear,border-color 400ms ease,box-shadow 400ms ease,filter 400ms ease}
+.cm-bf__card::before{
+  content:"";position:absolute;inset:-1px;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(340px circle at var(--mx) var(--my),rgba(224,138,242,.28),transparent 60%);
+  opacity:0;transition:opacity 400ms ease;
+}
+.cm-bf__card:hover::before,.cm-bf__card:focus-visible::before{opacity:1}
+.cm-bf__card:hover,.cm-bf__card:focus-visible{border-color:rgba(224,138,242,.55);box-shadow:0 30px 60px -30px rgba(0,0,0,.6),0 0 0 1px rgba(224,138,242,.15)}
+
+.cm-bf__row{position:relative;display:flex;align-items:center;justify-content:space-between;gap:12px;transform:translateZ(30px)}
+.cm-bf__code{
+  display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);
+  font-family:var(--cm-display);font-weight:600;font-size:13.5px;letter-spacing:.06em;color:#fff;font-variant-numeric:tabular-nums;
+}
+.cm-bf__icon{width:22px;height:22px;fill:none;stroke:var(--cm-pink);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+.cm-bf__dial{position:relative;width:62px;height:62px;flex:none}
+.cm-bf__dial svg{width:100%;height:100%;transform:rotate(-90deg)}
+.cm-bf__dial circle{fill:none;stroke-width:5}
+.cm-bf__dial .track{stroke:rgba(255,255,255,.12)}
+.cm-bf__dial .fill{stroke:url(#cmBfGrad-{{ section.id }});stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;
+  transition:stroke-dashoffset 1400ms var(--cm-ease);transition-delay:calc(var(--i) * 90ms + 900ms)}
+.cm-bf.is-in .cm-bf__dial .fill{stroke-dashoffset:calc(1 - var(--v))}
+.cm-bf__dial b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--cm-display);font-weight:600;font-size:14px;letter-spacing:-.01em;color:#fff}
+
+.cm-bf__form{margin-top:22px !important;font-family:var(--cm-display);font-weight:600;font-size:clamp(22px,1.9vw,27px);line-height:1.12;letter-spacing:-.02em;transform:translateZ(24px);color:#fff !important}
+.cm-bf__base{margin-top:6px !important;font-size:15.5px;color:var(--cm-sub);transform:translateZ(18px)}
+
+.cm-bf__foot{
+  margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.12);
+  display:flex;align-items:flex-end;justify-content:space-between;gap:12px;transform:translateZ(20px)
+}
+.cm-bf__label{display:block;font-family:var(--cm-display);font-weight:500;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--cm-sub);opacity:.8;margin-bottom:5px}
+.cm-bf__range{
+  font-family:var(--cm-display);font-weight:700;font-size:clamp(20px,1.7vw,24px);letter-spacing:-.02em;white-space:nowrap;
+  background:linear-gradient(90deg,#fff,var(--cm-pink));-webkit-background-clip:text;background-clip:text;color:transparent;
+  font-variant-numeric:tabular-nums;
+}
+.cm-bf__site{display:inline-flex;align-items:center;gap:8px;font-weight:500;font-size:14.5px;white-space:nowrap;color:#fff}
+.cm-bf__pin{width:9px;height:9px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c)}
+[data-site="wl"]{--c:var(--cm-wl)}
+[data-site="adl"]{--c:var(--cm-adl)}
+
+.cm-bf[data-focus] .cm-bf__card{transition-delay:0s}
+.cm-bf[data-focus="wl"] .cm-bf__card[data-site="adl"],
+.cm-bf[data-focus="adl"] .cm-bf__card[data-site="wl"]{opacity:.28;filter:saturate(.4)}
+.cm-bf[data-focus="wl"] .cm-bf__card[data-site="wl"],
+.cm-bf[data-focus="adl"] .cm-bf__card[data-site="adl"]{border-color:var(--c)}
+
+.cm-bf__clinics{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,1.8vw,22px);margin-top:clamp(28px,3vw,40px)}
+.cm-bf__clinic{
+  position:relative;overflow:hidden;cursor:pointer;outline:none;border-radius:26px;
+  padding:clamp(24px,2.6vw,34px);background:#fff;color:var(--cm-deep);
+  display:grid;grid-template-columns:1fr auto;gap:8px 20px;align-items:end;
+  opacity:0;transform:translateY(30px);
+  transition:opacity 700ms ease,transform 700ms var(--cm-ease),box-shadow 400ms ease;
+  transition-delay:1100ms,1100ms,0s;
+}
+.cm-bf__clinic + .cm-bf__clinic{transition-delay:1200ms,1200ms,0s}
+.cm-bf.is-in .cm-bf__clinic{opacity:1;transform:none}
+.cm-bf[data-focus] .cm-bf__clinic{transition-delay:0s}
+.cm-bf__clinic::after{
+  content:"";position:absolute;right:-80px;bottom:-80px;width:240px;height:240px;border-radius:50%;
+  background:radial-gradient(circle,rgba(200,80,209,.22),transparent 70%);transition:transform 600ms var(--cm-ease);
+}
+.cm-bf__clinic:hover::after,.cm-bf.is-pinned .cm-bf__clinic.is-on::after{transform:scale(1.5)}
+.cm-bf__clinic:hover,.cm-bf__clinic.is-on{box-shadow:0 0 0 3px var(--c),0 30px 60px -30px rgba(0,0,0,.7)}
+.cm-bf__clinic:focus-visible{box-shadow:0 0 0 3px #fff,0 0 0 6px var(--c)}
+.cm-bf[data-focus="wl"] .cm-bf__clinic[data-site="adl"],
+.cm-bf[data-focus="adl"] .cm-bf__clinic[data-site="wl"]{opacity:.55}
+
+.cm-bf__clinic-site{display:flex;align-items:center;gap:10px;grid-column:1 / -1;
+  font-family:var(--cm-display);font-weight:600;font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--cm-orchid)}
+.cm-bf__beacon{position:relative;width:10px;height:10px;border-radius:50%;background:var(--cm-orchid)}
+.cm-bf__beacon::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--cm-orchid);animation:cmBfBeacon 2s ease-out infinite}
+@keyframes cmBfBeacon{0%{transform:scale(1);opacity:.6}100%{transform:scale(3.4);opacity:0}}
+.cm-bf__clinic-name{grid-column:1 / -1;margin-top:10px !important;font-family:var(--cm-display);font-weight:600;font-size:clamp(22px,2vw,28px);letter-spacing:-.02em;color:var(--cm-deep) !important}
+.cm-bf__hours{font-size:15.5px;line-height:1.6;color:#5C5566}
+.cm-bf__phone{
+  position:relative;z-index:1;display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:999px;text-decoration:none !important;white-space:nowrap;
+  background:linear-gradient(120deg,var(--cm-plum),var(--cm-orchid));color:#fff !important;
+  font-family:var(--cm-display);font-weight:600;font-size:16px;font-variant-numeric:tabular-nums;
+  transition:transform 400ms var(--cm-ease),box-shadow 400ms ease;
+}
+.cm-bf__phone svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cm-bf__phone:hover{transform:translateY(-2px);box-shadow:0 14px 26px -12px rgba(157,62,198,.9);color:#fff !important}
+.cm-bf__phone:hover svg{animation:cmBfRing .5s ease 2}
+@keyframes cmBfRing{0%,100%{transform:rotate(0)}25%{transform:rotate(-14deg)}75%{transform:rotate(14deg)}}
+.cm-bf__phone:focus-visible{outline:2px solid var(--cm-deep);outline-offset:3px}
+
+@media (max-width:1000px){
+  .cm-bf__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cm-bf__clinic{grid-template-columns:1fr}
+  .cm-bf__phone{justify-self:start;margin-top:8px}
+}
+@media (max-width:640px){
+  .cm-bf__grid{grid-template-columns:1fr}
+  .cm-bf__clinics{grid-template-columns:1fr}
+  .cm-bf__actions{width:100%;flex-direction:column}
+  .cm-bf__btn{width:100%;height:52px}
+  .cm-bf__aurora span{filter:blur(50px)}
+}
+@media (prefers-reduced-motion:reduce){
+  .cm-bf *,.cm-bf *::before,.cm-bf *::after{animation:none !important;transition:none !important}
+  .cm-bf__title span,.cm-bf__card,.cm-bf__clinic{opacity:1;transform:none}
+  .cm-bf__dial .fill{stroke-dashoffset:calc(1 - var(--v))}
+}
+</style>
+
+<section
+  class="cm-bf"
+  id="cm-bf-{{ section.id }}"
+  data-cm-bf
+  aria-labelledby="cm-bf-title-{{ section.id }}"
+  {{ section.shopify_attributes }}
+>
+  <div class="cm-bf__aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="cm-bf__grain" aria-hidden="true"></div>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <linearGradient id="cmBfGrad-{{ section.id }}" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#e08af2"></stop>
+        <stop offset="1" stop-color="#FFFFFF"></stop>
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <div class="cm-bf__inner">
+    <div class="cm-bf__top">
       <div>
-        {% if section.settings.eyebrow != blank %}<p class="cm-eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
-        {% if section.settings.heading != blank %}<h2 class="cm-display-m" style="margin-top:0.75rem;">{{ section.settings.heading | escape }}</h2>{% endif %}
+        {% if section.settings.eyebrow != blank %}
+          <p class="cm-bf__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {% endif %}
+        {% if section.settings.heading != blank %}
+          <h2 class="cm-bf__title" id="cm-bf-title-{{ section.id }}"><span>{{ section.settings.heading | escape }}</span></h2>
+        {% endif %}
       </div>
-      <div class="cm-btn-row">
+      <div class="cm-bf__actions">
         {% if section.settings.secondary_label != blank %}
-          <a class="cm-btn cm-btn--secondary" href="{{ section.settings.secondary_link | default: '/pages/professionals-vets' }}">{{ section.settings.secondary_label | escape }}</a>
+          <a class="cm-bf__btn cm-bf__btn--ghost" href="{{ section.settings.secondary_link | default: '/pages/professionals-vets' }}">{{ section.settings.secondary_label | escape }}</a>
         {% endif %}
         {% if section.settings.primary_label != blank %}
-          <a class="cm-btn cm-btn--accent" href="{{ section.settings.primary_link | default: '/pages/contact' }}">{{ section.settings.primary_label | escape }}</a>
+          <a class="cm-bf__btn cm-bf__btn--solid" href="{{ section.settings.primary_link | default: '/pages/contact' }}">
+            {{ section.settings.primary_label | escape }}
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
         {% endif %}
       </div>
     </div>
 
-    <div class="cm-table-wrap">
-      <table class="cm-table">
-        <thead>
-          <tr>
-            {% assign heads = section.settings.columns | default: 'Code,Form,Base,Range,Turnaround,Site' | split: ',' %}
-            {% for h in heads %}<th>{{ h | strip | escape }}</th>{% endfor %}
-          </tr>
-        </thead>
-        <tbody>
-          {% for block in section.blocks %}
-            {% if block.type == 'row' %}
-              <tr {{ block.shopify_attributes }}>
-                <td>{{ block.settings.c1 | escape }}</td>
-                <td>{{ block.settings.c2 | escape }}</td>
-                <td>{{ block.settings.c3 | escape }}</td>
-                <td>{{ block.settings.c4 | escape }}</td>
-                <td>{{ block.settings.c5 | escape }}</td>
-                <td>{{ block.settings.c6 | escape }}</td>
-              </tr>
-            {% endif %}
-          {% endfor %}
-        </tbody>
-      </table>
+    <div class="cm-bf__grid" role="list">
+      {% assign row_i = 0 %}
+      {% for block in section.blocks %}
+        {% if block.type == 'row' %}
+          {% liquid
+            assign site_key = block.settings.site | default: 'wl'
+            if site_key == 'Adelaide' or site_key == 'adelaide'
+              assign site_key = 'adl'
+            elsif site_key == 'West Lakes' or site_key == 'west-lakes' or site_key == 'wl'
+              assign site_key = 'wl'
+            elsif block.settings.c6 == 'Adelaide'
+              assign site_key = 'adl'
+            elsif block.settings.c6 == 'West Lakes'
+              assign site_key = 'wl'
+            endif
+
+            assign code = block.settings.code | default: block.settings.c1
+            assign form = block.settings.form | default: block.settings.c2
+            assign base = block.settings.base | default: block.settings.c3
+            assign range = block.settings.range | default: block.settings.c4
+            assign turnaround = block.settings.turnaround | default: block.settings.c5
+            assign site_label = block.settings.site_label | default: block.settings.c6
+
+            assign dial = block.settings.dial | default: '0.3333'
+            if turnaround contains '72'
+              assign dial = '1'
+            elsif turnaround contains '48'
+              assign dial = '0.6667'
+            elsif turnaround contains '24'
+              assign dial = '0.3333'
+            endif
+
+            assign icon = block.settings.icon | default: 'bottle'
+          %}
+          <article
+            class="cm-bf__card"
+            role="listitem"
+            data-site="{{ site_key }}"
+            tabindex="0"
+            style="--i:{{ row_i }}"
+            {{ block.shopify_attributes }}
+          >
+            <div class="cm-bf__row">
+              <span class="cm-bf__code">
+                <svg class="cm-bf__icon" viewBox="0 0 24 24" aria-hidden="true">
+                  {% case icon %}
+                    {% when 'cream' %}
+                      <path d="M10 2h4v3h-4z"/><path d="M9 5h6l2 4v11a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V9z"/><path d="M7 17h10"/>
+                    {% when 'troche' %}
+                      <rect x="4" y="7" width="16" height="10" rx="5"/><path d="M12 7v10"/>
+                    {% when 'gel' %}
+                      <path d="M10 3h5M12 3v4"/><path d="M8 7h8v3H8z"/><path d="M8 10h8v10a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1z"/>
+                    {% when 'thick' %}
+                      <path d="M5 5h14l-2 15H7z"/><path d="M6 10c2 1.5 4 1.5 6 0s4-1.5 6 0"/>
+                    {% when 'dropper' %}
+                      <path d="M10 2h4v4h-4z"/><path d="M11 6h2v6h-2z"/><path d="M12 15c1.6 2 2.5 3.2 2.5 4.2a2.5 2.5 0 0 1-5 0c0-1 .9-2.2 2.5-4.2z"/>
+                    {% else %}
+                      <path d="M9 3h6v3H9z"/><path d="M9 6 7 9v10a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9l-2-3"/><path d="M7 13h10"/>
+                  {% endcase %}
+                </svg>
+                {{ code | escape }}
+              </span>
+              <span class="cm-bf__dial" style="--v:{{ dial }}">
+                <svg viewBox="0 0 62 62" aria-hidden="true">
+                  <circle class="track" cx="31" cy="31" r="26"></circle>
+                  <circle class="fill" pathLength="1" cx="31" cy="31" r="26"></circle>
+                </svg>
+                <b>{{ turnaround | escape }}</b>
+              </span>
+            </div>
+            <h3 class="cm-bf__form">{{ form | escape }}</h3>
+            <p class="cm-bf__base">{{ base | escape }}</p>
+            <div class="cm-bf__foot">
+              <div>
+                <span class="cm-bf__label">Range</span>
+                <span class="cm-bf__range">{{ range | escape }}</span>
+              </div>
+              <span class="cm-bf__site"><span class="cm-bf__pin" aria-hidden="true"></span>{{ site_label | escape }}</span>
+            </div>
+          </article>
+          {% assign row_i = row_i | plus: 1 %}
+        {% endif %}
+      {% endfor %}
     </div>
 
     {% if section.settings.show_pharmacists %}
-      <div class="cm-pro-locs">
+      <div class="cm-bf__clinics">
         {% for block in section.blocks %}
           {% if block.type == 'pharmacist' %}
-            <div class="cm-info-card" {{ block.shopify_attributes }}>
-              <p class="cm-mono-caption">{{ block.settings.location | escape }}</p>
-              <p class="cm-mono-data" style="margin-top:0.75rem;">{{ block.settings.name | escape }}</p>
-              <p class="cm-mono-data" style="color:var(--cm-muted);">{{ block.settings.credential | escape }}</p>
-              <a class="cm-locations__phone" href="{{ block.settings.phone_link }}">{{ block.settings.phone | escape }}</a>
+            {% liquid
+              assign clinic_site = 'wl'
+              assign loc = block.settings.location | downcase
+              if loc contains 'adelaide'
+                assign clinic_site = 'adl'
+              endif
+            %}
+            <div class="cm-bf__clinic" data-site="{{ clinic_site }}" tabindex="0" {{ block.shopify_attributes }}>
+              <span class="cm-bf__clinic-site"><span class="cm-bf__beacon" aria-hidden="true"></span>{{ block.settings.location | escape }}</span>
+              <h3 class="cm-bf__clinic-name">{{ block.settings.name | escape }}</h3>
+              <p class="cm-bf__hours">{{ block.settings.credential | escape }}</p>
+              <a class="cm-bf__phone" href="{{ block.settings.phone_link | escape }}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+                {{ block.settings.phone | escape }}
+              </a>
             </div>
           {% endif %}
-        {% endfor %}
-      </div>
-    {% endif %}
-
-    {% assign pathways = section.blocks | where: 'type', 'pathway' %}
-    {% if pathways.size > 0 %}
-      <div class="cm-pro-pathway">
-        {% for block in pathways %}
-          <div {{ block.shopify_attributes }}>
-            <p class="cm-mono-caption" style="color:var(--cm-muted);">{{ block.settings.title | escape }}</p>
-            <p class="cm-mono-data" style="margin-top:0.5rem;">{{ block.settings.body | escape }}</p>
-          </div>
         {% endfor %}
       </div>
     {% endif %}
   </div>
 </section>
 
+<script>
+(function () {
+  var root = document.getElementById('cm-bf-{{ section.id }}');
+  if (!root || root.dataset.cmBfReady === '1') return;
+  root.dataset.cmBfReady = '1';
+
+  var cards = [].slice.call(root.querySelectorAll('.cm-bf__card'));
+  var clinics = [].slice.call(root.querySelectorAll('.cm-bf__clinic'));
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var locked = null;
+
+  function begin() {
+    root.classList.add('is-in');
+  }
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (e) {
+      if (e[0].isIntersecting) {
+        begin();
+        io.disconnect();
+      }
+    }, { threshold: 0.15 });
+    io.observe(root);
+  } else {
+    begin();
+  }
+  setTimeout(function () {
+    if (!root.classList.contains('is-in')) begin();
+  }, 800);
+
+  cards.forEach(function (card) {
+    card.addEventListener('pointermove', function (e) {
+      var r = card.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width;
+      var y = (e.clientY - r.top) / r.height;
+      card.style.setProperty('--mx', x * 100 + '%');
+      card.style.setProperty('--my', y * 100 + '%');
+      if (!fine || reduce) return;
+      card.classList.add('is-tilting');
+      card.style.setProperty('--ry', (x - 0.5) * 12 + 'deg');
+      card.style.setProperty('--rx', (0.5 - y) * 10 + 'deg');
+    });
+    card.addEventListener('pointerleave', function () {
+      card.classList.remove('is-tilting');
+      card.style.setProperty('--rx', '0deg');
+      card.style.setProperty('--ry', '0deg');
+    });
+  });
+
+  function focusSite(site) {
+    var s = site || locked;
+    if (s) root.setAttribute('data-focus', s);
+    else root.removeAttribute('data-focus');
+    clinics.forEach(function (c) {
+      c.classList.toggle('is-on', !!locked && c.getAttribute('data-site') === locked);
+    });
+  }
+
+  cards.concat(clinics).forEach(function (el) {
+    var site = el.getAttribute('data-site');
+    el.addEventListener('mouseenter', function () { focusSite(site); });
+    el.addEventListener('mouseleave', function () { focusSite(null); });
+    el.addEventListener('focusin', function () { focusSite(site); });
+    el.addEventListener('focusout', function () { focusSite(null); });
+  });
+
+  clinics.forEach(function (c) {
+    var site = c.getAttribute('data-site');
+    function toggle(e) {
+      if (e.target.closest('a')) return;
+      locked = locked === site ? null : site;
+      root.classList.toggle('is-pinned', !!locked);
+      focusSite(locked);
+    }
+    c.addEventListener('click', toggle);
+    c.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggle(e);
+      }
+    });
+  });
+})();
+</script>
+
 {% schema %}
 {
   "name": "CanMed — Formulary",
-  "tag": "section",
+  "tag": "div",
   "class": "cm-section-formulary",
   "max_blocks": 24,
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Base formulary" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Standard bases and ranges" },
-    { "type": "text", "id": "columns", "label": "Column headers (comma-separated)", "default": "Code,Form,Base,Range,Turnaround,Site" },
     { "type": "text", "id": "secondary_label", "label": "Secondary CTA", "default": "For vets" },
     { "type": "url", "id": "secondary_link", "label": "Secondary link" },
     { "type": "text", "id": "primary_label", "label": "Primary CTA", "default": "Open a prescriber account" },
     { "type": "url", "id": "primary_link", "label": "Primary link" },
-    { "type": "checkbox", "id": "show_pharmacists", "label": "Show pharmacist cards", "default": true }
+    { "type": "checkbox", "id": "show_pharmacists", "label": "Show clinic cards", "default": true }
   ],
   "blocks": [
     {
       "type": "row",
-      "name": "Table row",
+      "name": "Formulary card",
       "settings": [
-        { "type": "text", "id": "c1", "label": "Col 1", "default": "CM-PS-014" },
-        { "type": "text", "id": "c2", "label": "Col 2", "default": "Oral suspension" },
-        { "type": "text", "id": "c3", "label": "Col 3", "default": "SyrSpend SF pH4" },
-        { "type": "text", "id": "c4", "label": "Col 4", "default": "0.1 – 50 mg/mL" },
-        { "type": "text", "id": "c5", "label": "Col 5", "default": "24 h" },
-        { "type": "text", "id": "c6", "label": "Col 6", "default": "West Lakes" }
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "bottle",
+          "options": [
+            { "value": "bottle", "label": "Bottle / suspension" },
+            { "value": "cream", "label": "Cream" },
+            { "value": "troche", "label": "Troche" },
+            { "value": "gel", "label": "Gel" },
+            { "value": "thick", "label": "Thickened liquid" },
+            { "value": "dropper", "label": "Dropper / oral liquid" }
+          ]
+        },
+        { "type": "text", "id": "c1", "label": "Code", "default": "CM-PS-014" },
+        { "type": "text", "id": "c2", "label": "Form", "default": "Oral suspension" },
+        { "type": "text", "id": "c3", "label": "Base", "default": "SyrSpend SF pH4" },
+        { "type": "text", "id": "c4", "label": "Range", "default": "0.1 – 50 mg/mL" },
+        { "type": "text", "id": "c5", "label": "Turnaround", "default": "24 h" },
+        { "type": "text", "id": "c6", "label": "Site label", "default": "West Lakes" },
+        {
+          "type": "select",
+          "id": "site",
+          "label": "Site key",
+          "default": "wl",
+          "options": [
+            { "value": "wl", "label": "West Lakes" },
+            { "value": "adl", "label": "Adelaide" }
+          ]
+        }
       ]
     },
     {
       "type": "pharmacist",
-      "name": "Pharmacist card",
+      "name": "Clinic card",
       "settings": [
         { "type": "text", "id": "location", "label": "Location", "default": "West Lakes" },
         { "type": "text", "id": "name", "label": "Name", "default": "CanMED West Lakes Clinic" },
-        { "type": "text", "id": "credential", "label": "Credential", "default": "Mon–Fri 9:00 AM – 6:00 PM · Sat 9:30 AM – 5:00 PM" },
+        { "type": "text", "id": "credential", "label": "Hours", "default": "Mon–Fri 9:00 AM – 6:00 PM · Sat 9:30 AM – 5:00 PM" },
         { "type": "text", "id": "phone", "label": "Phone", "default": "(08) 8450 3978" },
         { "type": "text", "id": "phone_link", "label": "Phone link", "default": "tel:+61884503978" }
       ]
-    },
-    {
-      "type": "pathway",
-      "name": "Pathway",
-      "settings": [
-        { "type": "text", "id": "title", "label": "Title", "default": "Credentialing" },
-        { "type": "textarea", "id": "body", "label": "Body", "default": "AHPRA number, prescriber number and practice address. Verified in two business days." }
-      ]
     }
   ],
-  "presets": [{ "name": "CanMed — Formulary" }]
+  "presets": [
+    {
+      "name": "CanMed — Formulary",
+      "blocks": [
+        { "type": "row", "settings": { "icon": "bottle", "c1": "CM-PS-014", "c2": "Oral suspension", "c3": "SyrSpend SF pH4", "c4": "0.1 – 50 mg/mL", "c5": "24 h", "c6": "West Lakes", "site": "wl" } },
+        { "type": "row", "settings": { "icon": "cream", "c1": "CM-TD-233", "c2": "Transdermal cream", "c3": "Anhydrous emollient", "c4": "0.5 – 200 mg/g", "c5": "48 h", "c6": "Adelaide", "site": "adl" } },
+        { "type": "row", "settings": { "icon": "troche", "c1": "CM-TR-118", "c2": "Buccal troche", "c3": "PEG 1450", "c4": "1 – 100 mg/unit", "c5": "48 h", "c6": "Adelaide", "site": "adl" } },
+        { "type": "row", "settings": { "icon": "gel", "c1": "CM-VT-058", "c2": "PLO gel", "c3": "Pluronic F127", "c4": "1 – 25 mg/0.1 mL", "c5": "48 h", "c6": "West Lakes", "site": "wl" } },
+        { "type": "row", "settings": { "icon": "thick", "c1": "CM-GD-071", "c2": "Thickened liquid", "c3": "Xanthan", "c4": "IDDSI 2 – 4", "c5": "24 h", "c6": "West Lakes", "site": "wl" } },
+        { "type": "row", "settings": { "icon": "dropper", "c1": "CM-PC-102", "c2": "Oral liquid", "c3": "MCT", "c4": "5 – 100 mg/mL", "c5": "72 h", "c6": "Adelaide", "site": "adl" } },
+        { "type": "pharmacist", "settings": { "location": "West Lakes", "name": "CanMED West Lakes Clinic", "credential": "Mon–Fri 9:00 AM – 6:00 PM · Sat 9:30 AM – 5:00 PM", "phone": "(08) 8450 3978", "phone_link": "tel:+61884503978" } },
+        { "type": "pharmacist", "settings": { "location": "Adelaide", "name": "CanMED Adelaide Clinic", "credential": "Mon–Fri 9:00 AM – 6:00 PM · Sat–Sun & public holidays closed", "phone": "(08) 7094 2268", "phone_link": "tel:+61870942268" } }
+      ]
+    }
+  ]
 }
 {% endschema %}
