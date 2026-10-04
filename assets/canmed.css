@@ -277,17 +277,10 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 }
 
 .cm-header__logo {
-  width: 56px;
-  height: 56px;
+  width: 65px;
+  height: 65px;
   object-fit: contain;
   flex-shrink: 0;
-}
-
-@media (min-width: 768px) {
-  .cm-header__logo {
-    width: 44px;
-    height: 44px;
-  }
 }
 
 .cm-header__wordmark {
@@ -310,13 +303,7 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--cm-muted);
-  display: none;
-}
-
-@media (min-width: 640px) {
-  .cm-header__tagline {
-    display: inline;
-  }
+  display: inline;
 }
 
 .cm-header__nav {
