@@ -87,7 +87,7 @@
       ],
       "settings": {
         "columns": "Species,Preferred forms,Excipient rules",
-        "primary_label": "Open a practice account",
+        "primary_label": "Open practice account",
         "primary_link": "",
         "secondary_label": "Human formulary",
         "secondary_link": "shopify://pages/for-professionals"
