@@ -475,10 +475,17 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 }
 
 .cm-footer__logo {
-  width: 65px;
-  height: 65px;
+  width: 78px;
+  height: 78px;
   object-fit: contain;
   flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .cm-footer__logo {
+    width: 65px;
+    height: 65px;
+  }
 }
 
 .cm-footer__wordmark {
@@ -491,18 +498,31 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 .cm-footer__name {
   margin: 0;
   font-family: var(--cm-font-display);
-  font-size: 1.35rem;
+  font-size: 1.65rem;
   font-weight: 600;
   color: #fff;
 }
 
+@media (min-width: 768px) {
+  .cm-footer__name {
+    font-size: 1.35rem;
+  }
+}
+
 .cm-footer__tagline {
-  margin: 0.25rem 0 0;
+  margin: 0.3rem 0 0;
   font-family: var(--cm-font-mono);
-  font-size: 0.6rem;
+  font-size: 0.72rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: rgb(255 255 255 / 0.65);
+}
+
+@media (min-width: 768px) {
+  .cm-footer__tagline {
+    margin-top: 0.25rem;
+    font-size: 0.6rem;
+  }
 }
 
 .cm-footer__blurb {
