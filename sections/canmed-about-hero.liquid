@@ -1,0 +1,108 @@
+{% comment %} CanMed — About hero (approved HTML) {% endcomment %}
+{{ 'canmed-about.css' | asset_url | stylesheet_tag }}
+
+<section class="cm-au-hero" data-reveal {{ section.shopify_attributes }}>
+  <div class="cm-au-hero__aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="cm-au-hero__grain" aria-hidden="true"></div>
+  <div class="cm-au-hero__inner">
+    {% if section.settings.eyebrow != blank %}
+      <p class="cm-au-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+    {% endif %}
+
+    {% if section.settings.heading_line_1 != blank or section.settings.heading_line_2 != blank %}
+      <h1 class="cm-au-hero__title" id="cm-au-hero-title-{{ section.id }}">
+        {% if section.settings.heading_line_1 != blank %}
+          <span class="cm-au-hero__line"><span>{{ section.settings.heading_line_1 | escape }}</span></span>
+        {% endif %}
+        {% if section.settings.heading_line_2 != blank %}
+          <span class="cm-au-hero__line"><span>{{ section.settings.heading_line_2 | escape }}</span></span>
+        {% endif %}
+      </h1>
+    {% endif %}
+
+    <div class="cm-au-hero__grid">
+      <div>
+        {% if section.settings.body != blank %}
+          <p class="cm-au-hero__lead">{{ section.settings.body | escape }}</p>
+        {% endif %}
+        {% if section.settings.primary_label != blank or section.settings.secondary_label != blank %}
+          <div class="cm-au-hero__actions">
+            {% if section.settings.primary_label != blank %}
+              <a class="cm-au-btn cm-au-btn--solid" href="{{ section.settings.primary_link | default: '#locations' }}">
+                {{ section.settings.primary_label | escape }}
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+              </a>
+            {% endif %}
+            {% if section.settings.secondary_label != blank %}
+              <a class="cm-au-btn cm-au-btn--ghost" href="{{ section.settings.secondary_link | default: '/pages/prescriptions' }}">
+                {{ section.settings.secondary_label | escape }}
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+
+      <aside class="cm-au-hero__aside" aria-label="{{ section.settings.aside_label | default: 'CanMed at a glance' | escape }}">
+        <div class="cm-au-hero__orbit" aria-hidden="true"></div>
+        <div class="cm-au-hero__aside-inner">
+          <div class="cm-au-hero__mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 3v14"/>
+              <path d="M8 21h8"/>
+              <path d="M5 7h14"/>
+              <path d="M7 7 4.8 12.2a2.2 2.2 0 0 0 2 3.1H8"/>
+              <path d="M17 7l2.2 5.2a2.2 2.2 0 0 1-2 3.1H16"/>
+              <circle cx="12" cy="7" r="1.1" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+          <div>
+            {% if section.settings.aside_kicker != blank %}
+              <p class="cm-au-hero__stat-label">{{ section.settings.aside_kicker | escape }}</p>
+            {% endif %}
+            {% if section.settings.aside_title != blank %}
+              <p class="cm-au-hero__stat-value">{{ section.settings.aside_title | escape }}</p>
+            {% endif %}
+            {% if section.settings.aside_note != blank %}
+              <p class="cm-au-hero__stat-note">{{ section.settings.aside_note | escape }}</p>
+            {% endif %}
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'canmed-about.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "CanMed — About hero",
+  "tag": "section",
+  "class": "cm-section-about-hero",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "About us" },
+    { "type": "text", "id": "heading_line_1", "label": "Heading line 1", "default": "A dispensary that still" },
+    { "type": "text", "id": "heading_line_2", "label": "Heading line 2", "default": "weighs things." },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body",
+      "default": "CanMed compounds each medicine for the person taking it. At both clinics the work is the same: read the script properly, weigh accurately, label clearly, and explain it to the person taking it. We don't outsource compounding, and we don't dispense anything a pharmacist hasn't personally reviewed."
+    },
+    { "type": "text", "id": "primary_label", "label": "Primary button", "default": "Find a clinic" },
+    { "type": "text", "id": "primary_link", "label": "Primary link", "default": "#locations", "info": "Use #locations or a page URL" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary button", "default": "Start a prescription" },
+    { "type": "text", "id": "secondary_link", "label": "Secondary link", "default": "/pages/prescriptions" },
+    { "type": "text", "id": "aside_label", "label": "Aside aria label", "default": "CanMed at a glance" },
+    { "type": "text", "id": "aside_kicker", "label": "Aside kicker", "default": "Two clinics · one standard" },
+    { "type": "text", "id": "aside_title", "label": "Aside title", "default": "West Lakes & Adelaide" },
+    {
+      "type": "textarea",
+      "id": "aside_note",
+      "label": "Aside note",
+      "default": "Compounded on site. Reviewed by a pharmacist. Explained to the patient."
+    }
+  ],
+  "presets": [{ "name": "CanMed — About hero" }]
+}
+{% endschema %}

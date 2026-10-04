@@ -1,55 +1,77 @@
-<section class="cm-band cm-section" data-cm-about-locations {{ section.shopify_attributes }}>
-  <div class="cm-shell">
-    <div class="cm-how__head">
-      {% if section.settings.eyebrow != blank %}<p class="cm-eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
-      {% if section.settings.heading != blank %}<h2 class="cm-display-l">{{ section.settings.heading | escape }}</h2>{% endif %}
-    </div>
+{% comment %} CanMed — About locations (tabs + map embeds) {% endcomment %}
+{{ 'canmed-about.css' | asset_url | stylesheet_tag }}
 
-    <div class="cm-loc-selector">
-      <p class="cm-mono-caption cm-loc-selector__label">{{ section.settings.selector_label | default: 'Viewing' | escape }}</p>
-      <div class="cm-loc-pills" role="tablist" aria-label="{{ section.settings.selector_label | default: 'Viewing' | escape }}">
-        {% assign loc_tab_index = 0 %}
+<section
+  class="cm-au-loc"
+  id="locations"
+  data-reveal
+  data-cm-about-locations
+  aria-labelledby="cm-au-loc-title-{{ section.id }}"
+  {{ section.shopify_attributes }}
+>
+  <div class="cm-au-loc__aurora" aria-hidden="true"><span></span><span></span></div>
+  <div class="cm-au__shell cm-au-loc__inner">
+    <div class="cm-au-loc__top">
+      <div>
+        {% if section.settings.eyebrow != blank %}
+          <p class="cm-au-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {% endif %}
+        {% if section.settings.heading != blank %}
+          <h2 class="cm-au-loc__title" id="cm-au-loc-title-{{ section.id }}"><span>{{ section.settings.heading | escape }}</span></h2>
+        {% endif %}
+        {% if section.settings.lead != blank %}
+          <p class="cm-au-loc__lead">{{ section.settings.lead | escape }}</p>
+        {% endif %}
+      </div>
+      <div class="cm-au-tabs" role="tablist" aria-label="{{ section.settings.selector_label | default: 'Clinic' | escape }}">
+        {% assign tab_i = 0 %}
         {% for block in section.blocks %}
           {% if block.type == 'location' %}
             <button
+              class="cm-au-tabs__btn{% if tab_i == 0 %} is-active{% endif %}"
               type="button"
-              class="cm-loc-pill{% if loc_tab_index == 0 %} is-active{% endif %}"
               role="tab"
               id="cm-about-tab-{{ block.id }}"
-              aria-selected="{% if loc_tab_index == 0 %}true{% else %}false{% endif %}"
               aria-controls="cm-about-panel-{{ block.id }}"
+              aria-selected="{% if tab_i == 0 %}true{% else %}false{% endif %}"
               data-cm-loc-tab="{{ block.id }}"
               {{ block.shopify_attributes }}
             >
-              {{ block.settings.name | escape }}
+              {{ block.settings.tab_label | default: block.settings.pin_label | default: block.settings.name | escape }}
             </button>
-            {% assign loc_tab_index = loc_tab_index | plus: 1 %}
+            {% assign tab_i = tab_i | plus: 1 %}
           {% endif %}
         {% endfor %}
       </div>
     </div>
 
-    {% assign loc_panel_index = 0 %}
+    {% assign panel_i = 0 %}
     {% for block in section.blocks %}
       {% if block.type == 'location' %}
         <div
-          class="cm-about-detail"
-          id="cm-about-panel-{{ block.id }}"
+          class="cm-au-loc__panel{% if panel_i == 0 %} is-active{% endif %}"
           role="tabpanel"
+          id="cm-about-panel-{{ block.id }}"
           aria-labelledby="cm-about-tab-{{ block.id }}"
           data-cm-loc-panel="{{ block.id }}"
-          {% unless loc_panel_index == 0 %}hidden{% endunless %}
+          {% unless panel_i == 0 %}hidden{% endunless %}
         >
-          <div>
-            <h3 class="cm-display-m">{{ block.settings.name | escape }}</h3>
-            <address class="cm-mono-data cm-about-detail__address">
+          <div class="cm-au-loc__detail">
+            {% if block.settings.pin_label != blank %}
+              <p class="cm-au-loc__pin"><i></i> {{ block.settings.pin_label | escape }}</p>
+            {% endif %}
+            <h3 class="cm-au-loc__name">{{ block.settings.name | escape }}</h3>
+            <address class="cm-au-loc__address">
               {{ block.settings.address | escape }}<br>
               {{ block.settings.suburb | escape }}
             </address>
             {% if block.settings.phone != blank %}
-              <a class="cm-about-phone" href="{{ block.settings.phone_link | default: block.settings.phone }}">{{ block.settings.phone | escape }}</a>
+              <a class="cm-au-loc__phone" href="{{ block.settings.phone_link | default: block.settings.phone }}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v2a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h2a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L7.1 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7A2 2 0 0 1 22 16.9Z"/></svg>
+                {{ block.settings.phone | escape }}
+              </a>
             {% endif %}
-            <dl class="cm-about-detail__hours">
+            <dl class="cm-au-loc__hours">
               {% if block.settings.hours_1_days != blank %}
                 <div><dt>{{ block.settings.hours_1_days | escape }}</dt><dd>{{ block.settings.hours_1_time | escape }}</dd></div>
               {% endif %}
@@ -60,64 +82,41 @@
                 <div><dt>{{ block.settings.hours_3_days | escape }}</dt><dd>{{ block.settings.hours_3_time | escape }}</dd></div>
               {% endif %}
             </dl>
-            {% if block.settings.pharmacist != blank %}
-              <div class="cm-about-detail__pharmacist">
-                <p class="cm-mono-caption" style="color:var(--cm-muted);">Compounding pharmacist</p>
-                <p class="cm-about-detail__pharmacist-name">{{ block.settings.pharmacist | escape }}</p>
-                {% if block.settings.credential != blank %}
-                  <p class="cm-mono-data" style="color:var(--cm-muted);">{{ block.settings.credential | escape }}</p>
-                {% endif %}
-              </div>
-            {% endif %}
           </div>
 
-          {% liquid
-            assign media_mode = block.settings.media_mode | default: 'placeholder'
-            assign map_note = block.settings.map_note
-            assign map_alt = block.settings.map_image.alt | default: block.settings.name | append: ' dispensary'
-          %}
-          <div class="cm-about-detail__map{% if media_mode == 'image' and block.settings.map_image != blank %} cm-about-detail__map--image{% elsif media_mode == 'map' and block.settings.map_embed != blank %} cm-about-detail__map--embed{% endif %}">
-            {% if media_mode == 'image' and block.settings.map_image != blank %}
-              {{
-                block.settings.map_image
-                | image_url: width: 1600
-                | image_tag:
-                  loading: 'lazy',
-                  widths: '400, 800, 1200, 1600',
-                  sizes: '(min-width: 768px) 55vw, 100vw',
-                  class: 'cm-about-detail__map-img',
-                  alt: map_alt
-              }}
-              {% if map_note != blank %}
-                <p class="cm-about-detail__map-caption cm-mono-data">{{ map_note | escape }}</p>
-              {% endif %}
-            {% elsif media_mode == 'map' and block.settings.map_embed != blank %}
-              <div class="cm-about-detail__map-frame">
+          <div class="cm-au-loc__map" aria-label="Map for {{ block.settings.name | escape }}">
+            {% if block.settings.map_embed != blank %}
+              <div class="cm-au-loc__map-frame">
                 <iframe
-                  src="{{ block.settings.map_embed | escape }}"
-                  title="Map of {{ block.settings.name | escape }} dispensary"
+                  title="{{ block.settings.name | escape }} map"
                   loading="lazy"
                   referrerpolicy="no-referrer-when-downgrade"
                   allowfullscreen
+                  src="{{ block.settings.map_embed | escape }}"
                 ></iframe>
               </div>
-              {% if map_note != blank %}
-                <p class="cm-about-detail__map-caption cm-mono-data">{{ map_note | escape }}</p>
-              {% endif %}
-            {% else %}
-              <p class="cm-mono-caption" style="color:rgb(74 63 82 / 0.6);">{{ block.settings.suburb | escape }}</p>
-              {% if map_note != blank %}
-                <p class="cm-mono-data" style="color:rgb(74 63 82 / 0.6);">{{ map_note | escape }}</p>
-              {% endif %}
             {% endif %}
+            <div class="cm-au-loc__map-card">
+              <div>
+                <strong>{{ block.settings.suburb | escape }}</strong>
+                <span>{{ block.settings.address | escape }}</span>
+              </div>
+              {% if block.settings.directions_link != blank %}
+                <a class="cm-au-loc__map-link" href="{{ block.settings.directions_link }}" target="_blank" rel="noopener">
+                  {{ section.settings.directions_label | default: 'Directions' | escape }}
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+                </a>
+              {% endif %}
+            </div>
           </div>
         </div>
-        {% assign loc_panel_index = loc_panel_index | plus: 1 %}
+        {% assign panel_i = panel_i | plus: 1 %}
       {% endif %}
     {% endfor %}
   </div>
 </section>
-<script src="{{ 'canmed-about-locations.js' | asset_url }}" defer></script>
+
+<script src="{{ 'canmed-about.js' | asset_url }}" defer></script>
 
 {% schema %}
 {
@@ -128,13 +127,22 @@
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Locations" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Pick a dispensary." },
-    { "type": "text", "id": "selector_label", "label": "Tab label", "default": "Viewing" }
+    {
+      "type": "textarea",
+      "id": "lead",
+      "label": "Lead",
+      "default": "Two South Australian clinics. Same formulary. Choose the one closest to you — or the one that suits your day."
+    },
+    { "type": "text", "id": "selector_label", "label": "Tablist label", "default": "Clinic" },
+    { "type": "text", "id": "directions_label", "label": "Directions button", "default": "Directions" }
   ],
   "blocks": [
     {
       "type": "location",
       "name": "Location",
       "settings": [
+        { "type": "text", "id": "tab_label", "label": "Tab label", "default": "West Lakes" },
+        { "type": "text", "id": "pin_label", "label": "Pin label", "default": "West Lakes" },
         { "type": "text", "id": "name", "label": "Name", "default": "CanMED West Lakes Clinic" },
         { "type": "text", "id": "address", "label": "Address", "default": "Unit 5, 151 Brebner Drive" },
         { "type": "text", "id": "suburb", "label": "Suburb", "default": "West Lakes SA 5021" },
@@ -146,37 +154,18 @@
         { "type": "text", "id": "hours_2_time", "label": "Hours 2 time", "default": "9:30 AM – 5:00 PM" },
         { "type": "text", "id": "hours_3_days", "label": "Hours 3 days", "default": "Sunday & public holidays" },
         { "type": "text", "id": "hours_3_time", "label": "Hours 3 time", "default": "Closed" },
-        { "type": "text", "id": "pharmacist", "label": "Pharmacist" },
-        { "type": "text", "id": "credential", "label": "Credential", "default": "B.Pharm, MPS — Compounding lead" },
-        {
-          "type": "select",
-          "id": "media_mode",
-          "label": "Map panel",
-          "info": "Choose a Google Maps embed URL or upload an image. Placeholder keeps the soft panel.",
-          "options": [
-            { "value": "placeholder", "label": "Placeholder panel" },
-            { "value": "map", "label": "Add map (embed URL)" },
-            { "value": "image", "label": "Add image" }
-          ],
-          "default": "placeholder"
-        },
         {
           "type": "text",
           "id": "map_embed",
           "label": "Map embed URL",
-          "info": "Paste the Google Maps iframe src only (Share → Embed a map → copy the src= URL).",
-          "visible_if": "{{ block.settings.media_mode == 'map' }}"
-        },
-        {
-          "type": "image_picker",
-          "id": "map_image",
-          "label": "Map / location image",
-          "visible_if": "{{ block.settings.media_mode == 'image' }}"
+          "info": "Google Maps iframe src (q=…&output=embed).",
+          "default": "https://www.google.com/maps?q=Unit+5,+151+Brebner+Drive,+West+Lakes+SA+5021&z=16&output=embed"
         },
         {
           "type": "text",
-          "id": "map_note",
-          "label": "Caption / note"
+          "id": "directions_link",
+          "label": "Directions link",
+          "default": "https://maps.google.com/?q=Unit+5,+151+Brebner+Drive,+West+Lakes+SA+5021"
         }
       ]
     }

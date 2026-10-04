@@ -1,13 +1,71 @@
 {
   "sections": {
     "hero": {
-      "type": "canmed-page-hero",
+      "type": "canmed-about-hero",
       "settings": {
-        "layout": "title_left",
         "eyebrow": "About us",
-        "heading": "A dispensary that still weighs things.",
-        "heading_size": "xl",
-        "body": "CanMed compounds each medicine for the person taking it. At both clinics the work is the same: read the script properly, weigh accurately, label clearly, and explain it to the person taking it. We don't outsource compounding, and we don't dispense anything a pharmacist hasn't personally reviewed."
+        "heading_line_1": "A dispensary that still",
+        "heading_line_2": "weighs things.",
+        "body": "CanMed compounds each medicine for the person taking it. At both clinics the work is the same: read the script properly, weigh accurately, label clearly, and explain it to the person taking it. We don't outsource compounding, and we don't dispense anything a pharmacist hasn't personally reviewed.",
+        "primary_label": "Find a clinic",
+        "primary_link": "#locations",
+        "secondary_label": "Start a prescription",
+        "secondary_link": "/pages/prescriptions",
+        "aside_kicker": "Two clinics · one standard",
+        "aside_title": "West Lakes & Adelaide",
+        "aside_note": "Compounded on site. Reviewed by a pharmacist. Explained to the patient."
+      }
+    },
+    "standards": {
+      "type": "canmed-about-standards",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "num": "01",
+            "name": "Read properly",
+            "hint": "Dose, form, clinical sense",
+            "copy": "Every script is checked for dose, form, and clinical sense before anything is weighed.",
+            "icon_paths": "<path d=\"M4 6h16\"/><path d=\"M4 12h10\"/><path d=\"M4 18h14\"/><path d=\"m15 10 2 2 4-4\"/>"
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "num": "02",
+            "name": "Weigh accurately",
+            "hint": "Calibrated balances, on site",
+            "copy": "Measured on calibrated balances — not scooped, guessed, or batched off-site.",
+            "icon_paths": "<path d=\"M12 3v14\"/><path d=\"M8 21h8\"/><path d=\"M5 7h14\"/><path d=\"M7 7 4.8 12.2a2.2 2.2 0 0 0 2 3.1H8\"/><path d=\"M17 7l2.2 5.2a2.2 2.2 0 0 1-2 3.1H16\"/>"
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "num": "03",
+            "name": "Label clearly",
+            "hint": "Plain language directions",
+            "copy": "Directions a person can follow at home — strength, timing, and storage in plain language.",
+            "icon_paths": "<rect x=\"4\" y=\"5\" width=\"16\" height=\"14\" rx=\"2\"/><path d=\"M8 9h8\"/><path d=\"M8 13h5\"/>"
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "num": "04",
+            "name": "Explain personally",
+            "hint": "Pharmacist to patient",
+            "copy": "A pharmacist reviews the finished medicine and talks it through with the person taking it.",
+            "icon_paths": "<path d=\"M4 19c2-4 5-6 8-6s6 2 8 6\"/><circle cx=\"12\" cy=\"8\" r=\"3.5\"/>"
+          }
+        }
+      },
+      "block_order": ["step_1", "step_2", "step_3", "step_4"],
+      "settings": {
+        "eyebrow": "Our standard",
+        "heading": "The same care, every script.",
+        "lead": "Whether you visit West Lakes or King William Street, the compounding bench follows the same discipline.",
+        "stage_kicker": "On the bench"
       }
     },
     "locations": {
@@ -16,6 +74,8 @@
         "west_lakes": {
           "type": "location",
           "settings": {
+            "tab_label": "West Lakes",
+            "pin_label": "West Lakes",
             "name": "CanMED West Lakes Clinic",
             "address": "Unit 5, 151 Brebner Drive",
             "suburb": "West Lakes SA 5021",
@@ -27,13 +87,15 @@
             "hours_2_time": "9:30 AM – 5:00 PM",
             "hours_3_days": "Sunday & public holidays",
             "hours_3_time": "Closed",
-            "media_mode": "placeholder",
-            "map_note": ""
+            "map_embed": "https://www.google.com/maps?q=Unit+5,+151+Brebner+Drive,+West+Lakes+SA+5021&z=16&output=embed",
+            "directions_link": "https://maps.google.com/?q=Unit+5,+151+Brebner+Drive,+West+Lakes+SA+5021"
           }
         },
         "adelaide": {
           "type": "location",
           "settings": {
+            "tab_label": "Adelaide",
+            "pin_label": "Adelaide CBD",
             "name": "CanMED Adelaide Clinic (King William Street)",
             "address": "Ground Floor, 90 King William Street",
             "suburb": "Adelaide SA 5000",
@@ -43,8 +105,10 @@
             "hours_1_time": "9:00 AM – 6:00 PM",
             "hours_2_days": "Sat – Sun & public holidays",
             "hours_2_time": "Closed",
-            "media_mode": "placeholder",
-            "map_note": ""
+            "hours_3_days": "",
+            "hours_3_time": "",
+            "map_embed": "https://www.google.com/maps?q=Ground+Floor,+90+King+William+Street,+Adelaide+SA+5000&z=16&output=embed",
+            "directions_link": "https://maps.google.com/?q=90+King+William+Street,+Adelaide+SA+5000"
           }
         }
       },
@@ -52,9 +116,22 @@
       "settings": {
         "eyebrow": "Locations",
         "heading": "Pick a dispensary.",
-        "selector_label": "Viewing"
+        "lead": "Two South Australian clinics. Same formulary. Choose the one closest to you — or the one that suits your day.",
+        "selector_label": "Clinic",
+        "directions_label": "Directions"
+      }
+    },
+    "cta": {
+      "type": "canmed-about-cta",
+      "settings": {
+        "heading": "Ready when your script is.",
+        "body": "Send a prescription online, or call the clinic that suits you. We'll take it from the weigh-in.",
+        "primary_label": "Start a prescription",
+        "primary_link": "/pages/prescriptions",
+        "secondary_label": "Contact us",
+        "secondary_link": "/pages/contact"
       }
     }
   },
-  "order": ["hero", "locations"]
+  "order": ["hero", "standards", "locations", "cta"]
 }
