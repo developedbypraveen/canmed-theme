@@ -15,7 +15,7 @@
         "eyebrow": "Compounded for you",
         "heading": "Medicine, formulated to the person taking it.",
         "body": "Two South Australian clinics compounding paediatric, geriatric, veterinary and phytocannabinoid medicines — one patient, one batch, at a time.",
-        "primary_label": "Start a prescription",
+        "primary_label": "Order your prescription",
         "primary_link": "",
         "secondary_label": "Browse the shop",
         "secondary_link": "",
@@ -80,6 +80,7 @@
         "card_shop": {
           "type": "card",
           "settings": {
+            "illustration": "shop",
             "label": "Shop",
             "title": "Compounded and stocked lines",
             "body": "Browse by access tier — prescription only, pharmacist only, or over the counter.",
@@ -90,6 +91,7 @@
         "card_rx": {
           "type": "card",
           "settings": {
+            "illustration": "rx",
             "label": "Prescriptions",
             "title": "Send us your script",
             "body": "A four-step intake. Upload, choose your dispensary, and track it from there.",
@@ -100,6 +102,7 @@
         "card_patients": {
           "type": "card",
           "settings": {
+            "illustration": "patients",
             "label": "For Patients",
             "title": "What compounding actually is",
             "body": "Plain-language answers before you commit to anything.",
