@@ -467,34 +467,42 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
   }
 }
 
-.cm-footer__logo {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
+.cm-footer__brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
 }
 
-@media (min-width: 768px) {
-  .cm-footer__logo {
-    width: 64px;
-    height: 64px;
-  }
+.cm-footer__logo {
+  width: 65px;
+  height: 65px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.cm-footer__wordmark {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  min-width: 0;
 }
 
 .cm-footer__name {
-  margin: 1rem 0 0;
+  margin: 0;
   font-family: var(--cm-font-display);
-  font-size: 1.875rem;
+  font-size: 1.35rem;
   font-weight: 600;
   color: #fff;
 }
 
 .cm-footer__tagline {
-  margin: 0.5rem 0 0;
+  margin: 0.25rem 0 0;
   font-family: var(--cm-font-mono);
-  font-size: 0.8125rem;
+  font-size: 0.6rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: rgb(255 255 255 / 0.6);
+  color: rgb(255 255 255 / 0.65);
 }
 
 .cm-footer__blurb {

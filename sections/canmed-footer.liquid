@@ -3,31 +3,35 @@
   <div class="cm-shell cm-footer__inner">
     <div class="cm-footer__grid">
       <div class="cm-footer__brand">
-        {% if section.settings.logo != blank %}
-          {{
-            section.settings.logo
-            | image_url: width: 240
-            | image_tag:
-              class: 'cm-footer__logo',
-              widths: '64, 80, 128, 160, 240',
-              sizes: '(max-width: 767px) 80px, 64px',
-              loading: 'lazy',
-              alt: shop.name
-          }}
-        {% else %}
-          <img
-            class="cm-footer__logo"
-            src="{{ 'canmed-logo.png' | asset_url }}"
-            alt="{{ shop.name | escape }}"
-            width="80"
-            height="80"
-            loading="lazy"
-          >
-        {% endif %}
-        <p class="cm-footer__name">{{ section.settings.brand_name | default: 'CanMed' | escape }}</p>
-        {% if section.settings.brand_tagline != blank %}
-          <p class="cm-footer__tagline">{{ section.settings.brand_tagline | escape }}</p>
-        {% endif %}
+        <div class="cm-footer__brand-lockup">
+          {% if section.settings.logo != blank %}
+            {{
+              section.settings.logo
+              | image_url: width: 195
+              | image_tag:
+                class: 'cm-footer__logo',
+                widths: '65, 130, 195',
+                sizes: '65px',
+                loading: 'lazy',
+                alt: shop.name
+            }}
+          {% else %}
+            <img
+              class="cm-footer__logo"
+              src="{{ 'canmed-logo.png' | asset_url }}"
+              alt="{{ shop.name | escape }}"
+              width="65"
+              height="65"
+              loading="lazy"
+            >
+          {% endif %}
+          <div class="cm-footer__wordmark">
+            <p class="cm-footer__name">{{ section.settings.brand_name | default: 'CanMed' | escape }}</p>
+            {% if section.settings.brand_tagline != blank %}
+              <p class="cm-footer__tagline">{{ section.settings.brand_tagline | escape }}</p>
+            {% endif %}
+          </div>
+        </div>
         {% if section.settings.tagline != blank %}
           <p class="cm-footer__blurb">{{ section.settings.tagline | escape }}</p>
         {% endif %}
