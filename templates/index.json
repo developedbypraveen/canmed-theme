@@ -16,7 +16,9 @@
         "heading": "Medicine, formulated to the person taking it.",
         "body": "Two South Australian clinics compounding paediatric, geriatric, veterinary and phytocannabinoid medicines — one patient, one batch, at a time.",
         "primary_label": "Start a prescription",
+        "primary_link": "",
         "secondary_label": "Browse the shop",
+        "secondary_link": "",
         "image_alt": "A glass amber tincture vessel"
       }
     },
@@ -60,7 +62,12 @@
           }
         }
       },
-      "block_order": ["step_1", "step_2", "step_3", "step_4"],
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4"
+      ],
       "settings": {
         "eyebrow": "How it works",
         "heading": "Four steps, and a pharmacist at every one.",
@@ -73,35 +80,39 @@
         "card_shop": {
           "type": "card",
           "settings": {
-            "illustration": "shop",
             "label": "Shop",
             "title": "Compounded and stocked lines",
-            "body": "Browse by access tier: prescription only, pharmacist only, or over the counter.",
-            "link_label": "Open"
+            "body": "Browse by access tier — prescription only, pharmacist only, or over the counter.",
+            "link_label": "Open →",
+            "link": ""
           }
         },
         "card_rx": {
           "type": "card",
           "settings": {
-            "illustration": "rx",
             "label": "Prescriptions",
             "title": "Send us your script",
             "body": "A four-step intake. Upload, choose your dispensary, and track it from there.",
-            "link_label": "Open"
+            "link_label": "Open →",
+            "link": ""
           }
         },
         "card_patients": {
           "type": "card",
           "settings": {
-            "illustration": "patients",
-            "label": "For patients",
+            "label": "For Patients",
             "title": "What compounding actually is",
             "body": "Plain-language answers before you commit to anything.",
-            "link_label": "Open"
+            "link_label": "Open →",
+            "link": "shopify://pages/for-patients"
           }
         }
       },
-      "block_order": ["card_shop", "card_rx", "card_patients"],
+      "block_order": [
+        "card_shop",
+        "card_rx",
+        "card_patients"
+      ],
       "settings": {
         "eyebrow": "Where to start",
         "heading": "Three ways in."
@@ -133,12 +144,16 @@
           }
         }
       },
-      "block_order": ["loc_west_lakes", "loc_adelaide"],
+      "block_order": [
+        "loc_west_lakes",
+        "loc_adelaide"
+      ],
       "settings": {
         "eyebrow": "Find us",
         "heading": "Two clinics, one formulary.",
         "lede": "Every location compounds to the same standard operating procedures and shares your record.",
         "cta_label": "Location details",
+        "cta_link": "",
         "show_compliance": true,
         "compliance_eyebrow": "Regulatory notice",
         "compliance_body": "Compounded medicines are prepared for an individual patient and are not evaluated by the TGA in the way registered products are. Nothing on this site is medical advice. Schedule 4 and Schedule 8 items are supplied only against a valid Australian prescription."
