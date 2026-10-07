@@ -13,6 +13,7 @@
           <p class="cm-eyebrow">{{ section.settings.eyebrow | escape }}</p>
         {% endif %}
         {% assign account_page = section.settings.account_page_path | default: '/pages/my-account' %}
+        {% comment %} New customer accounts: return_to sends the customer back to this page after sign-in {% endcomment %}
         <h1 class="cm-display-l">{{ section.settings.guest_heading | default: 'Sign in to see your prescriptions.' | escape }}</h1>
         <p class="cm-body-l cm-account__lede">
           {{ section.settings.guest_body | default: 'Sign in with the same email you use at checkout. Then this My Account page shows your prescriptions and orders.' | escape }}
@@ -20,7 +21,7 @@
         <div class="cm-btn-row">
           <a
             class="cm-btn cm-btn--accent"
-            href="{{ routes.account_login_url }}{% if account_page != blank %}?return_to={{ account_page | url_encode }}{% endif %}"
+            href="/customer_authentication/login?return_to={{ account_page | url_encode }}"
           >
             {{ section.settings.login_label | default: 'Sign in' | escape }}
           </a>

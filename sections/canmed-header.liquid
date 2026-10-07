@@ -56,12 +56,19 @@
     </nav>
 
     <div class="cm-header__actions">
-      <a
-        class="cm-header__account"
-        href="{{ section.settings.link_account | default: '/pages/my-account' }}"
-      >
-        {{ section.settings.account_label | default: 'My account' | escape }}
-      </a>
+      {% assign cm_account_page = section.settings.link_account | default: '/pages/my-account' %}
+      {% if customer %}
+        <a class="cm-header__account" href="{{ cm_account_page }}">
+          {{ section.settings.account_label | default: 'My account' | escape }}
+        </a>
+      {% else %}
+        <a
+          class="cm-header__account"
+          href="/customer_authentication/login?return_to={{ cm_account_page | url_encode }}"
+        >
+          {{ section.settings.account_label | default: 'My account' | escape }}
+        </a>
+      {% endif %}
 
       {% if section.settings.cta_label != blank %}
         <a
@@ -104,9 +111,18 @@
         <a class="cm-header__drawer-link" href="{{ section.settings.link_about | default: '/pages/about' }}">About</a>
         <a class="cm-header__drawer-link" href="{{ section.settings.link_contact | default: '/pages/contact' }}">Contact</a>
       {% endif %}
-      <a class="cm-header__drawer-link" href="{{ section.settings.link_account | default: '/pages/my-account' }}">
-        {{ section.settings.account_label | default: 'My account' | escape }}
-      </a>
+      {% if customer %}
+        <a class="cm-header__drawer-link" href="{{ cm_account_page }}">
+          {{ section.settings.account_label | default: 'My account' | escape }}
+        </a>
+      {% else %}
+        <a
+          class="cm-header__drawer-link"
+          href="/customer_authentication/login?return_to={{ cm_account_page | url_encode }}"
+        >
+          {{ section.settings.account_label | default: 'My account' | escape }}
+        </a>
+      {% endif %}
       {% if section.settings.cta_label != blank %}
         <a
           class="cm-btn cm-btn--accent"
