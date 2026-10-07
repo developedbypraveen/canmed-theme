@@ -344,44 +344,91 @@
             <button type="button" class="cm-account__back" data-cm-rx-back>
               ← Back to prescriptions
             </button>
-            <p class="cm-eyebrow">My account</p>
-            <h2 class="cm-account__title">{{ section.settings.addresses_heading | default: 'Saved addresses' | escape }}</h2>
-            <p class="cm-account__lede">
-              {{ section.settings.addresses_detail_body | default: 'Addresses saved from your checkouts. New addresses are added automatically the next time you check out.' | escape }}
-            </p>
+            <div class="cm-account__detail-head">
+              <div>
+                <p class="cm-eyebrow">My account</p>
+                <h2 class="cm-account__title">{{ section.settings.addresses_heading | default: 'Saved addresses' | escape }}</h2>
+                <p class="cm-account__lede">
+                  {{ section.settings.addresses_detail_body | default: 'Add, edit, or remove delivery addresses for checkout.' | escape }}
+                </p>
+              </div>
+              <button type="button" class="cm-account__track" data-cm-addr-toggle="new">
+                Add address
+              </button>
+            </div>
+
+            <div class="cm-account__addr-form" data-cm-addr-panel="new" hidden>
+              <h3 class="cm-account__heading">Add a new address</h3>
+              {% form 'customer_address', customer.new_address %}
+                {% if form.errors != blank %}
+                  <p class="cm-account__form-error" role="alert">{{ form.errors | default_errors }}</p>
+                {% endif %}
+                {% render 'canmed-address-fields', form: form, id_prefix: 'new' %}
+                <div class="cm-btn-row" style="margin-top:1.25rem;">
+                  <button type="submit" class="cm-btn cm-btn--accent">Save address</button>
+                  <button type="button" class="cm-btn cm-btn--secondary" data-cm-addr-cancel="new">Cancel</button>
+                </div>
+              {% endform %}
+            </div>
 
             {% if customer.addresses_count == 0 %}
-              <div class="cm-account__empty" style="margin-top:1.5rem;">
+              <div class="cm-account__empty" style="margin-top:1.5rem;" data-cm-addr-empty>
                 <h3 class="cm-account__heading">No saved addresses yet.</h3>
-                <p class="cm-account__lede">Complete a shop order or prescription delivery checkout and your address will appear here.</p>
-                <div class="cm-btn-row" style="justify-content:center;margin-top:1.75rem;">
-                  <a class="cm-btn cm-btn--accent" href="{{ section.settings.shop_link | default: '/pages/shop' }}">Browse the shop</a>
-                </div>
+                <p class="cm-account__lede">Add one above, or it will appear after your next delivery checkout.</p>
               </div>
             {% else %}
               <div class="cm-account__addresses cm-account__addresses--detail">
                 {% for address in customer.addresses %}
-                  <div class="cm-account__card{% if address == customer.default_address %} is-default{% endif %}">
-                    <p class="cm-mono-caption">
-                      {% if address == customer.default_address %}Default{% elsif address.company != blank %}{{ address.company | escape }}{% else %}Address{% endif %}
-                    </p>
-                    <p class="cm-mono-data">
-                      {% if address.name != blank %}{{ address.name | escape }}<br>{% endif %}
-                      {{ address.address1 | escape }}
-                      {% if address.address2 != blank %}<br>{{ address.address2 | escape }}{% endif %}
-                      <br>
-                      {{ address.city | escape }}
-                      {% if address.province_code != blank %} {{ address.province_code | escape }}{% endif %}
-                      {{ address.zip | escape }}
-                      {% if address.country != blank %}<br>{{ address.country | escape }}{% endif %}
-                      {% if address.phone != blank %}<br>{{ address.phone | escape }}{% endif %}
-                    </p>
+                  <div class="cm-account__card{% if address == customer.default_address %} is-default{% endif %}" data-cm-addr-card="{{ address.id }}">
+                    <div class="cm-account__addr-card-top">
+                      <p class="cm-mono-caption">
+                        {% if address == customer.default_address %}Default{% elsif address.company != blank %}{{ address.company | escape }}{% else %}Address{% endif %}
+                      </p>
+                      <div class="cm-account__addr-actions">
+                        <button type="button" class="cm-account__addr-action" data-cm-addr-toggle="{{ address.id }}">Edit</button>
+                        {% form 'customer_address', address %}
+                          <input type="hidden" name="_method" value="delete">
+                          <button
+                            type="submit"
+                            class="cm-account__addr-action cm-account__addr-action--danger"
+                            data-cm-addr-delete
+                            data-confirm="Delete this address?"
+                          >
+                            Delete
+                          </button>
+                        {% endform %}
+                      </div>
+                    </div>
+                    <div data-cm-addr-summary="{{ address.id }}">
+                      <p class="cm-mono-data">
+                        {% if address.name != blank %}{{ address.name | escape }}<br>{% endif %}
+                        {{ address.address1 | escape }}
+                        {% if address.address2 != blank %}<br>{{ address.address2 | escape }}{% endif %}
+                        <br>
+                        {{ address.city | escape }}
+                        {% if address.province_code != blank %} {{ address.province_code | escape }}{% endif %}
+                        {{ address.zip | escape }}
+                        {% if address.country != blank %}<br>{{ address.country | escape }}{% endif %}
+                        {% if address.phone != blank %}<br>{{ address.phone | escape }}{% endif %}
+                      </p>
+                    </div>
+
+                    <div class="cm-account__addr-form" data-cm-addr-panel="{{ address.id }}" hidden>
+                      <h3 class="cm-account__heading">Edit address</h3>
+                      {% form 'customer_address', address %}
+                        {% if form.errors != blank %}
+                          <p class="cm-account__form-error" role="alert">{{ form.errors | default_errors }}</p>
+                        {% endif %}
+                        {% render 'canmed-address-fields', form: form, id_prefix: address.id %}
+                        <div class="cm-btn-row" style="margin-top:1.25rem;">
+                          <button type="submit" class="cm-btn cm-btn--accent">Update address</button>
+                          <button type="button" class="cm-btn cm-btn--secondary" data-cm-addr-cancel="{{ address.id }}">Cancel</button>
+                        </div>
+                      {% endform %}
+                    </div>
                   </div>
                 {% endfor %}
               </div>
-              <p class="cm-account__detail-note">
-                To change an address, use a new delivery address at checkout — it will save to your account.
-              </p>
             {% endif %}
           </article>
         </div>
@@ -391,7 +438,7 @@
           {% if customer.addresses_count == 0 %}
             <p class="cm-mono-data cm-account__muted">{{ section.settings.addresses_empty | default: 'No saved addresses yet. They appear after checkout.' | escape }}</p>
             <button type="button" class="cm-btn cm-btn--secondary" style="margin-top:1rem;" data-cm-rx-open="cm-addresses">
-              {{ section.settings.manage_addresses_label | default: 'View addresses' | escape }}
+              {{ section.settings.manage_addresses_label | default: 'Manage addresses' | escape }}
             </button>
           {% else %}
             <div class="cm-account__addresses">
@@ -412,7 +459,7 @@
               {% endfor %}
             </div>
             <button type="button" class="cm-mono-data cm-account__aside-link" data-cm-rx-open="cm-addresses">
-              {{ section.settings.manage_addresses_label | default: 'View addresses' | escape }}
+              {{ section.settings.manage_addresses_label | default: 'Manage addresses' | escape }}
             </button>
           {% endif %}
 
@@ -473,9 +520,9 @@
       "type": "textarea",
       "id": "addresses_detail_body",
       "label": "Addresses detail intro",
-      "default": "Addresses saved from your checkouts. New addresses are added automatically the next time you check out."
+      "default": "Add, edit, or remove delivery addresses for checkout."
     },
-    { "type": "text", "id": "manage_addresses_label", "label": "View addresses label", "default": "View addresses" },
+    { "type": "text", "id": "manage_addresses_label", "label": "Manage addresses label", "default": "Manage addresses" },
     { "type": "url", "id": "shop_link", "label": "Shop link" },
     { "type": "text", "id": "clinic_heading", "label": "Clinic heading", "default": "Your dispensary" },
     { "type": "text", "id": "clinic_name", "label": "Clinic name", "default": "CanMED West Lakes Clinic" },

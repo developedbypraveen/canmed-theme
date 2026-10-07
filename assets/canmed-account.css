@@ -371,6 +371,90 @@
   margin-top: 1.5rem;
 }
 
+.cm-account__addr-form {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--cm-hairline);
+}
+
+.cm-account__addr-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem 1rem;
+  margin-top: 1rem;
+}
+
+.cm-account__addr-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.cm-account__addr-field--full {
+  grid-column: 1 / -1;
+}
+
+.cm-account__addr-field .cm-mono-caption {
+  color: var(--cm-muted);
+  font-size: 0.75rem;
+}
+
+.cm-account__addr-default {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--cm-charcoal);
+}
+
+.cm-account__addr-card-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.cm-account__addr-actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.cm-account__addr-actions form {
+  display: inline;
+  margin: 0;
+}
+
+.cm-account__addr-action {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--cm-font-mono);
+  font-size: 0.8125rem;
+  color: var(--cm-pine);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.cm-account__addr-action--danger {
+  color: #b42318;
+}
+
+.cm-account__form-error {
+  margin-top: 0.75rem;
+  color: #b42318;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 640px) {
+  .cm-account__addr-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .cm-account__aside .cm-account__card {
   margin-top: 1.5rem;
 }

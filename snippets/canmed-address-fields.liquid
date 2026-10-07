@@ -1,0 +1,67 @@
+{% comment %}
+  Shared fields for customer_address forms.
+  Expects: form, id_prefix (e.g. "new" or address.id)
+{% endcomment %}
+{% assign prefix = id_prefix | default: 'new' %}
+<div class="cm-account__addr-grid">
+  <label class="cm-account__addr-field">
+    <span class="cm-mono-caption">First name</span>
+    <input class="cm-product__input" type="text" name="address[first_name]" value="{{ form.first_name }}" autocomplete="given-name">
+  </label>
+  <label class="cm-account__addr-field">
+    <span class="cm-mono-caption">Last name</span>
+    <input class="cm-product__input" type="text" name="address[last_name]" value="{{ form.last_name }}" autocomplete="family-name">
+  </label>
+  <label class="cm-account__addr-field cm-account__addr-field--full">
+    <span class="cm-mono-caption">Company (optional)</span>
+    <input class="cm-product__input" type="text" name="address[company]" value="{{ form.company }}" autocomplete="organization">
+  </label>
+  <label class="cm-account__addr-field cm-account__addr-field--full">
+    <span class="cm-mono-caption">Address</span>
+    <input class="cm-product__input" type="text" name="address[address1]" value="{{ form.address1 }}" autocomplete="address-line1" required>
+  </label>
+  <label class="cm-account__addr-field cm-account__addr-field--full">
+    <span class="cm-mono-caption">Apartment, suite, etc. (optional)</span>
+    <input class="cm-product__input" type="text" name="address[address2]" value="{{ form.address2 }}" autocomplete="address-line2">
+  </label>
+  <label class="cm-account__addr-field">
+    <span class="cm-mono-caption">City</span>
+    <input class="cm-product__input" type="text" name="address[city]" value="{{ form.city }}" autocomplete="address-level2" required>
+  </label>
+  <label class="cm-account__addr-field">
+    <span class="cm-mono-caption">Country</span>
+    <select
+      class="cm-product__input"
+      id="cm-addr-country-{{ prefix }}"
+      name="address[country]"
+      data-cm-addr-country
+      data-default="{{ form.country | default: 'Australia' | escape }}"
+      autocomplete="country"
+    >
+      {{ all_country_option_tags }}
+    </select>
+  </label>
+  <label class="cm-account__addr-field" id="cm-addr-province-wrap-{{ prefix }}">
+    <span class="cm-mono-caption">State / province</span>
+    <select
+      class="cm-product__input"
+      id="cm-addr-province-{{ prefix }}"
+      name="address[province]"
+      data-cm-addr-province
+      data-default="{{ form.province | escape }}"
+      autocomplete="address-level1"
+    ></select>
+  </label>
+  <label class="cm-account__addr-field">
+    <span class="cm-mono-caption">Postcode</span>
+    <input class="cm-product__input" type="text" name="address[zip]" value="{{ form.zip }}" autocomplete="postal-code" required>
+  </label>
+  <label class="cm-account__addr-field">
+    <span class="cm-mono-caption">Phone</span>
+    <input class="cm-product__input" type="tel" name="address[phone]" value="{{ form.phone }}" autocomplete="tel">
+  </label>
+  <label class="cm-account__addr-default cm-account__addr-field--full">
+    {{ form.set_as_default_checkbox }}
+    <span>Set as default address</span>
+  </label>
+</div>
