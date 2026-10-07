@@ -28,6 +28,11 @@
     <span class="cm-mono-caption">City</span>
     <input class="cm-product__input" type="text" name="address[city]" value="{{ form.city }}" autocomplete="address-level2" required>
   </label>
+  {% if form.country != blank %}
+    {% assign cm_addr_country = form.country %}
+  {% else %}
+    {% assign cm_addr_country = 'Australia' %}
+  {% endif %}
   <label class="cm-account__addr-field">
     <span class="cm-mono-caption">Country</span>
     <select
@@ -35,8 +40,9 @@
       id="cm-addr-country-{{ prefix }}"
       name="address[country]"
       data-cm-addr-country
-      data-default="{{ form.country | default: 'Australia' | escape }}"
+      data-default="{{ cm_addr_country | escape }}"
       autocomplete="country"
+      required
     >
       {{ all_country_option_tags }}
     </select>

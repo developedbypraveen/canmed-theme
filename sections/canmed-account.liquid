@@ -340,6 +340,7 @@
             {% endif %}
           {% endfor %}
 
+          {% assign addresses_return = section.settings.account_page_path | default: '/pages/my-account' | append: '#cm-addresses' %}
           <article class="cm-account__detail" data-cm-rx-detail="cm-addresses" id="cm-addresses" hidden>
             <button type="button" class="cm-account__back" data-cm-rx-back>
               ← Back to prescriptions
@@ -359,7 +360,7 @@
 
             <div class="cm-account__addr-form" data-cm-addr-panel="new" hidden>
               <h3 class="cm-account__heading">Add a new address</h3>
-              {% form 'customer_address', customer.new_address %}
+              {% form 'customer_address', customer.new_address, return_to: addresses_return %}
                 {% if form.errors != blank %}
                   <p class="cm-account__form-error" role="alert">{{ form.errors | default_errors }}</p>
                 {% endif %}
@@ -386,7 +387,7 @@
                       </p>
                       <div class="cm-account__addr-actions">
                         <button type="button" class="cm-account__addr-action" data-cm-addr-toggle="{{ address.id }}">Edit</button>
-                        {% form 'customer_address', address %}
+                        {% form 'customer_address', address, return_to: addresses_return %}
                           <input type="hidden" name="_method" value="delete">
                           <button
                             type="submit"
@@ -415,7 +416,7 @@
 
                     <div class="cm-account__addr-form" data-cm-addr-panel="{{ address.id }}" hidden>
                       <h3 class="cm-account__heading">Edit address</h3>
-                      {% form 'customer_address', address %}
+                      {% form 'customer_address', address, return_to: addresses_return %}
                         {% if form.errors != blank %}
                           <p class="cm-account__form-error" role="alert">{{ form.errors | default_errors }}</p>
                         {% endif %}

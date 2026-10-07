@@ -13,10 +13,14 @@
       } catch (e) {
         /* selector already bound */
       }
-      var defCountry = countryEl.getAttribute('data-default');
+      var defCountry = countryEl.getAttribute('data-default') || 'Australia';
       var defProvince = provinceEl.getAttribute('data-default');
       if (defCountry) {
         countryEl.value = defCountry;
+        countryEl.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+      if (!countryEl.value || countryEl.value === '---') {
+        countryEl.value = 'Australia';
         countryEl.dispatchEvent(new Event('change', { bubbles: true }));
       }
       if (defProvince) {
