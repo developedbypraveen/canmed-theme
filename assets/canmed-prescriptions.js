@@ -1,5 +1,14 @@
 (function () {
   var TITLES = ['Your details', 'Delivery + dispensary', 'Prescription type', 'Notes + script'];
+  var ALLOWED_EXT = /\.(jpe?g|png|pdf|docx?)$/i;
+  var ALLOWED_MIME = [
+    'image/jpeg',
+    'image/png',
+    'application/pdf',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  ];
+  var MAX_BYTES = 20 * 1024 * 1024;
 
   function init(root) {
     if (!root || root.dataset.ready) return;
@@ -78,6 +87,12 @@
       });
     }
 
+    function isAllowedFile(f) {
+      if (!f) return false;
+      if (ALLOWED_MIME.indexOf(f.type) !== -1) return true;
+      return ALLOWED_EXT.test(f.name || '');
+    }
+
     function validate() {
       clearErrors();
       var ok = true;
@@ -120,19 +135,24 @@
         setError('rxType', "Choose the closest match — we'll route it correctly.");
         ok = false;
       }
-      // Step 3: file optional — real script must be emailed (email-only mode)
+      if (step === 3 && !file) {
+        setError('file', 'Attach your script (JPG, PNG, PDF or DOC).');
+        ok = false;
+      }
       return ok;
     }
 
     function takeFile(f) {
       if (!f) return;
-      var okTypes = ['image/jpeg', 'image/png', 'image/heic', 'image/heif', 'application/pdf'];
-      if (okTypes.indexOf(f.type) === -1 && !/\.(jpe?g|png|heic|heif|pdf)$/i.test(f.name)) {
-        setError('file', "That file type won't open on our side. Use JPG, PNG, HEIC or PDF.");
+      if (!isAllowedFile(f)) {
+        setError('file', 'Use JPG, PNG, PDF or DOC only.');
         return;
       }
-      if (f.size > 10 * 1024 * 1024) {
-        setError('file', 'That file is over 10 MB. Please email it instead.');
+      if (f.size > MAX_BYTES) {
+        setError(
+          'file',
+          'That file is over 20 MB. Compress it, or email it to ' + fallbackEmail + '.'
+        );
         return;
       }
       clearErrors();
@@ -140,12 +160,12 @@
       if (fileName) {
         fileName.hidden = false;
         fileName.textContent =
-          f.name +
-          ' · ' +
-          (f.size / 1024).toFixed(0) +
-          ' KB — name noted on order; still email the file to ' +
-          fallbackEmail;
+          f.name + ' · ' + (f.size / 1024).toFixed(0) + ' KB — will attach to your request';
       }
+    }
+
+    function appendProp(form, key, value) {
+      form.append('properties[' + key + ']', value == null ? '' : String(value));
     }
 
     async function submitOrder() {
@@ -154,6 +174,10 @@
           submitErr.hidden = false;
           submitErr.textContent = 'Intake product is not configured. Contact the pharmacy.';
         }
+        return;
+      }
+      if (!file) {
+        setError('file', 'Attach your script (JPG, PNG, PDF or DOC).');
         return;
       }
       if (nextBtn) {
@@ -172,48 +196,58 @@
       var locBtn = root.querySelector('[data-cm-rx-location].is-active') || locBtns[0];
       var pharmacist = locBtn ? locBtn.getAttribute('data-pharmacist') : '';
       var locName = locBtn ? locBtn.textContent.trim() : locationId;
-      var scriptLabel = file
-        ? file.name + ' (' + Math.round(file.size / 1024) + ' KB) — email file to ' + fallbackEmail
-        : 'Not attached — email script to ' + fallbackEmail;
-
-      var properties = {
-        _rx_intake: 'true',
-        'Full name': name,
-        Email: email,
-        Phone: phone,
-        'Date of birth': dob,
-        Method: method === 'delivery' ? 'Courier delivery' : 'Collect in store',
-        Dispensary: locName,
-        '_rx_location': locationId,
-        'Prescription type': rxType,
-        '_rx_type': rxType,
-        State: state || (method === 'pickup' ? 'N/A (pickup)' : ''),
-        'Delivery address': method === 'delivery' ? address.trim() : 'Pickup — ' + locName,
-        Notes: notes.trim() || '—',
-        'Script file': scriptLabel,
-        'Script delivery': 'Email to ' + fallbackEmail + ' (name dispensary in subject)',
-        Status: 'pending_review',
-        Payment: 'Awaiting pharmacist approval + payment link',
-      };
 
       try {
         await fetch('/cart/clear.js', { method: 'POST', credentials: 'same-origin' });
-        var res = await fetch('/cart/add.js', {
+
+        // Native Shopify file line-item property (multipart /cart/add — not cart/add.js)
+        var form = new FormData();
+        form.append('id', String(variantId));
+        form.append('quantity', '1');
+        appendProp(form, '_rx_intake', 'true');
+        appendProp(form, 'Full name', name);
+        appendProp(form, 'Email', email);
+        appendProp(form, 'Phone', phone);
+        appendProp(form, 'Date of birth', dob);
+        appendProp(form, 'Method', method === 'delivery' ? 'Courier delivery' : 'Collect in store');
+        appendProp(form, 'Dispensary', locName);
+        appendProp(form, '_rx_location', locationId);
+        appendProp(form, 'Prescription type', rxType);
+        appendProp(form, '_rx_type', rxType);
+        appendProp(form, 'State', state || (method === 'pickup' ? 'N/A (pickup)' : ''));
+        appendProp(
+          form,
+          'Delivery address',
+          method === 'delivery' ? address.trim() : 'Pickup — ' + locName
+        );
+        appendProp(form, 'Notes', notes.trim() || '—');
+        appendProp(form, 'Script file name', file.name + ' (' + Math.round(file.size / 1024) + ' KB)');
+        appendProp(form, 'Status', 'pending_review');
+        appendProp(form, 'Payment', 'Awaiting pharmacist approval + payment link');
+        // File property → Shopify stores CDN URL on the order line item
+        form.append('properties[Script attachment]', file, file.name);
+
+        var res = await fetch(window.Shopify && Shopify.routes && Shopify.routes.root
+          ? Shopify.routes.root + 'cart/add'
+          : '/cart/add', {
           method: 'POST',
           credentials: 'same-origin',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({
-            items: [
-              {
-                id: Number(variantId),
-                quantity: 1,
-                properties: properties,
-              },
-            ],
-          }),
+          headers: { Accept: 'application/json' },
+          body: form,
         });
-        var data = await res.json();
-        if (!res.ok) throw new Error((data && data.description) || 'Could not create order');
+
+        var data = null;
+        try {
+          data = await res.json();
+        } catch (_e) {
+          data = null;
+        }
+        if (!res.ok) {
+          throw new Error(
+            (data && (data.description || data.message)) ||
+              'Could not attach script. Try a smaller JPG/PNG/PDF, or email ' + fallbackEmail + '.'
+          );
+        }
 
         await fetch('/cart/update.js', {
           method: 'POST',
@@ -224,8 +258,8 @@
               rx_location: locationId,
               rx_type: rxType,
               rx_status: 'pending_review',
-              rx_script_file: file ? file.name : '',
-              rx_script_via: 'email',
+              rx_script_file: file.name,
+              rx_script_via: 'shopify_line_item_file',
               rx_payment: 'awaiting_invoice',
             },
             note:
@@ -233,11 +267,11 @@
               locName +
               ' — ' +
               rxType +
-              (file ? ' — file name: ' + file.name : '') +
-              ' — EMAIL SCRIPT to ' +
-              fallbackEmail +
-              ' (subject: dispensary + patient name)' +
+              ' — script attached on line item (Script attachment) — file: ' +
+              file.name +
               (notes ? ' — notes: ' + notes : '') +
+              ' — Fallback email: ' +
+              fallbackEmail +
               ' — After approval: create Draft Order with medicines and Send invoice (payment link).',
           }),
         });
@@ -252,17 +286,16 @@
               (pharmacist || 'A pharmacist') +
               ' at ' +
               locName +
-              ' will review your details. After approval you will receive an email with a payment link and the approved medicine details.';
+              ' will review your details and the attached script. After approval you will receive an email with a payment link and the approved medicine details.';
           }
           if (ref) {
             ref.textContent =
-              'Complete checkout to lodge this $0 request in Orders. Email your script to ' +
+              'Complete checkout to lodge this $0 request in Orders. If the file did not attach, email it to ' +
               fallbackEmail +
-              ' and name your dispensary in the subject.';
+              '.';
           }
         }
 
-        // Completing checkout creates the $0 order under Shopify Admin → Orders
         window.location.href = '/checkout';
       } catch (err) {
         if (submitErr) {

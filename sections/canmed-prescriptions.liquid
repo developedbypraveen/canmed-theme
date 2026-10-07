@@ -159,20 +159,24 @@
             <textarea class="cm-product__input cm-rx__textarea" rows="3" data-cm-rx-notes placeholder="Allergies, flavour preference, timing, animal species/weight…"></textarea>
           </label>
 
-          <p class="cm-mono-caption" style="margin-top:1.5rem;">Your script (email)</p>
+          <p class="cm-mono-caption" style="margin-top:1.5rem;">Script attachment</p>
           <p class="cm-mono-data" style="color:var(--cm-muted);">
-            Email the image or PDF to
-            <a href="mailto:{{ section.settings.fallback_email | default: 'scripts@canmed.com.au' }}">{{ section.settings.fallback_email | default: 'scripts@canmed.com.au' }}</a>
-            and name your dispensary in the subject. Optional: note the file name below so staff can match it.
+            JPG, PNG, PDF or DOC · up to 20 MB · attaches to your Shopify request for the pharmacist
           </p>
           <div class="cm-rx__drop" data-cm-rx-drop>
-            <p>Optional — note file name: <button type="button" class="cm-rx__choose" data-cm-rx-choose>choose a file</button></p>
-            <input type="file" class="cm-rx__file-input" accept="image/jpeg,image/png,image/heic,image/heif,application/pdf" data-cm-rx-file hidden>
+            <p>Drop your script here, or <button type="button" class="cm-rx__choose" data-cm-rx-choose>choose a file</button></p>
+            <input
+              type="file"
+              class="cm-rx__file-input"
+              accept="image/jpeg,image/png,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.jpg,.jpeg,.png,.pdf,.doc,.docx"
+              data-cm-rx-file
+              hidden
+            >
             <p class="cm-mono-data cm-rx__file-name" data-cm-rx-file-name hidden></p>
           </div>
           <span class="cm-rx__error cm-mono-data" data-err="file" hidden></span>
           <p class="cm-mono-data" style="margin-top:0.75rem;color:var(--cm-muted);">
-            {{ section.settings.file_note | default: 'This form creates a $0 request in Shopify Orders. The script file itself must be emailed to scripts@canmed.com.au with your dispensary named in the subject.' | escape }}
+            {{ section.settings.file_note | default: 'Your script attaches to the $0 request in Shopify Orders (clickable on the line item). If upload fails, email scripts@canmed.com.au naming your dispensary.' | escape }}
           </p>
         </div>
 
@@ -216,7 +220,7 @@
       "type": "textarea",
       "id": "file_note",
       "label": "File note",
-      "default": "This form creates a $0 request in Shopify Orders. The script file itself must be emailed to scripts@canmed.com.au with your dispensary named in the subject."
+      "default": "Your script attaches to the $0 request in Shopify Orders (clickable on the line item). If upload fails, email scripts@canmed.com.au naming your dispensary."
     },
     { "type": "url", "id": "shop_link", "label": "Shop link" }
   ],
