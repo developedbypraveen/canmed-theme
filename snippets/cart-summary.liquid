@@ -3,6 +3,7 @@
 
   @param {string} [accelerated_checkout_buttons_layout] - { 'vertical' } Forced layout of the additional checkout buttons, instead of relying on platform's layout.
   @param {string} [section_id] - The section ID for cart discount component.
+  @param {boolean} [show_view_cart] - When true, shows a View cart button above Checkout (cart drawer).
 {%- enddoc -%}
 
 {% render 'text-component-shimmer-styles' %}
@@ -257,7 +258,15 @@
   </div>
 </div>
 
-<div class="cart__ctas">
+<div class="cart__ctas{% if show_view_cart %} cart__ctas--drawer{% endif %}">
+  {% if show_view_cart %}
+    <a
+      href="{{ routes.cart_url }}"
+      class="cart__view-cart-button button button--secondary"
+    >
+      <span class="button-text">{{ 'content.view_cart' | t }}</span>
+    </a>
+  {% endif %}
   <button
     type="submit"
     id="checkout"
@@ -477,10 +486,17 @@
     grid-template-columns: 1fr;
   }
 
-  .cart__ctas .cart__checkout-button {
+  .cart__ctas .cart__checkout-button,
+  .cart__ctas .cart__view-cart-button {
     width: 100%;
     height: clamp(25px, var(--height-buy-buttons), 55px);
     padding-inline: var(--padding-4xl);
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .cart__ctas--drawer {
+    gap: 0.75rem;
   }
 
   .cart-drawer__summary .cart-totals:not(:has(.cart-totals__original-container:empty)) {

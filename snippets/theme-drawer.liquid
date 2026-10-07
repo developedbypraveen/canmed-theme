@@ -59,10 +59,13 @@
     }
 
     // Apply squeeze immediately, bypassing the margin transition.
-    // Only squeeze if at least one drawer was actually restored — saved
-    // drawer IDs may not exist on every page (e.g. cart-drawer on /cart).
+    // Only squeeze if at least one non-cart drawer was restored — cart overlays
+    // and must not shift the page (e.g. cart-drawer on product pages).
     var pageWrapper = document.querySelector('.page-wrapper');
-    if (pageWrapper && dialogs.length > 0) {
+    var shouldSqueezeRestore = drawerIds.some(function (id) {
+      return id && id !== 'cart-drawer' && document.getElementById(id);
+    });
+    if (pageWrapper && shouldSqueezeRestore) {
       pageWrapper.style.transition = 'none';
       pageWrapper.classList.add('page-wrapper--drawer-open');
     }
@@ -85,24 +88,24 @@
   const pageWrapper = document.querySelector('.page-wrapper');
   const squeezeQuery = window.matchMedia('(min-width: 990px)');
 
+  // Cart drawer overlays the page — never squeeze/shift layout for it.
+  function shouldSqueezePage() {
+    if (!squeezeQuery.matches) return false;
+    return Boolean(document.querySelector('theme-drawer[open]:not(#cart-drawer)'));
+  }
+
   // ── Squeeze coordination ──
-  // Listens to all drawers. Only squeezes on wide viewports.
+  // Listens to all drawers. Only squeezes on wide viewports (not for cart).
   document.addEventListener('theme-drawer:open', () => {
-    if (squeezeQuery.matches) {
-      pageWrapper?.classList.add('page-wrapper--drawer-open');
-    }
+    pageWrapper?.classList.toggle('page-wrapper--drawer-open', shouldSqueezePage());
   });
 
   document.addEventListener('theme-drawer:close', () => {
-    const openDrawer = document.querySelector('theme-drawer[open]');
-    if (!openDrawer) {
-      pageWrapper?.classList.remove('page-wrapper--drawer-open');
-    }
+    pageWrapper?.classList.toggle('page-wrapper--drawer-open', shouldSqueezePage());
   });
 
   squeezeQuery.addEventListener('change', () => {
-    const openDrawer = document.querySelector('theme-drawer[open]');
-    pageWrapper?.classList.toggle('page-wrapper--drawer-open', Boolean(openDrawer) && squeezeQuery.matches);
+    pageWrapper?.classList.toggle('page-wrapper--drawer-open', shouldSqueezePage());
   });
 
   // ── State persistence ──

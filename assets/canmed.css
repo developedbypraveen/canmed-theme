@@ -2344,8 +2344,10 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 .cart-page .button--primary,
 .cart-summary .checkout-button,
 .cart-summary button[name="checkout"],
+.cart-summary .cart__checkout-button,
 .cart-drawer .checkout-button,
-.cart-drawer button[name="checkout"] {
+.cart-drawer button[name="checkout"],
+.cart-drawer .cart__checkout-button {
   background: var(--cm-amber) !important;
   border-color: var(--cm-amber) !important;
   color: #fff !important;
@@ -2354,10 +2356,35 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 .cart-page .button--primary:hover,
 .cart-summary .checkout-button:hover,
 .cart-summary button[name="checkout"]:hover,
+.cart-summary .cart__checkout-button:hover,
 .cart-drawer .checkout-button:hover,
-.cart-drawer button[name="checkout"]:hover {
+.cart-drawer button[name="checkout"]:hover,
+.cart-drawer .cart__checkout-button:hover {
   background: var(--cm-pine) !important;
   border-color: var(--cm-pine) !important;
+}
+.cart-drawer .cart__view-cart-button,
+.cart-summary .cart__view-cart-button {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  background: transparent !important;
+  border: 1.5px solid var(--cm-pine) !important;
+  color: var(--cm-pine) !important;
+  border-radius: 999px !important;
+}
+.cart-drawer .cart__view-cart-button:hover,
+.cart-summary .cart__view-cart-button:hover {
+  background: var(--cm-pine) !important;
+  color: #fff !important;
+}
+
+/* Cart drawer overlays — never shift/squeeze the storefront layout */
+.page-wrapper:has(theme-drawer#cart-drawer[open]):not(:has(theme-drawer[open]:not(#cart-drawer))) {
+  margin-right: 0 !important;
+}
+html {
+  scrollbar-gutter: stable;
 }
 .cart-drawer,
 .cart-drawer__dialog,
