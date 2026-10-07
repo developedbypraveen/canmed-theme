@@ -12,20 +12,15 @@
         {% if section.settings.eyebrow != blank %}
           <p class="cm-eyebrow">{{ section.settings.eyebrow | escape }}</p>
         {% endif %}
-        {% assign account_return = section.settings.prescriptions_link | default: '/pages/my-account' %}
+        {% assign account_page = section.settings.account_page_path | default: '/pages/my-account' %}
         <h1 class="cm-display-l">{{ section.settings.guest_heading | default: 'Sign in to see your prescriptions.' | escape }}</h1>
         <p class="cm-body-l cm-account__lede">
-          {{ section.settings.guest_body | default: 'Use the same email you checkout with so your $0 prescription requests and shop orders appear here.' | escape }}
-        </p>
-        <p class="cm-mono-data cm-account__lede" style="margin-top:0.75rem;color:var(--cm-muted);">
-          After Shopify sign-in you may land on their Orders page — open
-          <a href="{{ account_return }}">My prescriptions on the CanMed site</a>
-          for status tracking.
+          {{ section.settings.guest_body | default: 'Sign in with the same email you use at checkout. Then this My Account page shows your prescriptions and orders.' | escape }}
         </p>
         <div class="cm-btn-row">
           <a
             class="cm-btn cm-btn--accent"
-            href="{{ routes.account_login_url }}?return_to={{ account_return | url_encode }}"
+            href="{{ routes.account_login_url }}?return_to={{ account_page | url_encode }}"
           >
             {{ section.settings.login_label | default: 'Sign in' | escape }}
           </a>
@@ -318,7 +313,19 @@
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "My account" },
     { "type": "text", "id": "guest_heading", "label": "Guest heading", "default": "Sign in to see your prescriptions." },
-    { "type": "textarea", "id": "guest_body", "label": "Guest body", "default": "Use the same email you checkout with so your $0 prescription requests and shop orders appear here." },
+    {
+      "type": "textarea",
+      "id": "guest_body",
+      "label": "Guest body",
+      "default": "Sign in with the same email you use at checkout. Then this My Account page shows your prescriptions and orders."
+    },
+    {
+      "type": "text",
+      "id": "account_page_path",
+      "label": "My Account page path",
+      "default": "/pages/my-account",
+      "info": "Used after sign-in (return_to). Keep as /pages/my-account."
+    },
     { "type": "text", "id": "login_label", "label": "Sign in label", "default": "Sign in" },
     { "type": "text", "id": "logout_label", "label": "Sign out label", "default": "Sign out" },
     { "type": "text", "id": "manage_label", "label": "Manage login label", "default": "Manage login" },

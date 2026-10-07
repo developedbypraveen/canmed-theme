@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "main": {
+      "type": "canmed-account",
+      "settings": {
+        "eyebrow": "My account",
+        "guest_heading": "Sign in to see your prescriptions.",
+        "guest_body": "Sign in with the same email you use at checkout. Then open My Account to see your prescriptions.",
+        "account_page_path": "/pages/my-account",
+        "login_label": "Sign in"
+      }
+    }
+  },
+  "order": ["main"]
+}
