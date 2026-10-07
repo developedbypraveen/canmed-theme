@@ -1,0 +1,72 @@
+{% comment %}
+  Sets status_key, status_label, status_tone, track_label from order + optional rx_status_raw.
+  Usage: {% render 'canmed-rx-status', order: order, rx_status_raw: rx_status_raw %}
+{% endcomment %}
+
+{% assign status_key = 'received' %}
+{% assign status_label = 'Received' %}
+{% assign status_tone = 'sage' %}
+{% assign track_label = 'Track' %}
+
+{% assign raw = rx_status_raw | default: '' | downcase | strip %}
+{% if raw == 'pending_review' or raw == 'received' %}
+  {% assign status_key = 'received' %}
+  {% assign status_label = 'Received' %}
+  {% assign status_tone = 'sage' %}
+{% elsif raw == 'under_review' or raw == 'review' or raw == 'under review' %}
+  {% assign status_key = 'review' %}
+  {% assign status_label = 'Under review' %}
+  {% assign status_tone = 'amber' %}
+{% elsif raw == 'approved' %}
+  {% assign status_key = 'approved' %}
+  {% assign status_label = 'Approved' %}
+  {% assign status_tone = 'pine' %}
+{% elsif raw == 'dispatched' or raw == 'fulfilled' %}
+  {% assign status_key = 'dispatched' %}
+  {% assign status_label = 'Dispatched' %}
+  {% assign status_tone = 'pine' %}
+{% elsif raw == 'cancelled' or raw == 'canceled' or raw == 'rejected' %}
+  {% assign status_key = 'cancelled' %}
+  {% assign status_label = 'Cancelled' %}
+  {% assign status_tone = 'muted' %}
+  {% assign track_label = 'View' %}
+{% endif %}
+
+{% if order.tags contains 'rx-review' %}
+  {% assign status_key = 'review' %}
+  {% assign status_label = 'Under review' %}
+  {% assign status_tone = 'amber' %}
+  {% assign track_label = 'Track' %}
+{% endif %}
+{% if order.tags contains 'rx-approved' %}
+  {% assign status_key = 'approved' %}
+  {% assign status_label = 'Approved' %}
+  {% assign status_tone = 'pine' %}
+  {% assign track_label = 'Track' %}
+{% endif %}
+{% if order.tags contains 'rx-dispatched' or order.fulfillment_status == 'fulfilled' %}
+  {% assign status_key = 'dispatched' %}
+  {% assign status_label = 'Dispatched' %}
+  {% assign status_tone = 'pine' %}
+  {% assign track_label = 'Track' %}
+{% endif %}
+{% if order.tags contains 'rx-cancelled' or order.tags contains 'rx-canceled' or order.tags contains 'rx-rejected' %}
+  {% assign status_key = 'cancelled' %}
+  {% assign status_label = 'Cancelled' %}
+  {% assign status_tone = 'muted' %}
+  {% assign track_label = 'View' %}
+{% endif %}
+
+{% if order.cancelled %}
+  {% assign status_key = 'cancelled' %}
+  {% assign status_label = 'Cancelled' %}
+  {% assign status_tone = 'muted' %}
+  {% assign track_label = 'View' %}
+{% elsif order.financial_status == 'voided' or order.financial_status == 'refunded' %}
+  {% unless order.fulfillment_status == 'fulfilled' %}
+    {% assign status_key = 'cancelled' %}
+    {% assign status_label = 'Cancelled' %}
+    {% assign status_tone = 'muted' %}
+    {% assign track_label = 'View' %}
+  {% endunless %}
+{% endif %}

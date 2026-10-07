@@ -5,7 +5,7 @@
 
 {{ 'canmed-account.css' | asset_url | stylesheet_tag }}
 
-<section class="cm-account" {{ section.shopify_attributes }}>
+<section class="cm-account" data-cm-account {{ section.shopify_attributes }}>
   <div class="cm-shell">
     {% if customer == blank %}
       <div class="cm-account__gate">
@@ -59,6 +59,7 @@
 
       <div class="cm-account__grid">
         <div class="cm-account__main">
+          <div data-cm-account-list>
           <h2 class="cm-account__heading">{{ section.settings.rx_heading | default: 'My prescriptions' | escape }}</h2>
 
           {% assign rx_count = 0 %}
@@ -119,84 +120,9 @@
                 {% endfor %}
 
                 {% if is_rx %}
-                  {% comment %}
-                    Status priority (Admin-accurate):
-                    1) order cancelled in Admin
-                    2) order tags (rx-*)
-                    3) line Status property
-                    4) fulfilment / financial status
-                    5) default received
-                  {% endcomment %}
-                  {% assign status_key = 'received' %}
-                  {% assign status_label = 'Received' %}
-                  {% assign status_tone = 'sage' %}
-                  {% assign track_label = section.settings.track_label | default: 'Track' %}
-
-                  {% assign raw = rx_status_raw | downcase | strip %}
-                  {% if raw == 'pending_review' or raw == 'received' %}
-                    {% assign status_key = 'received' %}
-                    {% assign status_label = 'Received' %}
-                    {% assign status_tone = 'sage' %}
-                  {% elsif raw == 'under_review' or raw == 'review' or raw == 'under review' %}
-                    {% assign status_key = 'review' %}
-                    {% assign status_label = 'Under review' %}
-                    {% assign status_tone = 'amber' %}
-                  {% elsif raw == 'approved' %}
-                    {% assign status_key = 'approved' %}
-                    {% assign status_label = 'Approved' %}
-                    {% assign status_tone = 'pine' %}
-                  {% elsif raw == 'dispatched' or raw == 'fulfilled' %}
-                    {% assign status_key = 'dispatched' %}
-                    {% assign status_label = 'Dispatched' %}
-                    {% assign status_tone = 'pine' %}
-                  {% elsif raw == 'cancelled' or raw == 'canceled' or raw == 'rejected' %}
-                    {% assign status_key = 'cancelled' %}
-                    {% assign status_label = 'Cancelled' %}
-                    {% assign status_tone = 'muted' %}
-                    {% assign track_label = 'View' %}
-                  {% endif %}
-
-                  {% if order.tags contains 'rx-review' %}
-                    {% assign status_key = 'review' %}
-                    {% assign status_label = 'Under review' %}
-                    {% assign status_tone = 'amber' %}
-                    {% assign track_label = section.settings.track_label | default: 'Track' %}
-                  {% endif %}
-                  {% if order.tags contains 'rx-approved' %}
-                    {% assign status_key = 'approved' %}
-                    {% assign status_label = 'Approved' %}
-                    {% assign status_tone = 'pine' %}
-                    {% assign track_label = section.settings.track_label | default: 'Track' %}
-                  {% endif %}
-                  {% if order.tags contains 'rx-dispatched' or order.fulfillment_status == 'fulfilled' %}
-                    {% assign status_key = 'dispatched' %}
-                    {% assign status_label = 'Dispatched' %}
-                    {% assign status_tone = 'pine' %}
-                    {% assign track_label = section.settings.track_label | default: 'Track' %}
-                  {% endif %}
-                  {% if order.tags contains 'rx-cancelled' or order.tags contains 'rx-canceled' or order.tags contains 'rx-rejected' %}
-                    {% assign status_key = 'cancelled' %}
-                    {% assign status_label = 'Cancelled' %}
-                    {% assign status_tone = 'muted' %}
-                    {% assign track_label = 'View' %}
-                  {% endif %}
-
-                  {% comment %} Admin Cancel order — highest priority {% endcomment %}
-                  {% if order.cancelled %}
-                    {% assign status_key = 'cancelled' %}
-                    {% assign status_label = 'Cancelled' %}
-                    {% assign status_tone = 'muted' %}
-                    {% assign track_label = 'View' %}
-                  {% elsif order.financial_status == 'voided' or order.financial_status == 'refunded' %}
-                    {% unless order.fulfillment_status == 'fulfilled' %}
-                      {% assign status_key = 'cancelled' %}
-                      {% assign status_label = 'Cancelled' %}
-                      {% assign status_tone = 'muted' %}
-                      {% assign track_label = 'View' %}
-                    {% endunless %}
-                  {% endif %}
-
+                  {% include 'canmed-rx-status' %}
                   {% assign rx_updated = order.updated_at | default: order.created_at %}
+                  {% assign rx_dom_id = 'cm-rx-' | append: order.id %}
                   <li class="cm-account__rx-item">
                     <div class="cm-account__rx-copy">
                       <p class="cm-account__rx-ref">
@@ -220,7 +146,11 @@
                         <span class="cm-status-pill__dot" aria-hidden="true"></span>
                         {{ status_label }}
                       </span>
-                      <a class="cm-account__track" href="{{ order.customer_url }}">
+                      <a
+                        class="cm-account__track"
+                        href="#{{ rx_dom_id }}"
+                        data-cm-rx-open="{{ rx_dom_id }}"
+                      >
                         {{ track_label | escape }}
                       </a>
                     </div>
@@ -291,6 +221,124 @@
               </table>
             </div>
           {% endif %}
+          </div>{% comment %} /data-cm-account-list {% endcomment %}
+
+          {% for order in customer.orders %}
+            {% assign is_rx = false %}
+            {% assign rx_type = '' %}
+            {% assign rx_dispensary = '' %}
+            {% assign rx_status_raw = '' %}
+            {% assign rx_notes = '' %}
+            {% assign rx_name = '' %}
+            {% assign rx_email = '' %}
+            {% assign rx_phone = '' %}
+            {% assign rx_dob = '' %}
+            {% assign rx_method = '' %}
+            {% assign rx_address = '' %}
+            {% assign rx_state = '' %}
+            {% assign rx_script_name = '' %}
+            {% assign rx_script_url = '' %}
+            {% for line in order.line_items %}
+              {% if line.properties['_rx_intake'] == 'true' or line.properties['_rx_intake'] == '1' or line.product.handle == 'prescription-submission' or line.title contains 'Prescription submission' %}
+                {% assign is_rx = true %}
+                {% if line.properties['Prescription type'] != blank %}{% assign rx_type = line.properties['Prescription type'] %}{% endif %}
+                {% if line.properties['Dispensary'] != blank %}{% assign rx_dispensary = line.properties['Dispensary'] %}{% endif %}
+                {% if line.properties['Status'] != blank %}{% assign rx_status_raw = line.properties['Status'] %}{% endif %}
+                {% if line.properties['Notes'] != blank and line.properties['Notes'] != '—' %}{% assign rx_notes = line.properties['Notes'] %}{% endif %}
+                {% if line.properties['Full name'] != blank %}{% assign rx_name = line.properties['Full name'] %}{% endif %}
+                {% if line.properties['Email'] != blank %}{% assign rx_email = line.properties['Email'] %}{% endif %}
+                {% if line.properties['Phone'] != blank %}{% assign rx_phone = line.properties['Phone'] %}{% endif %}
+                {% if line.properties['Date of birth'] != blank %}{% assign rx_dob = line.properties['Date of birth'] %}{% endif %}
+                {% if line.properties['Method'] != blank %}{% assign rx_method = line.properties['Method'] %}{% endif %}
+                {% if line.properties['Delivery address'] != blank %}{% assign rx_address = line.properties['Delivery address'] %}{% endif %}
+                {% if line.properties['State'] != blank %}{% assign rx_state = line.properties['State'] %}{% endif %}
+                {% if line.properties['Script file name'] != blank %}{% assign rx_script_name = line.properties['Script file name'] %}{% endif %}
+                {% if line.properties['Script attachment'] != blank %}{% assign rx_script_url = line.properties['Script attachment'] %}{% endif %}
+                {% if line.properties['Script file URL'] != blank %}{% assign rx_script_url = line.properties['Script file URL'] %}{% endif %}
+              {% endif %}
+            {% endfor %}
+
+            {% if is_rx %}
+              {% include 'canmed-rx-status' %}
+              {% assign rx_updated = order.updated_at | default: order.created_at %}
+              {% assign rx_dom_id = 'cm-rx-' | append: order.id %}
+              <article class="cm-account__detail" data-cm-rx-detail="{{ rx_dom_id }}" id="{{ rx_dom_id }}" hidden>
+                <button type="button" class="cm-account__back" data-cm-rx-back>
+                  ← Back to prescriptions
+                </button>
+                <div class="cm-account__detail-head">
+                  <div>
+                    <p class="cm-eyebrow">Prescription</p>
+                    <h2 class="cm-account__title">
+                      {% if rx_type != blank %}{{ rx_type | escape }} prescription{% else %}Prescription request{% endif %}
+                    </h2>
+                    <p class="cm-account__meta">
+                      {{ order.name | default: order.order_number }}
+                      {% if rx_dispensary != blank %} · {{ rx_dispensary | escape }}{% endif %}
+                      · Updated {{ rx_updated | date: '%Y-%m-%d %H:%M' }}
+                    </p>
+                  </div>
+                  <span class="cm-status-pill cm-status-pill--{{ status_tone }}" data-status="{{ status_key }}">
+                    <span class="cm-status-pill__dot" aria-hidden="true"></span>
+                    {{ status_label }}
+                  </span>
+                </div>
+
+                <dl class="cm-account__facts">
+                  {% if rx_name != blank %}
+                    <div><dt>Patient</dt><dd>{{ rx_name | escape }}</dd></div>
+                  {% endif %}
+                  {% if rx_email != blank %}
+                    <div><dt>Email</dt><dd>{{ rx_email | escape }}</dd></div>
+                  {% endif %}
+                  {% if rx_phone != blank %}
+                    <div><dt>Phone</dt><dd>{{ rx_phone | escape }}</dd></div>
+                  {% endif %}
+                  {% if rx_dob != blank %}
+                    <div><dt>Date of birth</dt><dd>{{ rx_dob | escape }}</dd></div>
+                  {% endif %}
+                  {% if rx_method != blank %}
+                    <div><dt>Method</dt><dd>{{ rx_method | escape }}</dd></div>
+                  {% endif %}
+                  {% if rx_address != blank %}
+                    <div><dt>Delivery</dt><dd>{{ rx_address | escape }}{% if rx_state != blank and rx_state != 'N/A (pickup)' %} · {{ rx_state | escape }}{% endif %}</dd></div>
+                  {% endif %}
+                  {% if rx_dispensary != blank %}
+                    <div><dt>Dispensary</dt><dd>{{ rx_dispensary | escape }}</dd></div>
+                  {% endif %}
+                  {% if rx_type != blank %}
+                    <div><dt>Type</dt><dd>{{ rx_type | escape }}</dd></div>
+                  {% endif %}
+                  {% if rx_notes != blank %}
+                    <div><dt>Notes</dt><dd>{{ rx_notes | escape }}</dd></div>
+                  {% endif %}
+                  {% if rx_script_name != blank or rx_script_url != blank %}
+                    <div>
+                      <dt>Script</dt>
+                      <dd>
+                        {% if rx_script_url != blank %}
+                          <a class="cm-account__aside-link" href="{{ rx_script_url }}" target="_blank" rel="noopener">
+                            {{ rx_script_name | default: 'Open script attachment' | escape }}
+                          </a>
+                        {% else %}
+                          {{ rx_script_name | escape }}
+                        {% endif %}
+                      </dd>
+                    </div>
+                  {% endif %}
+                </dl>
+
+                {% if status_key == 'cancelled' %}
+                  <p class="cm-account__detail-note">This request was cancelled. Contact the pharmacy if you need to submit again.</p>
+                  <div class="cm-btn-row" style="margin-top:1.5rem;">
+                    <a class="cm-btn cm-btn--accent" href="{{ section.settings.prescriptions_link | default: '/pages/prescriptions' }}">Start a new prescription</a>
+                  </div>
+                {% else %}
+                  <p class="cm-account__detail-note">A pharmacist will update this status as your request moves from received to dispatched.</p>
+                {% endif %}
+              </article>
+            {% endif %}
+          {% endfor %}
         </div>
 
         <aside class="cm-account__aside">
@@ -340,6 +388,8 @@
     {% endif %}
   </div>
 </section>
+
+<script src="{{ 'canmed-account.js' | asset_url }}" defer></script>
 
 {% schema %}
 {

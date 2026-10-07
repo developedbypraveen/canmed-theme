@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "canmed-account-redirect",
+      "settings": {
+        "account_page_path": "/pages/my-account"
+      }
+    }
+  },
+  "order": ["main"]
+}
