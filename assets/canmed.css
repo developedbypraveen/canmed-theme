@@ -2386,6 +2386,15 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 html {
   scrollbar-gutter: stable;
 }
+
+/* Fallback: cart must sit above sticky CanMed header (z-index 50) when not top-layer */
+theme-drawer#cart-drawer .theme-drawer__dialog {
+  z-index: 200 !important;
+}
+theme-drawer#cart-drawer .theme-drawer__dialog::backdrop {
+  z-index: 199;
+}
+
 .cart-drawer,
 .cart-drawer__dialog,
 #CartDrawer {
