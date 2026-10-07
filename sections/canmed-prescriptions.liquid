@@ -14,7 +14,6 @@
   class="cm-rx"
   data-cm-rx
   data-variant-id="{{ variant_id }}"
-  data-upload-url="{{ section.settings.upload_endpoint | default: '/apps/canmed/upload-script' | escape }}"
   data-fallback-email="{{ section.settings.fallback_email | default: 'scripts@canmed.com.au' | escape }}"
   {{ section.shopify_attributes }}
 >
@@ -33,7 +32,7 @@
           <li class="is-current" data-step-label="0"><span></span>01 · Your details</li>
           <li data-step-label="1"><span></span>02 · Delivery + dispensary</li>
           <li data-step-label="2"><span></span>03 · Prescription type</li>
-          <li data-step-label="3"><span></span>04 · Notes + upload</li>
+          <li data-step-label="3"><span></span>04 · Notes + script</li>
         </ol>
       </div>
 
@@ -160,17 +159,20 @@
             <textarea class="cm-product__input cm-rx__textarea" rows="3" data-cm-rx-notes placeholder="Allergies, flavour preference, timing, animal species/weight…"></textarea>
           </label>
 
-          <p class="cm-mono-caption" style="margin-top:1.5rem;">Script upload</p>
-          <p class="cm-mono-data" style="color:var(--cm-muted);">JPG, PNG, HEIC or PDF · up to 10 MB · both sides if it's a paper script</p>
+          <p class="cm-mono-caption" style="margin-top:1.5rem;">Your script (email)</p>
+          <p class="cm-mono-data" style="color:var(--cm-muted);">
+            Email the image or PDF to
+            <a href="mailto:{{ section.settings.fallback_email | default: 'scripts@canmed.com.au' }}">{{ section.settings.fallback_email | default: 'scripts@canmed.com.au' }}</a>
+            and name your dispensary in the subject. Optional: note the file name below so staff can match it.
+          </p>
           <div class="cm-rx__drop" data-cm-rx-drop>
-            <p>Drop your script here, or <button type="button" class="cm-rx__choose" data-cm-rx-choose>choose a file</button></p>
+            <p>Optional — note file name: <button type="button" class="cm-rx__choose" data-cm-rx-choose>choose a file</button></p>
             <input type="file" class="cm-rx__file-input" accept="image/jpeg,image/png,image/heic,image/heif,application/pdf" data-cm-rx-file hidden>
             <p class="cm-mono-data cm-rx__file-name" data-cm-rx-file-name hidden></p>
-            <p class="cm-mono-data cm-rx__upload-status" data-cm-rx-upload-status hidden></p>
           </div>
           <span class="cm-rx__error cm-mono-data" data-err="file" hidden></span>
           <p class="cm-mono-data" style="margin-top:0.75rem;color:var(--cm-muted);">
-            {{ section.settings.file_note | default: 'Your script is stored securely for the pharmacist and linked on your request. If upload fails, email the file to scripts@canmed.com.au naming your dispensary.' | escape }}
+            {{ section.settings.file_note | default: 'This form creates a $0 request in Shopify Orders. The script file itself must be emailed to scripts@canmed.com.au with your dispensary named in the subject.' | escape }}
           </p>
         </div>
 
@@ -211,17 +213,10 @@
     { "type": "text", "id": "fallback_copy", "label": "Fallback intro", "default": "Prefer email? Send your script to" },
     { "type": "text", "id": "fallback_suffix", "label": "Fallback suffix", "default": "and name your dispensary in the subject line." },
     {
-      "type": "text",
-      "id": "upload_endpoint",
-      "label": "Script upload endpoint",
-      "default": "/apps/canmed/upload-script",
-      "info": "App Proxy path. Requires the canmed-script-upload app installed with subpath canmed."
-    },
-    {
       "type": "textarea",
       "id": "file_note",
       "label": "File note",
-      "default": "Your script is stored securely for the pharmacist and linked on your request. If upload fails, email the file to scripts@canmed.com.au naming your dispensary."
+      "default": "This form creates a $0 request in Shopify Orders. The script file itself must be emailed to scripts@canmed.com.au with your dispensary named in the subject."
     },
     { "type": "url", "id": "shop_link", "label": "Shop link" }
   ],
