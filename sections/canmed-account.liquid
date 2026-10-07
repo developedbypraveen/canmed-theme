@@ -119,10 +119,18 @@
                 {% endfor %}
 
                 {% if is_rx %}
-                  {% comment %} Map Status property + fulfilment → received | review | approved | dispatched {% endcomment %}
+                  {% comment %}
+                    Status priority (Admin-accurate):
+                    1) order cancelled in Admin
+                    2) order tags (rx-*)
+                    3) line Status property
+                    4) fulfilment / financial status
+                    5) default received
+                  {% endcomment %}
                   {% assign status_key = 'received' %}
                   {% assign status_label = 'Received' %}
                   {% assign status_tone = 'sage' %}
+                  {% assign track_label = section.settings.track_label | default: 'Track' %}
 
                   {% assign raw = rx_status_raw | downcase | strip %}
                   {% if raw == 'pending_review' or raw == 'received' %}
@@ -141,29 +149,58 @@
                     {% assign status_key = 'dispatched' %}
                     {% assign status_label = 'Dispatched' %}
                     {% assign status_tone = 'pine' %}
+                  {% elsif raw == 'cancelled' or raw == 'canceled' or raw == 'rejected' %}
+                    {% assign status_key = 'cancelled' %}
+                    {% assign status_label = 'Cancelled' %}
+                    {% assign status_tone = 'muted' %}
+                    {% assign track_label = 'View' %}
                   {% endif %}
 
                   {% if order.tags contains 'rx-review' %}
                     {% assign status_key = 'review' %}
                     {% assign status_label = 'Under review' %}
                     {% assign status_tone = 'amber' %}
+                    {% assign track_label = section.settings.track_label | default: 'Track' %}
                   {% endif %}
                   {% if order.tags contains 'rx-approved' %}
                     {% assign status_key = 'approved' %}
                     {% assign status_label = 'Approved' %}
                     {% assign status_tone = 'pine' %}
+                    {% assign track_label = section.settings.track_label | default: 'Track' %}
                   {% endif %}
                   {% if order.tags contains 'rx-dispatched' or order.fulfillment_status == 'fulfilled' %}
                     {% assign status_key = 'dispatched' %}
                     {% assign status_label = 'Dispatched' %}
                     {% assign status_tone = 'pine' %}
+                    {% assign track_label = section.settings.track_label | default: 'Track' %}
+                  {% endif %}
+                  {% if order.tags contains 'rx-cancelled' or order.tags contains 'rx-canceled' or order.tags contains 'rx-rejected' %}
+                    {% assign status_key = 'cancelled' %}
+                    {% assign status_label = 'Cancelled' %}
+                    {% assign status_tone = 'muted' %}
+                    {% assign track_label = 'View' %}
+                  {% endif %}
+
+                  {% comment %} Admin Cancel order — highest priority {% endcomment %}
+                  {% if order.cancelled %}
+                    {% assign status_key = 'cancelled' %}
+                    {% assign status_label = 'Cancelled' %}
+                    {% assign status_tone = 'muted' %}
+                    {% assign track_label = 'View' %}
+                  {% elsif order.financial_status == 'voided' or order.financial_status == 'refunded' %}
+                    {% unless order.fulfillment_status == 'fulfilled' %}
+                      {% assign status_key = 'cancelled' %}
+                      {% assign status_label = 'Cancelled' %}
+                      {% assign status_tone = 'muted' %}
+                      {% assign track_label = 'View' %}
+                    {% endunless %}
                   {% endif %}
 
                   {% assign rx_updated = order.updated_at | default: order.created_at %}
                   <li class="cm-account__rx-item">
                     <div class="cm-account__rx-copy">
                       <p class="cm-account__rx-ref">
-                        #{{ order.name | default: order.order_number }}
+                        {{ order.name | default: order.order_number }}
                         {% if rx_dispensary != blank %} · {{ rx_dispensary | escape }}{% endif %}
                       </p>
                       <p class="cm-account__rx-title">
@@ -184,7 +221,7 @@
                         {{ status_label }}
                       </span>
                       <a class="cm-account__track" href="{{ order.customer_url }}">
-                        {{ section.settings.track_label | default: 'Track' | escape }}
+                        {{ track_label | escape }}
                       </a>
                     </div>
                   </li>

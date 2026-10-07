@@ -254,6 +254,15 @@
   color: var(--cm-pine);
 }
 
+.cm-status-pill--muted {
+  color: var(--cm-muted);
+  border-color: rgb(74 63 82 / 0.22);
+}
+
+.cm-status-pill--muted .cm-status-pill__dot {
+  background: var(--cm-muted);
+}
+
 .cm-account__orders-heading {
   margin-top: 4rem;
 }
