@@ -5,7 +5,7 @@
 
 {{ 'canmed-account.css' | asset_url | stylesheet_tag }}
 
-<section class="cm-account cm-section" {{ section.shopify_attributes }}>
+<section class="cm-account" {{ section.shopify_attributes }}>
   <div class="cm-shell">
     {% if customer == blank %}
       <div class="cm-account__gate">
@@ -14,8 +14,8 @@
         {% endif %}
         {% assign account_page = section.settings.account_page_path | default: '/pages/my-account' %}
         {% comment %} New customer accounts: return_to sends the customer back to this page after sign-in {% endcomment %}
-        <h1 class="cm-display-l">{{ section.settings.guest_heading | default: 'Sign in to see your prescriptions.' | escape }}</h1>
-        <p class="cm-body-l cm-account__lede">
+        <h1 class="cm-account__title">{{ section.settings.guest_heading | default: 'Sign in to see your prescriptions.' | escape }}</h1>
+        <p class="cm-account__lede">
           {{ section.settings.guest_body | default: 'Sign in with the same email you use at checkout. Then this My Account page shows your prescriptions and orders.' | escape }}
         </p>
         <div class="cm-btn-row">
@@ -36,7 +36,7 @@
           {% if section.settings.eyebrow != blank %}
             <p class="cm-eyebrow">{{ section.settings.eyebrow | escape }}</p>
           {% endif %}
-          <h1 class="cm-display-l">
+          <h1 class="cm-account__title">
             {% if customer.first_name != blank %}
               {{ customer.first_name | escape }}{% if customer.last_name != blank %} {{ customer.last_name | escape }}{% endif %}
             {% else %}
@@ -54,7 +54,7 @@
           <a class="cm-btn cm-btn--secondary" href="{{ routes.account_url }}">
             {{ section.settings.manage_label | default: 'Manage login' | escape }}
           </a>
-          <a class="cm-mono-data cm-account__logout" href="{{ routes.account_logout_url }}">
+          <a class="cm-account__logout" href="{{ routes.account_logout_url }}">
             {{ section.settings.logout_label | default: 'Sign out' | escape }}
           </a>
         </div>
@@ -62,7 +62,7 @@
 
       <div class="cm-account__grid">
         <div class="cm-account__main">
-          <h2 class="cm-display-m">{{ section.settings.rx_heading | default: 'My prescriptions' | escape }}</h2>
+          <h2 class="cm-account__heading">{{ section.settings.rx_heading | default: 'My prescriptions' | escape }}</h2>
 
           {% assign rx_count = 0 %}
           {% for order in customer.orders %}
@@ -85,8 +85,8 @@
 
           {% if rx_count == 0 %}
             <div class="cm-account__empty">
-              <h3 class="cm-display-m">{{ section.settings.empty_heading | default: 'Nothing here yet.' | escape }}</h3>
-              <p class="cm-body-l">
+              <h3 class="cm-account__heading">{{ section.settings.empty_heading | default: 'Nothing here yet.' | escape }}</h3>
+              <p class="cm-account__lede">
                 {{ section.settings.empty_body | default: 'Start your first prescription and you will see every status change here, from received to dispatched.' | escape }}
               </p>
               <div class="cm-btn-row" style="justify-content:center;margin-top:1.75rem;">
@@ -162,10 +162,11 @@
                     {% assign status_tone = 'pine' %}
                   {% endif %}
 
+                  {% assign rx_updated = order.updated_at | default: order.created_at %}
                   <li class="cm-account__rx-item">
                     <div class="cm-account__rx-copy">
-                      <p class="cm-mono-data cm-account__rx-ref">
-                        #{{ order.order_number }}
+                      <p class="cm-account__rx-ref">
+                        #{{ order.name | default: order.order_number }}
                         {% if rx_dispensary != blank %} · {{ rx_dispensary | escape }}{% endif %}
                       </p>
                       <p class="cm-account__rx-title">
@@ -175,9 +176,9 @@
                           Prescription request
                         {% endif %}
                       </p>
-                      <p class="cm-mono-data cm-account__rx-updated">
-                        Updated {{ order.updated_at | date: '%Y-%m-%d %H:%M' }}
-                        {% if rx_notes != blank %} · {{ rx_notes | escape | truncate: 80 }}{% endif %}
+                      <p class="cm-account__rx-updated">
+                        Updated {{ rx_updated | date: '%Y-%m-%d %H:%M' }}
+                        {% if rx_notes != blank %} · {{ rx_notes | escape | truncate: 60 }}{% endif %}
                       </p>
                     </div>
                     <div class="cm-account__rx-actions">
@@ -186,7 +187,7 @@
                         {{ status_label }}
                       </span>
                       <a class="cm-btn cm-btn--secondary cm-account__track" href="{{ order.customer_url }}">
-                        {{ section.settings.track_label | default: 'View' | escape }}
+                        {{ section.settings.track_label | default: 'Track' | escape }}
                       </a>
                     </div>
                   </li>
@@ -195,7 +196,7 @@
             </ul>
           {% endif %}
 
-          <h2 class="cm-display-m cm-account__orders-heading">{{ section.settings.orders_heading | default: 'Order history' | escape }}</h2>
+          <h2 class="cm-account__heading cm-account__orders-heading">{{ section.settings.orders_heading | default: 'Order history' | escape }}</h2>
 
           {% assign shop_count = 0 %}
           {% for order in customer.orders %}
@@ -259,7 +260,7 @@
         </div>
 
         <aside class="cm-account__aside">
-          <h2 class="cm-display-m">{{ section.settings.addresses_heading | default: 'Saved addresses' | escape }}</h2>
+          <h2 class="cm-account__heading">{{ section.settings.addresses_heading | default: 'Saved addresses' | escape }}</h2>
           {% if customer.addresses_count == 0 %}
             <p class="cm-mono-data cm-account__muted">{{ section.settings.addresses_empty | default: 'No saved addresses yet. They appear after checkout.' | escape }}</p>
             <a class="cm-btn cm-btn--secondary" style="margin-top:1rem;" href="{{ routes.account_url }}">
@@ -288,7 +289,7 @@
             </a>
           {% endif %}
 
-          <h2 class="cm-display-m cm-account__aside-heading">{{ section.settings.clinic_heading | default: 'Your dispensary' | escape }}</h2>
+          <h2 class="cm-account__heading cm-account__aside-heading">{{ section.settings.clinic_heading | default: 'Your dispensary' | escape }}</h2>
           <div class="cm-account__card">
             <p class="cm-mono-caption cm-account__clinic-name">{{ section.settings.clinic_name | default: 'CanMED West Lakes Clinic' | escape }}</p>
             <p class="cm-mono-data">
@@ -335,7 +336,7 @@
     { "type": "textarea", "id": "empty_body", "label": "Empty body", "default": "Start your first prescription and you will see every status change here, from received to dispatched." },
     { "type": "text", "id": "start_rx_label", "label": "Start prescription CTA", "default": "Start a prescription" },
     { "type": "url", "id": "prescriptions_link", "label": "Prescriptions page" },
-    { "type": "text", "id": "track_label", "label": "Track / view label", "default": "View" },
+    { "type": "text", "id": "track_label", "label": "Track / view label", "default": "Track" },
     { "type": "text", "id": "orders_heading", "label": "Orders heading", "default": "Order history" },
     { "type": "text", "id": "orders_empty", "label": "Orders empty", "default": "No shop orders yet." },
     { "type": "text", "id": "addresses_heading", "label": "Addresses heading", "default": "Saved addresses" },

@@ -1,21 +1,53 @@
-/* CanMed — My Account / My Prescriptions */
+/* CanMed — My Account (Lovable account layout) */
 
 .cm-account {
-  padding-block: 3rem 4.5rem;
+  padding-block: 3rem;
+}
+
+@media (min-width: 768px) {
+  .cm-account {
+    padding-block: 5rem;
+  }
+}
+
+/* Account uses denser type than marketing pages */
+.cm-account .cm-eyebrow {
+  font-size: 0.8125rem;
+}
+
+.cm-account__title {
+  margin: 1rem 0 0;
+  font-family: var(--cm-font-display);
+  font-weight: 600;
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--cm-pine);
+}
+
+.cm-account__heading {
+  margin: 0;
+  font-family: var(--cm-font-display);
+  font-weight: 600;
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--cm-pine);
 }
 
 .cm-account__gate {
-  max-width: 36rem;
-  padding-block: 2rem 4rem;
+  max-width: 32rem;
 }
 
 .cm-account__lede {
-  margin-top: 1rem;
+  margin-top: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.55;
   color: var(--cm-muted);
 }
 
 .cm-account__gate .cm-btn-row {
-  margin-top: 2rem;
+  margin-top: 1.75rem;
 }
 
 .cm-account__header {
@@ -23,11 +55,12 @@
   flex-wrap: wrap;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
 .cm-account__meta {
   margin-top: 0.5rem;
+  font-size: 0.875rem;
   color: var(--cm-muted);
 }
 
@@ -38,7 +71,13 @@
   gap: 1rem;
 }
 
+.cm-account__header-actions .cm-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
 .cm-account__logout {
+  font-size: 0.875rem;
   color: var(--cm-muted);
   text-decoration: underline;
   text-underline-offset: 4px;
@@ -48,6 +87,7 @@
   color: var(--cm-pine);
 }
 
+/* Lovable: mt-12 grid gap-10 lg:cols-12 → 8 + 4 */
 .cm-account__grid {
   display: grid;
   gap: 2.5rem;
@@ -56,9 +96,17 @@
 
 @media (min-width: 990px) {
   .cm-account__grid {
-    grid-template-columns: minmax(0, 2fr) minmax(16rem, 1fr);
-    gap: 3rem;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 2.5rem;
     align-items: start;
+  }
+
+  .cm-account__main {
+    grid-column: span 8;
+  }
+
+  .cm-account__aside {
+    grid-column: span 4;
   }
 }
 
@@ -67,12 +115,18 @@
   padding: 2.5rem 1.5rem;
   text-align: center;
   border: 1px solid var(--cm-hairline);
-  border-radius: 4px;
+  border-radius: 12px;
+  background: #fff;
 }
 
-.cm-account__empty .cm-body-l {
+.cm-account__empty .cm-account__heading {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+}
+
+.cm-account__empty .cm-account__lede {
   margin-top: 0.75rem;
-  color: var(--cm-muted);
+  max-width: 28rem;
+  margin-inline: auto;
 }
 
 .cm-account__rx-list {
@@ -96,13 +150,21 @@
   border-bottom: 0;
 }
 
+.cm-account__rx-copy {
+  min-width: min(100%, 16rem);
+  flex: 1 1 14rem;
+}
+
 .cm-account__rx-ref,
 .cm-account__rx-updated {
+  margin: 0;
+  font-size: 0.8125rem;
   color: var(--cm-muted);
 }
 
 .cm-account__rx-title {
-  margin-top: 0.25rem;
+  margin: 0.25rem 0 0;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--cm-pine);
 }
@@ -116,23 +178,25 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 1rem;
+  flex-shrink: 0;
 }
 
 .cm-account__track {
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
+  padding: 0.4rem 1rem !important;
+  font-size: 0.8125rem !important;
 }
 
 .cm-status-pill {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.35rem 0.75rem;
+  padding: 0.3rem 0.75rem;
   border: 1px solid var(--cm-hairline);
   border-radius: 999px;
   font-family: var(--cm-font-mono);
   font-size: 0.75rem;
   letter-spacing: 0.04em;
+  white-space: nowrap;
 }
 
 .cm-status-pill__dot {
@@ -154,13 +218,17 @@
   color: var(--cm-pine);
 }
 
-.cm-account__orders-heading,
+.cm-account__orders-heading {
+  margin-top: 4rem;
+}
+
 .cm-account__aside-heading {
-  margin-top: 3.5rem;
+  margin-top: 3rem;
 }
 
 .cm-account__muted {
   margin-top: 1rem;
+  font-size: 0.875rem;
   color: var(--cm-muted);
 }
 
@@ -211,7 +279,8 @@
 .cm-account__card {
   padding: 1.25rem;
   border: 1px solid var(--cm-hairline);
-  border-radius: 4px;
+  border-radius: 12px;
+  background: #fff;
 }
 
 .cm-account__card.is-default {
@@ -219,11 +288,14 @@
 }
 
 .cm-account__card .cm-mono-caption {
+  margin: 0;
+  font-size: 0.75rem;
   color: var(--cm-muted);
 }
 
 .cm-account__card .cm-mono-data {
   margin-top: 0.5rem;
+  font-size: 0.875rem;
   color: var(--cm-charcoal);
 }
 
@@ -234,6 +306,7 @@
 .cm-account__aside-link {
   display: inline-block;
   margin-top: 0.75rem;
+  font-size: 0.875rem;
   color: var(--cm-pine);
   text-decoration: underline;
   text-underline-offset: 4px;
@@ -241,4 +314,8 @@
 
 .cm-account__aside .cm-account__card {
   margin-top: 1.5rem;
+}
+
+.cm-account__aside > .cm-account__heading:first-child {
+  margin-top: 0;
 }
