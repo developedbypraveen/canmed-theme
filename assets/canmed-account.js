@@ -121,6 +121,42 @@
       });
     });
 
+    var accountReturn =
+      (root.getAttribute('data-cm-account-return') || '/pages/my-account') + '#cm-addresses';
+
+    /**
+     * New Customer Accounts often ignores return_to and dumps users on shopify.com profile.
+     * POST via fetch (don't follow redirect), then reload branded My Account.
+     */
+    root.querySelectorAll('[data-cm-rx-detail="cm-addresses"] form[action*="/account/addresses"]').forEach(function (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var returnTo = form.getAttribute('data-cm-addr-return') || accountReturn;
+        var body = new FormData(form);
+        // Guard: never send put+delete together (Shopify form helper injects put)
+        var methods = body.getAll('_method');
+        if (methods.indexOf('delete') !== -1) {
+          body.delete('_method');
+          body.append('_method', 'delete');
+        }
+        var busy = form.getAttribute('data-cm-addr-busy');
+        if (busy) return;
+        form.setAttribute('data-cm-addr-busy', '1');
+        fetch(form.action, {
+          method: 'POST',
+          body: body,
+          credentials: 'same-origin',
+          redirect: 'manual',
+        })
+          .catch(function () {
+            /* still navigate — delete/save may have succeeded */
+          })
+          .then(function () {
+            window.location.assign(returnTo);
+          });
+      });
+    });
+
     var hash = (window.location.hash || '').replace(/^#/, '');
     if (hash && root.querySelector('[data-cm-rx-detail="' + hash + '"]')) {
       showDetail(hash);

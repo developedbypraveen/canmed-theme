@@ -5,14 +5,19 @@
 
 {{ 'canmed-account.css' | asset_url | stylesheet_tag }}
 
-<section class="cm-account" data-cm-account {{ section.shopify_attributes }}>
+{% assign account_page = section.settings.account_page_path | default: '/pages/my-account' %}
+<section
+  class="cm-account"
+  data-cm-account
+  data-cm-account-return="{{ account_page | escape }}"
+  {{ section.shopify_attributes }}
+>
   <div class="cm-shell">
     {% if customer == blank %}
       <div class="cm-account__gate">
         {% if section.settings.eyebrow != blank %}
           <p class="cm-eyebrow">{{ section.settings.eyebrow | escape }}</p>
         {% endif %}
-        {% assign account_page = section.settings.account_page_path | default: '/pages/my-account' %}
         {% comment %} New customer accounts: return_to sends the customer back to this page after sign-in {% endcomment %}
         <h1 class="cm-account__title">{{ section.settings.guest_heading | default: 'Sign in to see your prescriptions.' | escape }}</h1>
         <p class="cm-account__lede">
@@ -340,7 +345,9 @@
             {% endif %}
           {% endfor %}
 
-          {% assign addresses_return = section.settings.account_page_path | default: '/pages/my-account' | append: '#cm-addresses' %}
+          {% comment %} No hash in return_to — Shopify New Accounts can ignore/break fragment URLs. {% endcomment %}
+          {% assign addresses_return = section.settings.account_page_path | default: '/pages/my-account' %}
+          {% assign addresses_return_hash = addresses_return | append: '#cm-addresses' %}
           <article class="cm-account__detail" data-cm-rx-detail="cm-addresses" id="cm-addresses" hidden>
             <button type="button" class="cm-account__back" data-cm-rx-back>
               ← Back to prescriptions
@@ -387,8 +394,21 @@
                       </p>
                       <div class="cm-account__addr-actions">
                         <button type="button" class="cm-account__addr-action" data-cm-addr-toggle="{{ address.id }}">Edit</button>
-                        {% form 'customer_address', address, return_to: addresses_return %}
+                        {% comment %}
+                          Do not use {% form 'customer_address' %} for delete — Shopify injects _method=put,
+                          which overrides delete and lands on a blank/broken page.
+                        {% endcomment %}
+                        <form
+                          method="post"
+                          action="{{ address.url }}"
+                          accept-charset="UTF-8"
+                          data-cm-addr-form
+                          data-cm-addr-return="{{ addresses_return_hash }}"
+                        >
+                          <input type="hidden" name="form_type" value="customer_address">
+                          <input type="hidden" name="utf8" value="✓">
                           <input type="hidden" name="_method" value="delete">
+                          <input type="hidden" name="return_to" value="{{ addresses_return }}">
                           <button
                             type="submit"
                             class="cm-account__addr-action cm-account__addr-action--danger"
@@ -397,7 +417,7 @@
                           >
                             Delete
                           </button>
-                        {% endform %}
+                        </form>
                       </div>
                     </div>
                     <div data-cm-addr-summary="{{ address.id }}">
