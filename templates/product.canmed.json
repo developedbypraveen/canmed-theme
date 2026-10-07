@@ -11,7 +11,7 @@
         "label_otc": "Over the Counter",
         "rx_cta": "Send your script",
         "s3_cta": "Request pharmacist call",
-        "order_cta": "Add to order",
+        "order_cta": "Add to cart",
         "nearest_cta": "Check availability"
       }
     }

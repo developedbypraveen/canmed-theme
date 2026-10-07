@@ -148,6 +148,7 @@
   </div>
 </section>
 
+<script src="{{ 'canmed-cart.js' | asset_url }}" defer></script>
 <script src="{{ 'canmed-product.js' | asset_url }}" defer></script>
 
 {% schema %}
@@ -168,7 +169,7 @@
     { "type": "text", "id": "variant_legend", "label": "Variant legend", "default": "Size / strength" },
     { "type": "text", "id": "rx_cta", "label": "Prescription CTA", "default": "Send your script" },
     { "type": "text", "id": "ask_cta", "label": "Ask pharmacist CTA", "default": "Ask a pharmacist" },
-    { "type": "text", "id": "order_cta", "label": "Add to order CTA", "default": "Add to order" }
+    { "type": "text", "id": "order_cta", "label": "Add to cart CTA", "default": "Add to cart" }
   ],
   "presets": [{ "name": "CanMed — Product" }]
 }

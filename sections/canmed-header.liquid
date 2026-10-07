@@ -70,6 +70,32 @@
         </a>
       {% endif %}
 
+      <button
+        type="button"
+        class="cm-header__cart{% if cart.item_count > 0 %} has-items{% endif %}"
+        data-cm-cart-toggle
+        aria-haspopup="dialog"
+        aria-controls="cart-drawer"
+        aria-label="{% if cart.item_count > 0 %}Cart, {{ cart.item_count }} items{% else %}Cart{% endif %}"
+      >
+        <svg width="22" height="22" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.5"
+            d="M3.392 6.875h13.216v8.016c0 .567-.224 1.112-.624 1.513-.4.402-.941.627-1.506.627H5.522a2.13 2.13 0 0 1-1.506-.627 2.15 2.15 0 0 1-.624-1.513zM8.818 2.969h2.333c.618 0 1.211.247 1.649.686a2.35 2.35 0 0 1 .683 1.658v1.562H6.486V5.313c0-.622.246-1.218.683-1.658a2.33 2.33 0 0 1 1.65-.686"
+          />
+        </svg>
+        <span
+          class="cm-header__cart-count"
+          data-cm-cart-count
+          {% if cart.item_count == 0 %}hidden{% endif %}
+        >
+          {{- cart.item_count -}}
+        </span>
+      </button>
+
       {% if section.settings.cta_label != blank %}
         <a
           class="cm-btn cm-btn--accent cm-header__cta"
@@ -136,6 +162,7 @@
   </div>
 </header>
 
+<script src="{{ 'canmed-cart.js' | asset_url }}" defer></script>
 <script src="{{ 'canmed-header.js' | asset_url }}" defer></script>
 
 {% schema %}
