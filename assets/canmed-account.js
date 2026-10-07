@@ -94,7 +94,9 @@
         /* opaque redirect / network — mutation may still have succeeded */
       })
       .then(function () {
-        window.location.replace(returnTo);
+        // Must hard-navigate: replace() to the same hash URL does not reload Liquid.
+        var base = (returnTo || '/pages/my-account#cm-addresses').split('#')[0];
+        window.location.replace(base + (base.indexOf('?') >= 0 ? '&' : '?') + 'addr=' + Date.now() + '#cm-addresses');
       });
   }
 
