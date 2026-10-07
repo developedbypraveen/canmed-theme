@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "main": {
+      "type": "canmed-customer-register",
+      "settings": {
+        "eyebrow": "My account",
+        "heading": "Create account",
+        "body": "After you create an account you will go to My Account / My Prescriptions.",
+        "account_page_path": "/pages/my-account",
+        "submit_label": "Create account",
+        "login_label": "Sign in"
+      }
+    }
+  },
+  "order": ["main"]
+}

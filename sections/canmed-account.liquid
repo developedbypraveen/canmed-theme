@@ -20,7 +20,7 @@
         <div class="cm-btn-row">
           <a
             class="cm-btn cm-btn--accent"
-            href="{{ routes.account_login_url }}?return_to={{ account_page | url_encode }}"
+            href="{{ routes.account_login_url }}{% if account_page != blank %}?return_to={{ account_page | url_encode }}{% endif %}"
           >
             {{ section.settings.login_label | default: 'Sign in' | escape }}
           </a>

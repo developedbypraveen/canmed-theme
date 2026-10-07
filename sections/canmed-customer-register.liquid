@@ -1,0 +1,85 @@
+{% comment %}
+  Classic customer register → return to My Account page.
+{% endcomment %}
+
+{{ 'canmed-account.css' | asset_url | stylesheet_tag }}
+
+{% assign account_page = section.settings.account_page_path | default: '/pages/my-account' %}
+
+<section class="cm-account cm-section" {{ section.shopify_attributes }}>
+  <div class="cm-shell">
+    <div class="cm-account__gate" style="max-width:28rem;">
+      <p class="cm-eyebrow">{{ section.settings.eyebrow | default: 'My account' | escape }}</p>
+      <h1 class="cm-display-l">{{ section.settings.heading | default: 'Create account' | escape }}</h1>
+      <p class="cm-body-l cm-account__lede">
+        {{ section.settings.body | default: 'After you create an account you will go to My Account / My Prescriptions.' | escape }}
+      </p>
+
+      {% form 'create_customer' %}
+        <input type="hidden" name="return_to" value="{{ account_page }}">
+
+        {% if form.errors != blank %}
+          <p class="cm-mono-data" style="margin-top:1rem;color:#b42318;" role="alert">
+            {{ form.errors | default_errors }}
+          </p>
+        {% endif %}
+
+        <label class="cm-rx__field" style="display:block;margin-top:1.5rem;">
+          <span class="cm-mono-caption">First name</span>
+          <input class="cm-product__input" type="text" name="customer[first_name]" autocomplete="given-name" style="margin-top:0.5rem;width:100%;">
+        </label>
+
+        <label class="cm-rx__field" style="display:block;margin-top:1rem;">
+          <span class="cm-mono-caption">Last name</span>
+          <input class="cm-product__input" type="text" name="customer[last_name]" autocomplete="family-name" style="margin-top:0.5rem;width:100%;">
+        </label>
+
+        <label class="cm-rx__field" style="display:block;margin-top:1rem;">
+          <span class="cm-mono-caption">Email</span>
+          <input class="cm-product__input" type="email" name="customer[email]" autocomplete="email" required style="margin-top:0.5rem;width:100%;">
+        </label>
+
+        <label class="cm-rx__field" style="display:block;margin-top:1rem;">
+          <span class="cm-mono-caption">Password</span>
+          <input class="cm-product__input" type="password" name="customer[password]" autocomplete="new-password" required style="margin-top:0.5rem;width:100%;">
+        </label>
+
+        <div class="cm-btn-row" style="margin-top:1.75rem;">
+          <button type="submit" class="cm-btn cm-btn--accent">
+            {{ section.settings.submit_label | default: 'Create account' | escape }}
+          </button>
+          <a class="cm-btn cm-btn--secondary" href="{{ routes.account_login_url }}">
+            {{ section.settings.login_label | default: 'Sign in' | escape }}
+          </a>
+        </div>
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CanMed — Customer register",
+  "tag": "section",
+  "class": "cm-section-customer-register",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "My account" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Create account" },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body",
+      "default": "After you create an account you will go to My Account / My Prescriptions."
+    },
+    {
+      "type": "text",
+      "id": "account_page_path",
+      "label": "Redirect after register",
+      "default": "/pages/my-account"
+    },
+    { "type": "text", "id": "submit_label", "label": "Submit", "default": "Create account" },
+    { "type": "text", "id": "login_label", "label": "Sign in link", "default": "Sign in" }
+  ],
+  "presets": [{ "name": "CanMed — Customer register" }]
+}
+{% endschema %}

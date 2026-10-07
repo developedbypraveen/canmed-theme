@@ -1,13 +1,14 @@
 {
   "sections": {
     "main": {
-      "type": "canmed-account",
+      "type": "canmed-customer-login",
       "settings": {
         "eyebrow": "My account",
-        "guest_heading": "Sign in to see your prescriptions.",
-        "guest_body": "Sign in with the same email you use at checkout. Then open My Account to see your prescriptions.",
+        "heading": "Sign in",
+        "body": "After you sign in you will go to My Account / My Prescriptions.",
         "account_page_path": "/pages/my-account",
-        "login_label": "Sign in"
+        "submit_label": "Sign in",
+        "register_label": "Create account"
       }
     }
   },

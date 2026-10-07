@@ -1,0 +1,39 @@
+{% comment %}
+  Classic /account → send customers to the branded My Account page.
+{% endcomment %}
+
+{% assign account_page = section.settings.account_page_path | default: '/pages/my-account' %}
+
+<section class="cm-account cm-section" {{ section.shopify_attributes }}>
+  <div class="cm-shell">
+    <div class="cm-account__gate">
+      <p class="cm-eyebrow">My account</p>
+      <h1 class="cm-display-l">Taking you to My Account…</h1>
+      <p class="cm-body-l cm-account__lede">If nothing happens, continue below.</p>
+      <div class="cm-btn-row" style="margin-top:1.5rem;">
+        <a class="cm-btn cm-btn--accent" href="{{ account_page }}">Go to My Account</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  window.location.replace({{ account_page | json }});
+</script>
+
+{% schema %}
+{
+  "name": "CanMed — Account redirect",
+  "tag": "section",
+  "class": "cm-section-account-redirect",
+  "settings": [
+    {
+      "type": "text",
+      "id": "account_page_path",
+      "label": "My Account path",
+      "default": "/pages/my-account"
+    }
+  ],
+  "presets": [{ "name": "CanMed — Account redirect" }]
+}
+{% endschema %}

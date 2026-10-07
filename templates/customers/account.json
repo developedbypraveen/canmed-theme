@@ -1,23 +1,9 @@
 {
   "sections": {
     "main": {
-      "type": "canmed-account",
+      "type": "canmed-account-redirect",
       "settings": {
-        "eyebrow": "My account",
-        "guest_heading": "Sign in to see your prescriptions.",
-        "guest_body": "Sign in with the same email you use at checkout. Then this My Account page shows your prescriptions and orders.",
-        "account_page_path": "/pages/my-account",
-        "login_label": "Sign in",
-        "rx_heading": "My prescriptions",
-        "empty_heading": "Nothing here yet.",
-        "empty_body": "Start your first prescription and you will see every status change here, from received to dispatched.",
-        "start_rx_label": "Start a prescription",
-        "orders_heading": "Order history",
-        "addresses_heading": "Saved addresses",
-        "clinic_heading": "Your dispensary",
-        "clinic_name": "CanMED West Lakes Clinic",
-        "clinic_address": "Unit 5, 151 Brebner Drive, West Lakes SA 5021",
-        "clinic_phone": "(08) 8450 3978"
+        "account_page_path": "/pages/my-account"
       }
     }
   },
