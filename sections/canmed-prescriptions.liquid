@@ -176,7 +176,7 @@
           </div>
           <span class="cm-rx__error cm-mono-data" data-err="file" hidden></span>
           <p class="cm-mono-data" style="margin-top:0.75rem;color:var(--cm-muted);">
-            {{ section.settings.file_note | default: 'Your script attaches to the $0 request in Shopify Orders (clickable on the line item). If upload fails, email scripts@canmed.com.au naming your dispensary.' | escape }}
+            {{ section.settings.file_note | default: 'Your script attaches to the request in Shopify Orders. After checkout, you get an order confirmation email and the pharmacy gets a new-order email. If the file fails, email scripts@canmed.com.au naming your dispensary.' | escape }}
           </p>
         </div>
 
@@ -220,7 +220,7 @@
       "type": "textarea",
       "id": "file_note",
       "label": "File note",
-      "default": "Your script attaches to the $0 request in Shopify Orders (clickable on the line item). If upload fails, email scripts@canmed.com.au naming your dispensary."
+      "default": "Your script attaches to the request in Shopify Orders. After checkout, you get an order confirmation email and the pharmacy gets a new-order email. If the file fails, email scripts@canmed.com.au naming your dispensary."
     },
     { "type": "url", "id": "shop_link", "label": "Shop link" }
   ],

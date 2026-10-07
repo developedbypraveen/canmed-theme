@@ -260,6 +260,7 @@
               rx_status: 'pending_review',
               rx_script_file: file.name,
               rx_script_via: 'shopify_line_item_file',
+              rx_patient_email: email,
               rx_payment: 'awaiting_invoice',
             },
             note:
@@ -267,12 +268,16 @@
               locName +
               ' — ' +
               rxType +
-              ' — script attached on line item (Script attachment) — file: ' +
+              ' — patient: ' +
+              name +
+              ' <' +
+              email +
+              '> — script attached on line item (Script attachment) — file: ' +
               file.name +
               (notes ? ' — notes: ' + notes : '') +
-              ' — Fallback email: ' +
+              ' — Fallback: ' +
               fallbackEmail +
-              ' — After approval: create Draft Order with medicines and Send invoice (payment link).',
+              ' — After approval: Draft Order + Send invoice.',
           }),
         });
 
@@ -290,13 +295,17 @@
           }
           if (ref) {
             ref.textContent =
-              'Complete checkout to lodge this $0 request in Orders. If the file did not attach, email it to ' +
-              fallbackEmail +
-              '.';
+              'Complete the next step to lodge your request. Shopify will email you an order confirmation, and the pharmacy gets a new-order email with your details and script link.';
           }
         }
 
-        window.location.href = '/checkout';
+        // Prefill checkout email so patient confirmation + merchant "new order" emails fire correctly
+        var checkoutUrl =
+          '/checkout?checkout[email]=' +
+          encodeURIComponent(email) +
+          '&checkout[shipping_address][phone]=' +
+          encodeURIComponent(phone);
+        window.location.href = checkoutUrl;
       } catch (err) {
         if (submitErr) {
           submitErr.hidden = false;
