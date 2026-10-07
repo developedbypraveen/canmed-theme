@@ -31,6 +31,102 @@
     });
   }
 
+  function ensureCountry(form) {
+    var country = form.querySelector('[name="address[country]"]');
+    if (!country) return;
+    if (!country.value || country.value === '---') {
+      country.value = 'Australia';
+      country.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  }
+
+  function brandedReturn(root, form) {
+    var fromForm = form && form.getAttribute('data-cm-addr-return');
+    if (fromForm) return fromForm;
+    var base = root.getAttribute('data-cm-account-return') || '/pages/my-account';
+    return base + '#cm-addresses';
+  }
+
+  function setFormBusy(form, busy) {
+    form.setAttribute('data-cm-addr-busy', busy ? '1' : '');
+    form.querySelectorAll('button[type="submit"]').forEach(function (btn) {
+      if (busy) {
+        if (!btn.getAttribute('data-cm-addr-label')) {
+          btn.setAttribute('data-cm-addr-label', btn.textContent.trim());
+        }
+        var isDelete = btn.hasAttribute('data-cm-addr-delete');
+        btn.textContent = isDelete ? 'Deleting…' : 'Saving…';
+        btn.disabled = true;
+      } else {
+        var label = btn.getAttribute('data-cm-addr-label');
+        if (label) btn.textContent = label;
+        btn.disabled = false;
+      }
+    });
+  }
+
+  /**
+   * Stay on branded My Account — New Customer Accounts ignore return_to and
+   * dump users onto shopify.com profile. POST then reload this layout only.
+   */
+  function submitAddressForm(root, form) {
+    if (form.getAttribute('data-cm-addr-busy') === '1') return;
+
+    ensureCountry(form);
+    var returnTo = brandedReturn(root, form);
+    var body = new FormData(form);
+    var methods = body.getAll('_method');
+    if (methods.indexOf('delete') !== -1) {
+      body.delete('_method');
+      body.append('_method', 'delete');
+    }
+
+    setFormBusy(form, true);
+
+    fetch(form.action, {
+      method: 'POST',
+      body: body,
+      credentials: 'same-origin',
+      redirect: 'manual',
+      headers: { Accept: 'text/html' },
+    })
+      .catch(function () {
+        /* opaque redirect / network — mutation may still have succeeded */
+      })
+      .then(function () {
+        window.location.replace(returnTo);
+      });
+  }
+
+  function bindAddressForms(root) {
+    var panel = root.querySelector('[data-cm-rx-detail="cm-addresses"]');
+    if (!panel) return;
+
+    panel.querySelectorAll('form').forEach(function (form) {
+      var action = (form.getAttribute('action') || '').toLowerCase();
+      if (action.indexOf('/account/addresses') === -1) return;
+      if (form.dataset.cmAddrBound) return;
+      form.dataset.cmAddrBound = '1';
+      form.setAttribute('data-cm-addr-form', '');
+      var parentReturn = form.closest('[data-cm-addr-return]');
+      if (parentReturn && parentReturn.getAttribute('data-cm-addr-return')) {
+        form.setAttribute('data-cm-addr-return', parentReturn.getAttribute('data-cm-addr-return'));
+      } else if (!form.getAttribute('data-cm-addr-return')) {
+        form.setAttribute('data-cm-addr-return', brandedReturn(root, form));
+      }
+
+      form.addEventListener(
+        'submit',
+        function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          submitAddressForm(root, form);
+        },
+        true
+      );
+    });
+  }
+
   function init(root) {
     if (!root || root.dataset.cmAccountReady) return;
     root.dataset.cmAccountReady = '1';
@@ -61,7 +157,10 @@
       if (window.history && window.history.replaceState) {
         window.history.replaceState({}, '', '#' + id);
       }
-      if (id === 'cm-addresses') initCountryProvince(panel);
+      if (id === 'cm-addresses') {
+        initCountryProvince(panel);
+        bindAddressForms(root);
+      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -80,7 +179,19 @@
       var summary = root.querySelector('[data-cm-addr-summary="' + id + '"]');
       if (panel) panel.hidden = false;
       if (summary) summary.hidden = true;
-      if (panel) initCountryProvince(panel);
+      if (panel) {
+        initCountryProvince(panel);
+        bindAddressForms(root);
+        var focusEl = panel.querySelector(
+          'input:not([type="hidden"]):not([type="checkbox"]), select, textarea'
+        );
+        if (focusEl) {
+          setTimeout(function () {
+            focusEl.focus({ preventScroll: false });
+            panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }, 40);
+        }
+      }
     }
 
     root.querySelectorAll('[data-cm-rx-open]').forEach(function (btn) {
@@ -117,52 +228,21 @@
     root.querySelectorAll('[data-cm-addr-delete]').forEach(function (btn) {
       btn.addEventListener('click', function (e) {
         var msg = btn.getAttribute('data-confirm') || 'Delete this address?';
-        if (!window.confirm(msg)) e.preventDefault();
-      });
-    });
-
-    var accountReturn =
-      (root.getAttribute('data-cm-account-return') || '/pages/my-account') + '#cm-addresses';
-
-    /**
-     * New Customer Accounts often ignores return_to and dumps users on shopify.com profile.
-     * POST via fetch (don't follow redirect), then reload branded My Account.
-     */
-    root.querySelectorAll('[data-cm-rx-detail="cm-addresses"] form[action*="/account/addresses"]').forEach(function (form) {
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var returnTo = form.getAttribute('data-cm-addr-return') || accountReturn;
-        var body = new FormData(form);
-        // Guard: never send put+delete together (Shopify form helper injects put)
-        var methods = body.getAll('_method');
-        if (methods.indexOf('delete') !== -1) {
-          body.delete('_method');
-          body.append('_method', 'delete');
+        if (!window.confirm(msg)) {
+          e.preventDefault();
+          e.stopPropagation();
         }
-        var busy = form.getAttribute('data-cm-addr-busy');
-        if (busy) return;
-        form.setAttribute('data-cm-addr-busy', '1');
-        fetch(form.action, {
-          method: 'POST',
-          body: body,
-          credentials: 'same-origin',
-          redirect: 'manual',
-        })
-          .catch(function () {
-            /* still navigate — delete/save may have succeeded */
-          })
-          .then(function () {
-            window.location.assign(returnTo);
-          });
       });
     });
+
+    bindAddressForms(root);
 
     var hash = (window.location.hash || '').replace(/^#/, '');
     if (hash && root.querySelector('[data-cm-rx-detail="' + hash + '"]')) {
       showDetail(hash);
     }
 
-    // After address form submit, Shopify may return to /account/addresses — bounce back
+    // Classic /account/addresses → branded addresses panel
     if (hash === 'cm-addresses' || /account\/addresses/i.test(window.location.pathname)) {
       showDetail('cm-addresses');
     }

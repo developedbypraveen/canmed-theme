@@ -365,7 +365,12 @@
               </button>
             </div>
 
-            <div class="cm-account__addr-form" data-cm-addr-panel="new" hidden>
+            <div
+              class="cm-account__addr-form"
+              data-cm-addr-panel="new"
+              data-cm-addr-return="{{ addresses_return_hash }}"
+              hidden
+            >
               <h3 class="cm-account__heading">Add a new address</h3>
               {% form 'customer_address', customer.new_address, return_to: addresses_return %}
                 {% if form.errors != blank %}
@@ -434,7 +439,12 @@
                       </p>
                     </div>
 
-                    <div class="cm-account__addr-form" data-cm-addr-panel="{{ address.id }}" hidden>
+                    <div
+                      class="cm-account__addr-form"
+                      data-cm-addr-panel="{{ address.id }}"
+                      data-cm-addr-return="{{ addresses_return_hash }}"
+                      hidden
+                    >
                       <h3 class="cm-account__heading">Edit address</h3>
                       {% form 'customer_address', address, return_to: addresses_return %}
                         {% if form.errors != blank %}
