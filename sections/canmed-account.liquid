@@ -12,12 +12,21 @@
         {% if section.settings.eyebrow != blank %}
           <p class="cm-eyebrow">{{ section.settings.eyebrow | escape }}</p>
         {% endif %}
+        {% assign account_return = section.settings.prescriptions_link | default: '/pages/my-account' %}
         <h1 class="cm-display-l">{{ section.settings.guest_heading | default: 'Sign in to see your prescriptions.' | escape }}</h1>
         <p class="cm-body-l cm-account__lede">
           {{ section.settings.guest_body | default: 'Use the same email you checkout with so your $0 prescription requests and shop orders appear here.' | escape }}
         </p>
+        <p class="cm-mono-data cm-account__lede" style="margin-top:0.75rem;color:var(--cm-muted);">
+          After Shopify sign-in you may land on their Orders page — open
+          <a href="{{ account_return }}">My prescriptions on the CanMed site</a>
+          for status tracking.
+        </p>
         <div class="cm-btn-row">
-          <a class="cm-btn cm-btn--accent" href="{{ routes.account_login_url }}">
+          <a
+            class="cm-btn cm-btn--accent"
+            href="{{ routes.account_login_url }}?return_to={{ account_return | url_encode }}"
+          >
             {{ section.settings.login_label | default: 'Sign in' | escape }}
           </a>
           <a class="cm-btn cm-btn--secondary" href="{{ section.settings.prescriptions_link | default: '/pages/prescriptions' }}">
