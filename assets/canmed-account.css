@@ -351,10 +351,24 @@
 .cm-account__aside-link {
   display: inline-block;
   margin-top: 0.75rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--cm-font-mono);
   font-size: 0.875rem;
   color: var(--cm-pine);
   text-decoration: underline;
   text-underline-offset: 4px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.cm-account__aside-link:hover {
+  color: var(--cm-pine-dark);
+}
+
+.cm-account__addresses--detail {
+  margin-top: 1.5rem;
 }
 
 .cm-account__aside .cm-account__card {
