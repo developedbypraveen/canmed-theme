@@ -51,9 +51,6 @@
           </p>
         </div>
         <div class="cm-account__header-actions">
-          <a class="cm-btn cm-btn--secondary" href="{{ routes.account_url }}">
-            {{ section.settings.manage_label | default: 'Manage login' | escape }}
-          </a>
           <a class="cm-account__logout" href="{{ routes.account_logout_url }}">
             {{ section.settings.logout_label | default: 'Sign out' | escape }}
           </a>
@@ -330,7 +327,6 @@
     },
     { "type": "text", "id": "login_label", "label": "Sign in label", "default": "Sign in" },
     { "type": "text", "id": "logout_label", "label": "Sign out label", "default": "Sign out" },
-    { "type": "text", "id": "manage_label", "label": "Manage login label", "default": "Manage login" },
     { "type": "text", "id": "rx_heading", "label": "Prescriptions heading", "default": "My prescriptions" },
     { "type": "text", "id": "empty_heading", "label": "Empty heading", "default": "Nothing here yet." },
     { "type": "textarea", "id": "empty_body", "label": "Empty body", "default": "Start your first prescription and you will see every status change here, from received to dispatched." },
