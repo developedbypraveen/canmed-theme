@@ -11,6 +11,8 @@
     var rxType = null;
     var file = null;
     var variantId = root.getAttribute('data-variant-id');
+    var uploadUrl = root.getAttribute('data-upload-url') || '/apps/canmed/upload-script';
+    var fallbackEmail = root.getAttribute('data-fallback-email') || 'scripts@canmed.com.au';
 
     var wizard = root.querySelector('[data-cm-rx-wizard]');
     var success = root.querySelector('[data-cm-rx-success]');
@@ -24,6 +26,7 @@
     var drop = root.querySelector('[data-cm-rx-drop]');
     var fileInput = root.querySelector('[data-cm-rx-file]');
     var fileName = root.querySelector('[data-cm-rx-file-name]');
+    var uploadStatus = root.querySelector('[data-cm-rx-upload-status]');
     var chooseBtn = root.querySelector('[data-cm-rx-choose]');
 
     var locBtns = root.querySelectorAll('[data-cm-rx-location]');
@@ -126,6 +129,17 @@
       return ok;
     }
 
+    function setUploadStatus(msg, show) {
+      if (!uploadStatus) return;
+      if (!show) {
+        uploadStatus.hidden = true;
+        uploadStatus.textContent = '';
+        return;
+      }
+      uploadStatus.hidden = false;
+      uploadStatus.textContent = msg;
+    }
+
     function takeFile(f) {
       if (!f) return;
       var okTypes = ['image/jpeg', 'image/png', 'image/heic', 'image/heif', 'application/pdf'];
@@ -139,10 +153,44 @@
       }
       clearErrors();
       file = f;
+      setUploadStatus('', false);
       if (fileName) {
         fileName.hidden = false;
         fileName.textContent = f.name + ' · ' + (f.size / 1024).toFixed(0) + ' KB attached';
       }
+    }
+
+    async function uploadScriptFile() {
+      if (!file) throw new Error('Attach your script before sending.');
+      setUploadStatus('Uploading script for the pharmacist…', true);
+      if (nextBtn) nextBtn.textContent = 'Uploading script…';
+
+      var body = new FormData();
+      body.append('file', file, file.name);
+
+      var res = await fetch(uploadUrl, {
+        method: 'POST',
+        credentials: 'same-origin',
+        body: body,
+      });
+
+      var data = null;
+      try {
+        data = await res.json();
+      } catch (_e) {
+        data = null;
+      }
+
+      if (!res.ok || !data || !data.ok || !data.url) {
+        var msg =
+          (data && data.error) ||
+          'Could not upload the script. Try again, or email it to ' + fallbackEmail + '.';
+        setUploadStatus('', false);
+        throw new Error(msg);
+      }
+
+      setUploadStatus('Script uploaded — finishing your request…', true);
+      return data;
     }
 
     async function submitOrder() {
@@ -170,26 +218,34 @@
       var pharmacist = locBtn ? locBtn.getAttribute('data-pharmacist') : '';
       var locName = locBtn ? locBtn.textContent.trim() : locationId;
 
-      var properties = {
-        _rx_intake: 'true',
-        'Full name': name,
-        Email: email,
-        Phone: phone,
-        'Date of birth': dob,
-        Method: method === 'delivery' ? 'Courier delivery' : 'Collect in store',
-        Dispensary: locName,
-        '_rx_location': locationId,
-        'Prescription type': rxType,
-        '_rx_type': rxType,
-        State: state || (method === 'pickup' ? 'N/A (pickup)' : ''),
-        'Delivery address': method === 'delivery' ? address.trim() : 'Pickup — ' + locName,
-        Notes: notes.trim() || '—',
-        'Script file': file ? file.name + ' (' + Math.round(file.size / 1024) + ' KB)' : 'Not attached',
-        Status: 'pending_review',
-        Payment: 'Awaiting pharmacist approval + payment link',
-      };
-
       try {
+        var uploaded = await uploadScriptFile();
+        var scriptLabel =
+          (uploaded.name || file.name) + ' (' + Math.round((uploaded.size || file.size) / 1024) + ' KB)';
+
+        var properties = {
+          _rx_intake: 'true',
+          'Full name': name,
+          Email: email,
+          Phone: phone,
+          'Date of birth': dob,
+          Method: method === 'delivery' ? 'Courier delivery' : 'Collect in store',
+          Dispensary: locName,
+          '_rx_location': locationId,
+          'Prescription type': rxType,
+          '_rx_type': rxType,
+          State: state || (method === 'pickup' ? 'N/A (pickup)' : ''),
+          'Delivery address': method === 'delivery' ? address.trim() : 'Pickup — ' + locName,
+          Notes: notes.trim() || '—',
+          'Script file': scriptLabel,
+          'Script file URL': uploaded.url,
+          '_rx_script_file_id': uploaded.fileId || '',
+          Status: 'pending_review',
+          Payment: 'Awaiting pharmacist approval + payment link',
+        };
+
+        if (nextBtn) nextBtn.textContent = 'Sending…';
+
         await fetch('/cart/clear.js', { method: 'POST', credentials: 'same-origin' });
         var res = await fetch('/cart/add.js', {
           method: 'POST',
@@ -208,7 +264,6 @@
         var data = await res.json();
         if (!res.ok) throw new Error((data && data.description) || 'Could not create order');
 
-        // Update cart attributes for Flow / staff
         await fetch('/cart/update.js', {
           method: 'POST',
           credentials: 'same-origin',
@@ -218,7 +273,8 @@
               rx_location: locationId,
               rx_type: rxType,
               rx_status: 'pending_review',
-              rx_script_file: file ? file.name : '',
+              rx_script_file: uploaded.name || file.name,
+              rx_script_url: uploaded.url,
               rx_payment: 'awaiting_invoice',
             },
             note:
@@ -226,7 +282,10 @@
               locName +
               ' — ' +
               rxType +
-              (file ? ' — file: ' + file.name : '') +
+              ' — file: ' +
+              (uploaded.name || file.name) +
+              ' — url: ' +
+              uploaded.url +
               (notes ? ' — notes: ' + notes : '') +
               ' — After approval: create Draft Order with medicines and Send invoice (payment link).',
           }),
@@ -247,17 +306,23 @@
           if (ref) {
             ref.textContent =
               'Complete the next step to lodge your request in our system (no medicine charge yet). Email your script if needed: ' +
-              (root.getAttribute('data-fallback-email') || 'scripts@canmed.com.au');
+              fallbackEmail;
           }
         }
 
-        // Creates a $0 order in Shopify Admin for staff to review, then they send a payment invoice
         window.location.href = '/checkout';
       } catch (err) {
+        setUploadStatus('', false);
         if (submitErr) {
           submitErr.hidden = false;
-          submitErr.textContent = err.message || 'Something went wrong. Please try again or email your script.';
+          submitErr.textContent =
+            err.message ||
+            'Something went wrong. Please try again or email your script to ' + fallbackEmail + '.';
         }
+        setError(
+          'file',
+          'Upload failed — retry, or email the script to ' + fallbackEmail + ' naming your dispensary.'
+        );
         if (nextBtn) {
           nextBtn.disabled = false;
           nextBtn.textContent = 'Send to a pharmacist';
