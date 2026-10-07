@@ -56,15 +56,12 @@
     </nav>
 
     <div class="cm-header__actions">
-      {% if shop.customer_accounts_enabled %}
-        <a class="cm-header__account" href="{{ routes.account_url }}">
-          {{ section.settings.account_label | default: 'My account' | escape }}
-        </a>
-      {% else %}
-        <a class="cm-header__account" href="{{ section.settings.link_account | default: '/account' }}">
-          {{ section.settings.account_label | default: 'My account' | escape }}
-        </a>
-      {% endif %}
+      <a
+        class="cm-header__account"
+        href="{{ section.settings.link_account | default: '/pages/my-account' }}"
+      >
+        {{ section.settings.account_label | default: 'My account' | escape }}
+      </a>
 
       {% if section.settings.cta_label != blank %}
         <a
@@ -107,11 +104,9 @@
         <a class="cm-header__drawer-link" href="{{ section.settings.link_about | default: '/pages/about' }}">About</a>
         <a class="cm-header__drawer-link" href="{{ section.settings.link_contact | default: '/pages/contact' }}">Contact</a>
       {% endif %}
-      {% if shop.customer_accounts_enabled %}
-        <a class="cm-header__drawer-link" href="{{ routes.account_url }}">{{ section.settings.account_label | default: 'My account' | escape }}</a>
-      {% else %}
-        <a class="cm-header__drawer-link" href="{{ section.settings.link_account | default: '/account' }}">{{ section.settings.account_label | default: 'My account' | escape }}</a>
-      {% endif %}
+      <a class="cm-header__drawer-link" href="{{ section.settings.link_account | default: '/pages/my-account' }}">
+        {{ section.settings.account_label | default: 'My account' | escape }}
+      </a>
       {% if section.settings.cta_label != blank %}
         <a
           class="cm-btn cm-btn--accent"
@@ -169,7 +164,8 @@
     {
       "type": "url",
       "id": "link_account",
-      "label": "Account link (if accounts disabled)"
+      "label": "My account page",
+      "info": "Create a Page with template “account” (e.g. /pages/my-account)."
     },
     {
       "type": "header",

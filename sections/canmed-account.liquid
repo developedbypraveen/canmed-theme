@@ -1,0 +1,334 @@
+{% comment %}
+  CanMed My Account — prescriptions (intake orders) + order history + addresses
+  Requires Customer Accounts enabled. Create a Page with template "account".
+{% endcomment %}
+
+{{ 'canmed-account.css' | asset_url | stylesheet_tag }}
+
+<section class="cm-account cm-section" {{ section.shopify_attributes }}>
+  <div class="cm-shell">
+    {% if customer == blank %}
+      <div class="cm-account__gate">
+        {% if section.settings.eyebrow != blank %}
+          <p class="cm-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {% endif %}
+        <h1 class="cm-display-l">{{ section.settings.guest_heading | default: 'Sign in to see your prescriptions.' | escape }}</h1>
+        <p class="cm-body-l cm-account__lede">
+          {{ section.settings.guest_body | default: 'Use the same email you checkout with so your $0 prescription requests and shop orders appear here.' | escape }}
+        </p>
+        <div class="cm-btn-row">
+          <a class="cm-btn cm-btn--accent" href="{{ routes.account_login_url }}">
+            {{ section.settings.login_label | default: 'Sign in' | escape }}
+          </a>
+          <a class="cm-btn cm-btn--secondary" href="{{ section.settings.prescriptions_link | default: '/pages/prescriptions' }}">
+            {{ section.settings.start_rx_label | default: 'Start a prescription' | escape }}
+          </a>
+        </div>
+      </div>
+    {% else %}
+      <header class="cm-account__header">
+        <div>
+          {% if section.settings.eyebrow != blank %}
+            <p class="cm-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+          {% endif %}
+          <h1 class="cm-display-l">
+            {% if customer.first_name != blank %}
+              {{ customer.first_name | escape }}{% if customer.last_name != blank %} {{ customer.last_name | escape }}{% endif %}
+            {% else %}
+              {{ customer.email | escape }}
+            {% endif %}
+          </h1>
+          <p class="cm-mono-data cm-account__meta">
+            {{ customer.email | escape }}
+            {% if customer.orders_count > 0 %}
+              · {{ customer.orders_count }} order{% if customer.orders_count != 1 %}s{% endif %}
+            {% endif %}
+          </p>
+        </div>
+        <div class="cm-account__header-actions">
+          <a class="cm-btn cm-btn--secondary" href="{{ routes.account_url }}">
+            {{ section.settings.manage_label | default: 'Manage login' | escape }}
+          </a>
+          <a class="cm-mono-data cm-account__logout" href="{{ routes.account_logout_url }}">
+            {{ section.settings.logout_label | default: 'Sign out' | escape }}
+          </a>
+        </div>
+      </header>
+
+      <div class="cm-account__grid">
+        <div class="cm-account__main">
+          <h2 class="cm-display-m">{{ section.settings.rx_heading | default: 'My prescriptions' | escape }}</h2>
+
+          {% assign rx_count = 0 %}
+          {% for order in customer.orders %}
+            {% assign is_rx = false %}
+            {% for line in order.line_items %}
+              {% if line.properties['_rx_intake'] == 'true' or line.properties['_rx_intake'] == '1' %}
+                {% assign is_rx = true %}
+              {% endif %}
+              {% if line.product.handle == 'prescription-submission' %}
+                {% assign is_rx = true %}
+              {% endif %}
+              {% if line.title contains 'Prescription submission' or line.title contains 'Prescription Submission' %}
+                {% assign is_rx = true %}
+              {% endif %}
+            {% endfor %}
+            {% if is_rx %}
+              {% assign rx_count = rx_count | plus: 1 %}
+            {% endif %}
+          {% endfor %}
+
+          {% if rx_count == 0 %}
+            <div class="cm-account__empty">
+              <h3 class="cm-display-m">{{ section.settings.empty_heading | default: 'Nothing here yet.' | escape }}</h3>
+              <p class="cm-body-l">
+                {{ section.settings.empty_body | default: 'Start your first prescription and you will see every status change here, from received to dispatched.' | escape }}
+              </p>
+              <div class="cm-btn-row" style="justify-content:center;margin-top:1.75rem;">
+                <a class="cm-btn cm-btn--accent" href="{{ section.settings.prescriptions_link | default: '/pages/prescriptions' }}">
+                  {{ section.settings.start_rx_label | default: 'Start a prescription' | escape }}
+                </a>
+              </div>
+            </div>
+          {% else %}
+            <ul class="cm-account__rx-list">
+              {% for order in customer.orders %}
+                {% assign is_rx = false %}
+                {% assign rx_type = '' %}
+                {% assign rx_dispensary = '' %}
+                {% assign rx_status_raw = '' %}
+                {% assign rx_notes = '' %}
+                {% for line in order.line_items %}
+                  {% if line.properties['_rx_intake'] == 'true' or line.properties['_rx_intake'] == '1' or line.product.handle == 'prescription-submission' or line.title contains 'Prescription submission' %}
+                    {% assign is_rx = true %}
+                    {% if line.properties['Prescription type'] != blank %}
+                      {% assign rx_type = line.properties['Prescription type'] %}
+                    {% endif %}
+                    {% if line.properties['Dispensary'] != blank %}
+                      {% assign rx_dispensary = line.properties['Dispensary'] %}
+                    {% endif %}
+                    {% if line.properties['Status'] != blank %}
+                      {% assign rx_status_raw = line.properties['Status'] %}
+                    {% endif %}
+                    {% if line.properties['Notes'] != blank and line.properties['Notes'] != '—' %}
+                      {% assign rx_notes = line.properties['Notes'] %}
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+
+                {% if is_rx %}
+                  {% comment %} Map Status property + fulfilment → received | review | approved | dispatched {% endcomment %}
+                  {% assign status_key = 'received' %}
+                  {% assign status_label = 'Received' %}
+                  {% assign status_tone = 'sage' %}
+
+                  {% assign raw = rx_status_raw | downcase | strip %}
+                  {% if raw == 'pending_review' or raw == 'received' %}
+                    {% assign status_key = 'received' %}
+                    {% assign status_label = 'Received' %}
+                    {% assign status_tone = 'sage' %}
+                  {% elsif raw == 'under_review' or raw == 'review' or raw == 'under review' %}
+                    {% assign status_key = 'review' %}
+                    {% assign status_label = 'Under review' %}
+                    {% assign status_tone = 'amber' %}
+                  {% elsif raw == 'approved' %}
+                    {% assign status_key = 'approved' %}
+                    {% assign status_label = 'Approved' %}
+                    {% assign status_tone = 'pine' %}
+                  {% elsif raw == 'dispatched' or raw == 'fulfilled' %}
+                    {% assign status_key = 'dispatched' %}
+                    {% assign status_label = 'Dispatched' %}
+                    {% assign status_tone = 'pine' %}
+                  {% endif %}
+
+                  {% if order.tags contains 'rx-review' %}
+                    {% assign status_key = 'review' %}
+                    {% assign status_label = 'Under review' %}
+                    {% assign status_tone = 'amber' %}
+                  {% endif %}
+                  {% if order.tags contains 'rx-approved' %}
+                    {% assign status_key = 'approved' %}
+                    {% assign status_label = 'Approved' %}
+                    {% assign status_tone = 'pine' %}
+                  {% endif %}
+                  {% if order.tags contains 'rx-dispatched' or order.fulfillment_status == 'fulfilled' %}
+                    {% assign status_key = 'dispatched' %}
+                    {% assign status_label = 'Dispatched' %}
+                    {% assign status_tone = 'pine' %}
+                  {% endif %}
+
+                  <li class="cm-account__rx-item">
+                    <div class="cm-account__rx-copy">
+                      <p class="cm-mono-data cm-account__rx-ref">
+                        #{{ order.order_number }}
+                        {% if rx_dispensary != blank %} · {{ rx_dispensary | escape }}{% endif %}
+                      </p>
+                      <p class="cm-account__rx-title">
+                        {% if rx_type != blank %}
+                          {{ rx_type | escape }} prescription
+                        {% else %}
+                          Prescription request
+                        {% endif %}
+                      </p>
+                      <p class="cm-mono-data cm-account__rx-updated">
+                        Updated {{ order.updated_at | date: '%Y-%m-%d %H:%M' }}
+                        {% if rx_notes != blank %} · {{ rx_notes | escape | truncate: 80 }}{% endif %}
+                      </p>
+                    </div>
+                    <div class="cm-account__rx-actions">
+                      <span class="cm-status-pill cm-status-pill--{{ status_tone }}" data-status="{{ status_key }}">
+                        <span class="cm-status-pill__dot" aria-hidden="true"></span>
+                        {{ status_label }}
+                      </span>
+                      <a class="cm-btn cm-btn--secondary cm-account__track" href="{{ order.customer_url }}">
+                        {{ section.settings.track_label | default: 'View' | escape }}
+                      </a>
+                    </div>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          {% endif %}
+
+          <h2 class="cm-display-m cm-account__orders-heading">{{ section.settings.orders_heading | default: 'Order history' | escape }}</h2>
+
+          {% assign shop_count = 0 %}
+          {% for order in customer.orders %}
+            {% assign is_rx = false %}
+            {% for line in order.line_items %}
+              {% if line.properties['_rx_intake'] == 'true' or line.properties['_rx_intake'] == '1' or line.product.handle == 'prescription-submission' or line.title contains 'Prescription submission' %}
+                {% assign is_rx = true %}
+              {% endif %}
+            {% endfor %}
+            {% unless is_rx %}
+              {% assign shop_count = shop_count | plus: 1 %}
+            {% endunless %}
+          {% endfor %}
+
+          {% if shop_count == 0 %}
+            <p class="cm-mono-data cm-account__muted">{{ section.settings.orders_empty | default: 'No shop orders yet.' | escape }}</p>
+          {% else %}
+            <div class="cm-account__table-wrap">
+              <table class="cm-account__table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Item</th>
+                    <th>Total</th>
+                    <th>Reorder</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for order in customer.orders %}
+                    {% assign is_rx = false %}
+                    {% for line in order.line_items %}
+                      {% if line.properties['_rx_intake'] == 'true' or line.properties['_rx_intake'] == '1' or line.product.handle == 'prescription-submission' or line.title contains 'Prescription submission' %}
+                        {% assign is_rx = true %}
+                      {% endif %}
+                    {% endfor %}
+                    {% unless is_rx %}
+                      {% assign first_line = order.line_items.first %}
+                      <tr>
+                        <td>{{ order.created_at | date: '%Y-%m-%d' }}</td>
+                        <td>
+                          {{ first_line.title | escape }}
+                          {% if order.line_items.size > 1 %}
+                            <span class="cm-account__muted">+{{ order.line_items.size | minus: 1 }} more</span>
+                          {% endif %}
+                        </td>
+                        <td>{{ order.total_price | money }}</td>
+                        <td>
+                          {% if first_line.product.url != blank %}
+                            <a class="cm-account__reorder" href="{{ first_line.product.url }}">Reorder</a>
+                          {% else %}
+                            <a class="cm-account__reorder" href="{{ order.customer_url }}">View</a>
+                          {% endif %}
+                        </td>
+                      </tr>
+                    {% endunless %}
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% endif %}
+        </div>
+
+        <aside class="cm-account__aside">
+          <h2 class="cm-display-m">{{ section.settings.addresses_heading | default: 'Saved addresses' | escape }}</h2>
+          {% if customer.addresses_count == 0 %}
+            <p class="cm-mono-data cm-account__muted">{{ section.settings.addresses_empty | default: 'No saved addresses yet. They appear after checkout.' | escape }}</p>
+            <a class="cm-btn cm-btn--secondary" style="margin-top:1rem;" href="{{ routes.account_url }}">
+              {{ section.settings.manage_addresses_label | default: 'Manage addresses' | escape }}
+            </a>
+          {% else %}
+            <div class="cm-account__addresses">
+              {% for address in customer.addresses %}
+                <div class="cm-account__card{% if address == customer.default_address %} is-default{% endif %}">
+                  <p class="cm-mono-caption">
+                    {% if address == customer.default_address %}Home{% else %}Address{% endif %}
+                  </p>
+                  <p class="cm-mono-data">
+                    {{ address.address1 | escape }}
+                    {% if address.address2 != blank %}<br>{{ address.address2 | escape }}{% endif %}
+                    <br>
+                    {{ address.city | escape }}
+                    {% if address.province_code != blank %} {{ address.province_code | escape }}{% endif %}
+                    {{ address.zip | escape }}
+                  </p>
+                </div>
+              {% endfor %}
+            </div>
+            <a class="cm-mono-data cm-account__aside-link" href="{{ routes.account_url }}">
+              {{ section.settings.manage_addresses_label | default: 'Manage addresses' | escape }}
+            </a>
+          {% endif %}
+
+          <h2 class="cm-display-m cm-account__aside-heading">{{ section.settings.clinic_heading | default: 'Your dispensary' | escape }}</h2>
+          <div class="cm-account__card">
+            <p class="cm-mono-caption cm-account__clinic-name">{{ section.settings.clinic_name | default: 'CanMED West Lakes Clinic' | escape }}</p>
+            <p class="cm-mono-data">
+              {{ section.settings.clinic_address | default: 'Unit 5, 151 Brebner Drive, West Lakes SA 5021' | escape }}
+            </p>
+            {% if section.settings.clinic_phone != blank %}
+              <a class="cm-mono-data cm-account__aside-link" href="tel:{{ section.settings.clinic_phone | replace: ' ', '' | replace: '(', '' | replace: ')', '' }}">
+                {{ section.settings.clinic_phone | escape }}
+              </a>
+            {% endif %}
+          </div>
+        </aside>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CanMed — My Account",
+  "tag": "section",
+  "class": "cm-section-account",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "My account" },
+    { "type": "text", "id": "guest_heading", "label": "Guest heading", "default": "Sign in to see your prescriptions." },
+    { "type": "textarea", "id": "guest_body", "label": "Guest body", "default": "Use the same email you checkout with so your $0 prescription requests and shop orders appear here." },
+    { "type": "text", "id": "login_label", "label": "Sign in label", "default": "Sign in" },
+    { "type": "text", "id": "logout_label", "label": "Sign out label", "default": "Sign out" },
+    { "type": "text", "id": "manage_label", "label": "Manage login label", "default": "Manage login" },
+    { "type": "text", "id": "rx_heading", "label": "Prescriptions heading", "default": "My prescriptions" },
+    { "type": "text", "id": "empty_heading", "label": "Empty heading", "default": "Nothing here yet." },
+    { "type": "textarea", "id": "empty_body", "label": "Empty body", "default": "Start your first prescription and you will see every status change here, from received to dispatched." },
+    { "type": "text", "id": "start_rx_label", "label": "Start prescription CTA", "default": "Start a prescription" },
+    { "type": "url", "id": "prescriptions_link", "label": "Prescriptions page" },
+    { "type": "text", "id": "track_label", "label": "Track / view label", "default": "View" },
+    { "type": "text", "id": "orders_heading", "label": "Orders heading", "default": "Order history" },
+    { "type": "text", "id": "orders_empty", "label": "Orders empty", "default": "No shop orders yet." },
+    { "type": "text", "id": "addresses_heading", "label": "Addresses heading", "default": "Saved addresses" },
+    { "type": "text", "id": "addresses_empty", "label": "Addresses empty", "default": "No saved addresses yet. They appear after checkout." },
+    { "type": "text", "id": "manage_addresses_label", "label": "Manage addresses", "default": "Manage addresses" },
+    { "type": "text", "id": "clinic_heading", "label": "Clinic heading", "default": "Your dispensary" },
+    { "type": "text", "id": "clinic_name", "label": "Clinic name", "default": "CanMED West Lakes Clinic" },
+    { "type": "text", "id": "clinic_address", "label": "Clinic address", "default": "Unit 5, 151 Brebner Drive, West Lakes SA 5021" },
+    { "type": "text", "id": "clinic_phone", "label": "Clinic phone", "default": "(08) 8450 3978" }
+  ],
+  "presets": [{ "name": "CanMed — My Account" }]
+}
+{% endschema %}

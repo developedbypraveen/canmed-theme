@@ -28,7 +28,7 @@
         "brand_tagline": "Compounding Chemist",
         "menu": "main-menu",
         "account_label": "My account",
-        "link_account": "",
+        "link_account": "/pages/my-account",
         "cta_label": "Start a prescription",
         "cta_link": "",
         "link_prescriptions": "",

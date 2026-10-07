@@ -193,7 +193,7 @@
         <p class="cm-body-l" data-cm-rx-success-copy></p>
         <p class="cm-mono-data" data-cm-rx-ref></p>
         <div class="cm-btn-row" style="justify-content:center;margin-top:2rem;">
-          <a class="cm-btn cm-btn--accent" href="{{ routes.account_url }}">My Prescriptions</a>
+          <a class="cm-btn cm-btn--accent" href="{{ section.settings.account_link | default: '/pages/my-account' }}">My Prescriptions</a>
           <a class="cm-btn cm-btn--secondary" href="{{ section.settings.shop_link | default: '/pages/shop' }}">Back to shop</a>
         </div>
       </div>
@@ -222,7 +222,8 @@
       "label": "File note",
       "default": "Your script attaches to the request in Shopify Orders. After checkout, you get an order confirmation email and the pharmacy gets a new-order email. If the file fails, email scripts@canmed.com.au naming your dispensary."
     },
-    { "type": "url", "id": "shop_link", "label": "Shop link" }
+    { "type": "url", "id": "shop_link", "label": "Shop link" },
+    { "type": "url", "id": "account_link", "label": "My Account / Prescriptions link", "info": "Page using the account template (e.g. /pages/my-account)." }
   ],
   "blocks": [
     {
