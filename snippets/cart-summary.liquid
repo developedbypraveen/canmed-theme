@@ -4,6 +4,7 @@
   @param {string} [accelerated_checkout_buttons_layout] - { 'vertical' } Forced layout of the additional checkout buttons, instead of relying on platform's layout.
   @param {string} [section_id] - The section ID for cart discount component.
   @param {boolean} [show_view_cart] - When true, shows a View cart button above Checkout (cart drawer).
+  @param {boolean} [hide_accelerated_checkout] - When true, hides Shop Pay / PayPal / GPay wallet buttons.
 {%- enddoc -%}
 
 {% render 'text-component-shimmer-styles' %}
@@ -282,16 +283,18 @@
     </span>
   </button>
 
-  {% if additional_checkout_buttons and settings.show_accelerated_checkout_buttons %}
-    <div
-      class="
-        additional-checkout-buttons
-        {% if accelerated_checkout_buttons_layout == 'vertical' %}additional-checkout-buttons--vertical{% endif %}
-      "
-    >
-      {{ content_for_additional_checkout_buttons }}
-    </div>
-  {% endif %}
+  {% unless hide_accelerated_checkout %}
+    {% if additional_checkout_buttons and settings.show_accelerated_checkout_buttons %}
+      <div
+        class="
+          additional-checkout-buttons
+          {% if accelerated_checkout_buttons_layout == 'vertical' %}additional-checkout-buttons--vertical{% endif %}
+        "
+      >
+        {{ content_for_additional_checkout_buttons }}
+      </div>
+    {% endif %}
+  {% endunless %}
 </div>
 
 {% stylesheet %}

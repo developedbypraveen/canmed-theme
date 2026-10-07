@@ -33,7 +33,12 @@
   {{ block.shopify_attributes }}
 >
   <div class="{{ cart_summary_inner_class }}">
-    {% render 'cart-summary', accelerated_checkout_buttons_layout: 'vertical', section_id: section.id %}
+    {% comment %} CanMed cart page: one Check out CTA only — hide oversized Shop Pay / PayPal / GPay stack {% endcomment %}
+    {% render 'cart-summary',
+      accelerated_checkout_buttons_layout: 'vertical',
+      section_id: section.id,
+      hide_accelerated_checkout: true
+    %}
   </div>
 </div>
 

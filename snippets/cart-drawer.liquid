@@ -116,7 +116,11 @@
                 </scroll-hint>
 
                 <div class="cart-drawer__summary">
-                  {% render 'cart-summary', section_id: 'cart-drawer-section', show_view_cart: true %}
+                  {% render 'cart-summary',
+                    section_id: 'cart-drawer-section',
+                    show_view_cart: true,
+                    hide_accelerated_checkout: true
+                  %}
                 </div>
               </scroll-hint>
             {%- endif -%}

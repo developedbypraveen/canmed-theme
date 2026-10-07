@@ -48,10 +48,10 @@
         }
       },
       "settings": {
-        "section_width": "page-width",
+        "section_width": "full-width",
         "background_color": "{{ settings.color_palette.background }}",
-        "padding-block-start": 40,
-        "padding-block-end": 48
+        "padding-block-start": 32,
+        "padding-block-end": 40
       }
     },
     "cm_related": {

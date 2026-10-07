@@ -18,46 +18,50 @@
   <template id="empty-cart-template">
     <div class="section-background{% if custom_color %} color-custom-{{ section.id }}{% endif %}"></div>
     <div
-      class="section{% if custom_color %} color-custom-{{ section.id }}{% endif %} section--{{ section.settings.section_width }}"
+      class="section section--full-width cm-cart-section{% if custom_color %} color-custom-{{ section.id }}{% endif %}"
     >
-      <div
-        class="cart-page spacing-style{% if cart.empty? %} cart-page--empty{% endif %}"
-        style="{% render 'spacing-style', settings: section.settings %}"
-      >
-        <div class="cart-page__title">
-          {%- content_for 'block', id: 'cart-page-title', type: '_cart-title', force_empty: true %}
+      <div class="cm-shell">
+        <div
+          class="cart-page spacing-style{% if cart.empty? %} cart-page--empty{% endif %}"
+          style="{% render 'spacing-style', settings: section.settings %}"
+        >
+          <div class="cart-page__title">
+            {%- content_for 'block', id: 'cart-page-title', type: '_cart-title', force_empty: true %}
+          </div>
+          <div class="cart-page__items">
+            {%- content_for 'block', id: 'cart-page-items', type: '_cart-products', force_empty: true %}
+          </div>
+          {{ cart_page_more_blocks_content }}
         </div>
-        <div class="cart-page__items">
-          {%- content_for 'block', id: 'cart-page-items', type: '_cart-products', force_empty: true %}
-        </div>
-        {{ cart_page_more_blocks_content }}
       </div>
     </div>
   </template>
 
   <div class="section-background{% if custom_color %} color-custom-{{ section.id }}{% endif %}"></div>
   <div
-    class="section{% if custom_color %} color-custom-{{ section.id }}{% endif %} section--{{ section.settings.section_width }}"
+    class="section section--full-width cm-cart-section{% if custom_color %} color-custom-{{ section.id }}{% endif %}"
   >
-    <div
-      class="cart-page spacing-style{% if cart.empty? %} cart-page--empty{% endif %}"
-      style="{% render 'spacing-style', settings: section.settings %}"
-    >
-      <div class="cart-page__title">
-        {%- content_for 'block', id: 'cart-page-title', type: '_cart-title' %}
-      </div>
-
-      <div class="cart-page__items">
-        {%- content_for 'block', id: 'cart-page-items', type: '_cart-products' %}
-      </div>
-
-      {%- unless cart.empty? -%}
-        <div class="cart-page__summary">
-          {%- content_for 'block', id: 'cart-page-summary', type: '_cart-summary' -%}
+    <div class="cm-shell">
+      <div
+        class="cart-page spacing-style{% if cart.empty? %} cart-page--empty{% endif %}"
+        style="{% render 'spacing-style', settings: section.settings %}"
+      >
+        <div class="cart-page__title">
+          {%- content_for 'block', id: 'cart-page-title', type: '_cart-title' %}
         </div>
-      {%- endunless -%}
 
-      {{ cart_page_more_blocks_content }}
+        <div class="cart-page__items">
+          {%- content_for 'block', id: 'cart-page-items', type: '_cart-products' %}
+        </div>
+
+        {%- unless cart.empty? -%}
+          <div class="cart-page__summary">
+            {%- content_for 'block', id: 'cart-page-summary', type: '_cart-summary' -%}
+          </div>
+        {%- endunless -%}
+
+        {{ cart_page_more_blocks_content }}
+      </div>
     </div>
   </div>
 {% endcapture %}
