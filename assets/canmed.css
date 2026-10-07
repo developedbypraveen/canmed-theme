@@ -2276,9 +2276,36 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 }
 
 /* —— Cart page + drawer (CanMed layout) —— */
+
+/* Keep cart inside the same shell width as the rest of the site */
+.section--page-width:has(.cart-page) {
+  --page-content-width: min(var(--cm-shell), 100%);
+}
+.section--page-width .cart-page:has(.cart-summary--extend),
+.section--page-width .cart-page {
+  grid-column: auto !important;
+  width: 100%;
+  max-width: var(--cm-shell);
+  margin-inline: auto;
+  padding-inline: 20px;
+  box-sizing: border-box;
+}
+@media (min-width: 768px) {
+  .section--page-width .cart-page {
+    padding-inline: 40px;
+  }
+}
+@media (min-width: 750px) {
+  .section--page-width .cart-page,
+  .section--page-width .cart-page:has(.cart-summary--extend) {
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 320px) !important;
+    gap: 1.5rem 2rem !important;
+  }
+}
+
 .cart-page {
-  gap: 2rem !important;
-  padding-block: 1.5rem 3rem;
+  gap: 1.5rem !important;
+  padding-block: 0.5rem 2.5rem;
 }
 .cart-page__title .cart-title,
 .cart-page__title h1,
@@ -2288,23 +2315,75 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
   font-family: var(--cm-font-display) !important;
   color: var(--cm-pine) !important;
   letter-spacing: -0.02em;
+  font-size: clamp(1.75rem, 3vw, 2.25rem) !important;
 }
 .cart-page__items {
   border: 1px solid var(--cm-hairline);
   border-radius: 12px;
   background: var(--cm-ivory);
-  padding: 1.25rem 1.35rem;
+  padding: 1rem 1.15rem;
 }
 .cart-page__summary {
-  border: 1px solid var(--cm-hairline);
-  border-radius: 12px;
-  background: var(--cm-secondary);
-  padding: 1.5rem !important;
+  border: 1px solid var(--cm-hairline) !important;
+  border-radius: 12px !important;
+  background: var(--cm-secondary) !important;
+  padding: 0 !important;
   align-self: start !important;
+  height: auto !important;
+  position: sticky !important;
+  top: calc(var(--header-group-height, 5rem) + 1rem);
 }
 .cart-page__summary .cart-summary,
-.cart-summary {
+.cart-page .cart-summary {
   background: transparent !important;
+  height: auto !important;
+  display: block !important;
+  border: none !important;
+}
+.cart-page .cart-summary__inner {
+  gap: 1rem !important;
+  padding: 1.25rem !important;
+  position: static !important;
+  align-items: stretch !important;
+}
+.cart-page .cart-totals {
+  width: 100%;
+}
+.cart-page .cart__ctas {
+  width: 100%;
+  gap: 0.65rem !important;
+}
+.cart-page .cart__checkout-button,
+.cart-page .cart__view-cart-button {
+  height: 44px !important;
+  min-height: 44px !important;
+  max-height: 44px !important;
+  padding-inline: 1.25rem !important;
+  font-size: 0.875rem !important;
+  line-height: 1 !important;
+}
+.cart-page shopify-accelerated-checkout-cart,
+.cart-page .additional-checkout-buttons {
+  --shopify-accelerated-checkout-button-block-size: 42px;
+  --shopify-accelerated-checkout-button-inline-size: 100%;
+  --shopify-accelerated-checkout-button-border-radius: 999px;
+  --shopify-accelerated-checkout-button-box-shadow: none;
+  --shopify-accelerated-checkout-row-gap: 8px;
+  width: 100%;
+}
+.cart-page .additional-checkout-buttons {
+  margin-top: 0.15rem;
+}
+.cart-page .cart-actions {
+  margin-block-start: 0 !important;
+  padding-block: 0 !important;
+}
+.cart-page .cart-totals__container {
+  margin-top: 0.25rem;
+}
+.cart-page .cart-totals__total-label,
+.cart-page .cart-totals__total-value {
+  font-size: 0.95rem;
 }
 .cart-items__wrapper {
   color: var(--cm-charcoal);
@@ -2378,6 +2457,12 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
   background: var(--cm-pine) !important;
   color: #fff !important;
 }
+.cart-drawer shopify-accelerated-checkout-cart,
+.cart-drawer .additional-checkout-buttons {
+  --shopify-accelerated-checkout-button-block-size: 42px;
+  --shopify-accelerated-checkout-button-border-radius: 999px;
+  --shopify-accelerated-checkout-row-gap: 8px;
+}
 
 /* Cart drawer overlays — never shift/squeeze the storefront layout */
 .page-wrapper:has(theme-drawer#cart-drawer[open]):not(:has(theme-drawer[open]:not(#cart-drawer))) {
@@ -2416,10 +2501,4 @@ theme-drawer#cart-drawer .theme-drawer__dialog::backdrop {
   background: var(--cm-amber);
   border-color: var(--cm-amber);
   color: #fff;
-}
-@media (min-width: 750px) {
-  .cart-page__summary {
-    position: sticky;
-    top: 6rem;
-  }
 }
