@@ -377,6 +377,17 @@
   border-top: 1px solid var(--cm-hairline);
 }
 
+.cm-account__addr-form .cm-product__input:focus-visible {
+  outline: 2px solid var(--cm-pine);
+  outline-offset: 2px;
+}
+
+.cm-account__addr-form button[type="submit"]:disabled,
+.cm-account__addr-action:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
 .cm-account__addr-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
