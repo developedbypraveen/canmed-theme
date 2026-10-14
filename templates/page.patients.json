@@ -18,7 +18,7 @@
         "t1": { "type": "type", "settings": { "icon": "paediatric", "title": "Paediatric", "body": "Child-scaled doses and flavours" } },
         "t2": { "type": "type", "settings": { "icon": "geriatric", "title": "Geriatric", "body": "Swallowing and polypharmacy support" } },
         "t3": { "type": "type", "settings": { "icon": "veterinary", "title": "Veterinary", "body": "Species-specific formulations" } },
-        "t4": { "type": "type", "settings": { "icon": "phyto", "title": "Phytocannabinoid", "body": "Approved prescriptions only" } },
+        "t4": { "type": "type", "settings": { "icon": "phyto", "title": "Alternative Medicine", "body": "Approved prescriptions only" } },
         "t5": { "type": "type", "settings": { "icon": "other", "title": "Something else", "body": "Tell us and we'll route it" } }
       },
       "block_order": ["t1", "t2", "t3", "t4", "t5"],

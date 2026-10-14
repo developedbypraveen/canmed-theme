@@ -15,7 +15,7 @@
       "type": "canmed-announcement",
       "settings": {
         "enabled": true,
-        "text": "Free delivery over $99 — phytocannabinoid orders ship free over $180 and require an approved script.",
+        "text": "Free delivery over $99 — alternative medicine orders ship free over $180 and require an approved script.",
         "show_dismiss": true,
         "dismiss_label": "Dismiss delivery notice"
       }

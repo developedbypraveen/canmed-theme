@@ -167,7 +167,7 @@ PRODUCTS = [
         "access_note": "Requires a valid script from your prescriber before we dispense.",
     },
     {
-        "title": "Phytocannabinoid Oil",
+        "title": "Alternative Medicine Oil",
         "handle": "phyto-oil-full-spectrum",
         "tier": "prescription",
         "product_type": "Prescription Only",

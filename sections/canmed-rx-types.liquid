@@ -255,13 +255,7 @@
                 </svg>
               </span>
               {% if block.settings.title != blank %}
-                <h3 class="cm-make__name">
-                  {%- if icon == 'phyto' and block.settings.title == 'Phytocannabinoid' -%}
-                    Phyto&shy;cannabinoid
-                  {%- else -%}
-                    {{ block.settings.title | escape }}
-                  {%- endif -%}
-                </h3>
+                <h3 class="cm-make__name">{{ block.settings.title | escape }}</h3>
               {% endif %}
               {% if block.settings.body != blank %}
                 <p class="cm-make__text">{{ block.settings.body | escape }}</p>
@@ -398,7 +392,7 @@
             { "value": "paediatric", "label": "Paediatric" },
             { "value": "geriatric", "label": "Geriatric" },
             { "value": "veterinary", "label": "Veterinary" },
-            { "value": "phyto", "label": "Phytocannabinoid" },
+            { "value": "phyto", "label": "Alternative Medicine" },
             { "value": "other", "label": "Something else" }
           ]
         },
@@ -449,7 +443,7 @@
           "type": "type",
           "settings": {
             "icon": "phyto",
-            "title": "Phytocannabinoid",
+            "title": "Alternative Medicine",
             "body": "Approved prescriptions only"
           }
         },

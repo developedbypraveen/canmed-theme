@@ -132,7 +132,7 @@
           <div class="cm-rx__types" data-cm-rx-types>
             {% assign types = section.blocks | where: 'type', 'rx_type' %}
             {% if types.size == 0 %}
-              {% assign default_types = 'paediatric|Paediatric|Child-scaled doses and flavours,geriatric|Geriatric|Swallowing and polypharmacy support,veterinary|Veterinary|Species-specific formulations,phytocannabinoid|Phytocannabinoid|Approved prescriptions only,other|Something else|Tell us and we will route it' | split: ',' %}
+              {% assign default_types = 'paediatric|Paediatric|Child-scaled doses and flavours,geriatric|Geriatric|Swallowing and polypharmacy support,veterinary|Veterinary|Species-specific formulations,phytocannabinoid|Alternative Medicine|Approved prescriptions only,other|Something else|Tell us and we will route it' | split: ',' %}
               {% for t in default_types %}
                 {% assign parts = t | split: '|' %}
                 <button type="button" class="cm-rx__type" data-cm-rx-type="{{ parts[0] }}">
@@ -256,7 +256,7 @@
         { "type": "rx_type", "settings": { "id": "paediatric", "label": "Paediatric", "note": "Child-scaled doses and flavours" } },
         { "type": "rx_type", "settings": { "id": "geriatric", "label": "Geriatric", "note": "Swallowing and polypharmacy support" } },
         { "type": "rx_type", "settings": { "id": "veterinary", "label": "Veterinary", "note": "Species-specific formulations" } },
-        { "type": "rx_type", "settings": { "id": "phytocannabinoid", "label": "Phytocannabinoid", "note": "Approved prescriptions only" } },
+        { "type": "rx_type", "settings": { "id": "phytocannabinoid", "label": "Alternative Medicine", "note": "Approved prescriptions only" } },
         { "type": "rx_type", "settings": { "id": "other", "label": "Something else", "note": "Tell us and we'll route it" } }
       ]
     }
