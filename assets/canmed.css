@@ -16,14 +16,33 @@
   --cm-font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
   --cm-font-body: "Poppins", ui-sans-serif, system-ui, sans-serif;
   --cm-font-mono: "Poppins", ui-sans-serif, system-ui, sans-serif;
-  --cm-shell: 1240px;
-  --cm-section-x: 20px;
+  --cm-shell: 1440px;
+  --cm-section-x: 24px;
   --cm-section-y: 4rem;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 1440px) {
   :root {
-    --cm-section-x: 40px;
+    --cm-shell: 1280px;
+  }
+}
+
+@media (max-width: 1024px) {
+  :root {
+    --cm-shell: 960px;
+    --cm-section-x: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --cm-shell: 100%;
+    --cm-section-x: 16px;
+  }
+}
+
+@media (min-width: 769px) {
+  :root {
     --cm-section-y: 5rem;
   }
 }
