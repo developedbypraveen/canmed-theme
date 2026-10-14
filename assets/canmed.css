@@ -699,64 +699,80 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 
 /* ---------- Hero ---------- */
 .cm-hero {
-  padding: 2.5rem 0;
+  padding: 2rem 0 2.5rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 900px) {
   .cm-hero {
-    padding: 4rem 0;
+    padding: 3rem 0 3.5rem;
   }
 }
-
-/* Keep How-it-works padding identical to the HTML reference (no hero crush) */
 
 .cm-hero__grid {
   display: grid;
-  gap: 2.5rem;
+  gap: 1.75rem;
   align-items: center;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 900px) {
   .cm-hero__grid {
-    grid-template-columns: 5fr 7fr;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr);
+    gap: 2.5rem 3rem;
+    align-items: center;
   }
 }
 
-.cm-hero__copy .cm-display-xl {
-  margin-top: 1.5rem;
-  line-height: 1.16;
+.cm-hero__copy {
+  min-width: 0;
 }
 
-@media (min-width: 768px) {
-  .cm-hero__copy .cm-display-xl {
-    line-height: 1.05;
+.cm-hero__title {
+  font-family: var(--cm-font-display);
+  font-weight: 700;
+  font-size: clamp(1.85rem, 2.8vw + 0.6rem, 2.85rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--cm-pine);
+  margin: 0.85rem 0 0;
+  text-wrap: balance;
+  max-width: 14em;
+}
+
+@media (min-width: 900px) {
+  .cm-hero__title {
+    font-size: clamp(2.15rem, 2.4vw + 0.5rem, 2.85rem);
+    line-height: 1.12;
+    max-width: 15em;
   }
 }
 
 .cm-hero__lede {
-  margin-top: 1.5rem;
-  max-width: 28rem;
+  margin-top: 1.15rem;
+  max-width: 34rem;
+  font-size: clamp(1rem, 0.9vw + 0.75rem, 1.125rem);
+  line-height: 1.55;
 }
 
 .cm-hero__copy .cm-btn-row {
-  margin-top: 2.25rem;
+  margin-top: 1.75rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 
 .cm-hero__media {
   position: relative;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1;
   width: 100%;
+  max-width: 28rem;
+  margin-inline: auto;
+  max-height: min(420px, 58vh);
 }
 
-@media (min-width: 640px) {
+@media (min-width: 900px) {
   .cm-hero__media {
+    max-width: none;
+    max-height: min(520px, 62vh);
     aspect-ratio: 1;
-  }
-}
-
-@media (min-width: 768px) {
-  .cm-hero__media {
-    aspect-ratio: 4 / 5;
   }
 }
 
