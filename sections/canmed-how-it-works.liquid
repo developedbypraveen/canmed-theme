@@ -30,12 +30,19 @@
   background:var(--cm-bg);
   color:var(--cm-ink);
   font-family:var(--cm-body);
-  padding:clamp(56px,8vw,120px) clamp(20px,5vw,64px);
+  padding-block:var(--cm-section-y,4rem);
+  padding-inline:0;
   overflow:hidden;
 }
 .cm-hiw *,.cm-hiw *::before,.cm-hiw *::after{box-sizing:border-box}
 .cm-hiw h2,.cm-hiw h3,.cm-hiw p,.cm-hiw ol{margin:0;padding:0}
-.cm-hiw__inner{max-width:1240px;margin:0 auto}
+.cm-hiw__inner{
+  width:100%;
+  max-width:var(--cm-shell,1240px);
+  margin:0 auto;
+  padding-inline:var(--cm-section-x,20px);
+  box-sizing:border-box;
+}
 
 .cm-hiw__eyebrow{
   display:inline-flex;align-items:center;gap:10px;

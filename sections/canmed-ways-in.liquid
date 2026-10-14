@@ -19,11 +19,19 @@
 
   position:relative;overflow:hidden;
   background:var(--cm-bg);color:var(--cm-ink);font-family:var(--cm-body);
-  padding:clamp(64px,8vw,128px) clamp(20px,5vw,64px);
+  padding-block:var(--cm-section-y,4rem);
+  padding-inline:0;
 }
 .cm-ways *,.cm-ways *::before,.cm-ways *::after{box-sizing:border-box}
 .cm-ways h2,.cm-ways h3,.cm-ways p{margin:0;padding:0}
-.cm-ways__inner{position:relative;z-index:1;max-width:1240px;margin:0 auto}
+.cm-ways__inner{
+  position:relative;z-index:1;
+  width:100%;
+  max-width:var(--cm-shell,1240px);
+  margin:0 auto;
+  padding-inline:var(--cm-section-x,20px);
+  box-sizing:border-box;
+}
 
 .cm-ways__dots{position:absolute;inset:0;z-index:0;pointer-events:none}
 .cm-ways__dots span{
