@@ -15,29 +15,29 @@
         "f1": {
           "type": "fact",
           "settings": {
-            "label": "Prescriber line",
-            "value": "(08) 8450 3978 · (08) 7094 2268"
+            "label": "Phone",
+            "value": "08 7094 2269"
           }
         },
         "f2": {
           "type": "fact",
           "settings": {
-            "label": "Orders",
-            "value": "orders@canmed.com.au"
+            "label": "Email",
+            "value": "orders.adelaide@canmedcompounding.com"
           }
         },
         "f3": {
           "type": "fact",
           "settings": {
-            "label": "Same-day cutoff",
-            "value": "11:00 AEST"
+            "label": "Hours",
+            "value": "Mon–Sat 9am–6pm"
           }
         },
         "f4": {
           "type": "fact",
           "settings": {
-            "label": "Account setup",
-            "value": "2 business days"
+            "label": "Dosage forms",
+            "value": "Non-sterile liquids, capsules, creams & more"
           }
         }
       },
@@ -51,8 +51,8 @@
         "tone": "pine",
         "show_icon": false,
         "eyebrow": "For medical professionals",
-        "heading": "Formulary, ranges, turnaround.",
-        "body": "Direct ordering for registered prescribers. Scripts received before 11:00 are triaged the same day. Compounding records and CoA available on request per batch."
+        "heading": "Working with us as a prescriber",
+        "body": "When a patient's needs fall outside what commercial medicines offer, a compounding pharmacist can help you work out what's practical before you write the script. We're happy to talk through dosage forms, strengths, bases and ingredients to avoid, and to flag where a suitable commercial product already exists."
       }
     },
     "formulary": {

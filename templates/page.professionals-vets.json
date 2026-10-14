@@ -15,8 +15,8 @@
         "tone": "dark",
         "show_icon": true,
         "eyebrow": "For veterinary practice",
-        "heading": "The dose the animal will actually take.",
-        "body": "Compounded at our clinics under veterinary SOPs. Species-appropriate excipients only — we exclude xylitol, benzyl alcohol and propylene glycol from feline preparations by default, and note every exclusion on the batch record."
+        "heading": "Compounding for animal patients",
+        "body": "Getting a medicine into an animal is often the hardest part of treatment. When you decide a compounded medicine is the better option, we'll prepare it to your prescription and send it to your clinic or directly to the owner. This page is for registered veterinarians — pet owners should talk to their vet first."
       }
     },
     "content": {
@@ -57,22 +57,22 @@
         "c1": {
           "type": "card",
           "settings": {
-            "title": "Practice ordering",
-            "body": "Bulk practice orders accepted against a written direction. Minimum batch 5 units."
+            "title": "Forms that can make dosing easier",
+            "body": "Oral suspensions and mixtures, capsules in individual strengths, creams, gels and lotions, troches and lozenges. Most oral medicines can be flavoured (beef, chicken, fish)."
           }
         },
         "c2": {
           "type": "card",
           "settings": {
-            "title": "Turnaround",
-            "body": "48 hours from approval. Courier to metro practices next business day."
+            "title": "Ordering",
+            "body": "Send the prescription, we confirm the formulation if needed, then contact the owner or clinic about payment and delivery."
           }
         },
         "c3": {
           "type": "card",
           "settings": {
             "title": "Clinic contact",
-            "body": "West Lakes (08) 8450 3978\nAdelaide (08) 7094 2268"
+            "body": "Phone 08 7094 2269\norders.adelaide@canmedcompounding.com"
           }
         }
       },

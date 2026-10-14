@@ -72,11 +72,14 @@
         "other"
       ],
       "settings": {
-        "eyebrow": "Start a prescription",
-        "heading": "We build your formulation as you go.",
+        "eyebrow": "Send a prescription",
+        "heading": "Send us your prescription",
         "intake_product": "prescription-submission",
         "intake_variant_id": "50665717465320",
-        "fallback_email": "scripts@canmed.com.au",
+        "fallback_email": "orders.adelaide@canmedcompounding.com",
+        "fallback_copy": "Having trouble with the form? Email your details and prescription to",
+        "fallback_suffix": "or call us on 08 7094 2269 and we'll help.",
+        "file_note": "A pharmacist will review your prescription and contact you, usually within one business day, to confirm the details and the price. Nothing is prepared or charged until you've agreed. Allowed files: PDF, JPG, PNG or DOC.",
         "shop_link": "/pages/shop"
       }
     }

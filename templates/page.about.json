@@ -13,12 +13,12 @@
       "type": "canmed-about-hero",
       "settings": {
         "eyebrow": "About us",
-        "heading_line_1": "A dispensary that still",
-        "heading_line_2": "weighs things.",
-        "body": "CanMed compounds each medicine for the person taking it. At both clinics the work is the same: read the script properly, weigh accurately, label clearly, and explain it to the person taking it. We don't outsource compounding, and we don't dispense anything a pharmacist hasn't personally reviewed.",
+        "heading_line_1": "About CanMed",
+        "heading_line_2": "Compounding Chemist",
+        "body": "We're a compounding pharmacy preparing medicines to a prescriber's order, for patients whose needs a commercially made product doesn't meet. Every medicine starts with a prescription for a named patient. Before we do anything, a pharmacist checks that compounding is appropriate, that the formulation is sound, and that the patient understands what they're getting and what it will cost.",
         "primary_label": "Find a clinic",
         "primary_link": "#locations",
-        "secondary_label": "Start a prescription",
+        "secondary_label": "Send a prescription",
         "secondary_link": "/pages/prescriptions",
         "aside_label": "CanMed at a glance",
         "aside_kicker": "Two clinics · one standard",
@@ -142,9 +142,9 @@
     "cta": {
       "type": "canmed-about-cta",
       "settings": {
-        "heading": "Ready when your script is.",
-        "body": "Send a prescription online, or call the clinic that suits you. We'll take it from the weigh-in.",
-        "primary_label": "Start a prescription",
+        "heading": "Visit us",
+        "body": "Send a prescription online, or call 08 7094 2269. Email orders.adelaide@canmedcompounding.com — we'll take it from there.",
+        "primary_label": "Send a prescription",
         "primary_link": "/pages/prescriptions",
         "secondary_label": "Contact us",
         "secondary_link": "/pages/contact"

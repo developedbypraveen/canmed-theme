@@ -5,11 +5,11 @@
       "settings": {
         "layout": "title_left",
         "eyebrow": "For patients",
-        "heading": "When the packet doesn't fit the person.",
+        "heading": "Getting a compounded medicine: what to expect",
         "heading_size": "xl",
-        "body": "Manufactured medicines come in fixed strengths and fixed forms. Compounding is what happens when your prescriber needs something else — a smaller dose, a liquid instead of a tablet, a cream instead of a capsule, or a formula without the ingredient you react to. A pharmacist makes it, one batch, for you.",
-        "primary_label": "Start a prescription",
-        "secondary_label": "Ask a question first"
+        "body": "If your doctor has suggested a compounded medicine, you probably have a few questions. What happens after you send the script? How much will it cost? Is it any different to take? This page covers the practical side, from your first contact with us to finishing the course.",
+        "primary_label": "Send a prescription",
+        "secondary_label": "Contact us"
       }
     },
     "rx_types": {
@@ -40,10 +40,34 @@
     "faq": {
       "type": "canmed-faq",
       "blocks": {
-        "q1": { "type": "item", "settings": { "question": "Do I need a prescription?", "answer": "For anything Schedule 4 or 8, yes. S3 lines need a short conversation with a pharmacist. Over-the-counter lines you can order directly." } },
-        "q2": { "type": "item", "settings": { "question": "How long does compounding take?", "answer": "Most oral liquids and creams are ready within 24 to 48 hours of pharmacist approval. Sterile preparations take longer, and we tell you when we approve the script." } },
-        "q3": { "type": "item", "settings": { "question": "Can you flavour a child's medicine?", "answer": "Yes — strawberry, banana or unflavoured, in a sugar-free, dye-free base. We label the syringe in millilitres so there is no tablet-splitting maths at bedtime." } },
-        "q4": { "type": "item", "settings": { "question": "Is a compounded medicine TGA registered?", "answer": "No. Compounded medicines are made for one patient and sit outside the registration pathway. That is why a pharmacist reviews every script personally." } }
+        "q1": {
+          "type": "item",
+          "settings": {
+            "question": "Do I need a prescription?",
+            "answer": "For almost every medicine we compound, yes. Your doctor decides whether a compounded medicine is right and what it should contain."
+          }
+        },
+        "q2": {
+          "type": "item",
+          "settings": {
+            "question": "How long does it take?",
+            "answer": "Most medicines are ready within 1 to 2 business days of receiving a valid prescription. Some take longer, and we'll let you know when you order. Delivery time is extra."
+          }
+        },
+        "q3": {
+          "type": "item",
+          "settings": {
+            "question": "Are compounded medicines checked by the TGA?",
+            "answer": "No. The TGA does not evaluate compounded medicines for safety, quality or effectiveness before they're supplied. If a suitable TGA-approved medicine is available, it's generally the better choice, and your pharmacist may suggest it."
+          }
+        },
+        "q4": {
+          "type": "item",
+          "settings": {
+            "question": "Can I claim it on my private health insurance?",
+            "answer": "Some funds include a benefit for private prescriptions. We can give you an itemised receipt; check with your fund about what your policy covers."
+          }
+        }
       },
       "block_order": ["q1", "q2", "q3", "q4"],
       "settings": {}

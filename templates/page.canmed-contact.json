@@ -27,7 +27,15 @@
         }
       },
       "block_order": ["west_lakes", "adelaide"],
-      "settings": {}
+      "settings": {
+        "eyebrow": "Contact us",
+        "heading": "Contact us",
+        "body": "For questions about a prescription, an order or whether compounding might suit you, the quickest way to reach a pharmacist is by phone on 08 7094 2269, or email orders.adelaide@canmedcompounding.com.",
+        "form_note": "We reply during opening hours. Please don't attach prescriptions here — use the prescription form instead. This form isn't monitored for urgent medical issues. In an emergency call 000; for poisoning advice call 13 11 26.",
+        "submit_label": "Send message",
+        "success_heading": "Message received.",
+        "success_body": "We reply to messages during opening hours. For anything urgent, call 08 7094 2269."
+      }
     }
   },
   "order": ["contact"]
