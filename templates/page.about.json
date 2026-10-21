@@ -33,9 +33,9 @@
           "type": "step",
           "settings": {
             "num": "01",
-            "name": "Read properly",
-            "hint": "Dose, form, clinical sense",
-            "copy": "Every script is checked for dose, form, and clinical sense before anything is weighed.",
+            "name": "Read",
+            "hint": "We check the script first",
+            "copy": "A pharmacist reads the prescription and checks the dose, the form and whether compounding makes sense for this patient. If something needs clarifying, we call the prescriber before we start.",
             "icon_paths": "<path d=\"M4 6h16\"></path><path d=\"M4 12h10\"></path><path d=\"M4 18h14\"></path><path d=\"m15 10 2 2 4-4\"></path>"
           }
         },
@@ -43,9 +43,9 @@
           "type": "step",
           "settings": {
             "num": "02",
-            "name": "Weigh accurately",
-            "hint": "Calibrated balances, on site",
-            "copy": "Measured on calibrated balances — not scooped, guessed, or batched off-site.",
+            "name": "Weigh",
+            "hint": "Measured on calibrated scales",
+            "copy": "Ingredients are weighed and measured on balances that are calibrated on a set schedule, and each step is recorded on a worksheet so the preparation can be traced.",
             "icon_paths": "<path d=\"M12 3v14\"></path><path d=\"M8 21h8\"></path><path d=\"M5 7h14\"></path><path d=\"M7 7 4.8 12.2a2.2 2.2 0 0 0 2 3.1H8\"></path><path d=\"M17 7l2.2 5.2a2.2 2.2 0 0 1-2 3.1H16\"></path>"
           }
         },
@@ -53,9 +53,9 @@
           "type": "step",
           "settings": {
             "num": "03",
-            "name": "Label clearly",
-            "hint": "Plain language directions",
-            "copy": "Directions a person can follow at home — strength, timing, and storage in plain language.",
+            "name": "Label",
+            "hint": "Directions in plain English",
+            "copy": "Every label shows the patient's name, the dose, how to take it, how to store it and when to use it by. We write directions so they're easy to follow at home.",
             "icon_paths": "<rect x=\"4\" y=\"5\" width=\"16\" height=\"14\" rx=\"2\"></rect><path d=\"M8 9h8\"></path><path d=\"M8 13h5\"></path>"
           }
         },
@@ -63,9 +63,9 @@
           "type": "step",
           "settings": {
             "num": "04",
-            "name": "Explain personally",
-            "hint": "Pharmacist to patient",
-            "copy": "A pharmacist reviews the finished medicine and talks it through with the person taking it.",
+            "name": "Explain",
+            "hint": "A pharmacist talks you through it",
+            "copy": "Before you take it home, a pharmacist explains how to take or give the medicine, what to watch for and who to call with questions.",
             "icon_paths": "<path d=\"M4 19c2-4 5-6 8-6s6 2 8 6\"></path><circle cx=\"12\" cy=\"8\" r=\"3.5\"></circle>"
           }
         }
@@ -78,8 +78,9 @@
       ],
       "settings": {
         "eyebrow": "Our standard",
-        "heading": "The same care, every script.",
-        "lead": "Whether you visit West Lakes or King William Street, the compounding bench follows the same discipline.",
+        "heading": "Four steps, every prescription",
+        "lead": "It doesn't matter which clinic you use. Every compounded medicine goes through the same four steps before it reaches you.",
+        "footnote": "Same steps at West Lakes and King William Street.",
         "stage_kicker": "On the bench"
       }
     },
@@ -139,6 +140,28 @@
         "directions_label": "Directions"
       }
     },
+    "team": {
+      "type": "canmed-team",
+      "settings": {
+        "eyebrow": "Our team",
+        "heading": "The people preparing your medicine",
+        "lede": "Every compounded medicine is checked and released by a registered pharmacist. Here's who you'll meet at our clinics.",
+        "cta_label": ""
+      }
+    },
+    "facility": {
+      "type": "canmed-about-facility",
+      "settings": {
+        "eyebrow": "Where it's made",
+        "heading": "Made here in Adelaide, not shipped in",
+        "paragraph_1": "Your medicine is prepared by our own pharmacists in the compounding room. We prepare non-sterile medicines only, such as liquids, creams, gels, capsules and troches. We don't make injections or eye drops.",
+        "paragraph_2": "The compounding room is kept separate from the retail floor. It has dedicated benches, calibrated balances and its own cleaning routine. We follow the Pharmacy Board of Australia's guidelines on compounding and keep a worksheet for every preparation, recording what went in, who made it and who checked it.",
+        "chip_1": "Non-sterile compounding only",
+        "chip_2": "Every batch recorded and pharmacist-checked",
+        "chip_3": "Prepared to order, never in advance",
+        "closing": "Want to see where your medicine is made? Ask at the counter next time you visit."
+      }
+    },
     "cta": {
       "type": "canmed-about-cta",
       "settings": {
@@ -154,6 +177,8 @@
   "order": [
     "hero",
     "standards",
+    "team",
+    "facility",
     "locations",
     "cta"
   ]

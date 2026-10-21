@@ -49,6 +49,15 @@
         <div class="cart-page__title">
           {%- content_for 'block', id: 'cart-page-title', type: '_cart-title' %}
         </div>
+        {% unless cart.empty? %}
+        <p class="cm-mono-data" style="margin:0.75rem 0 0;">This cart is for over-the-counter products. Compounded and prescription medicines are ordered through our prescription form, and a pharmacist will contact you with a price.</p>
+        <p class="cm-mono-data" style="margin:0.5rem 0 0;">Always read the label and follow the directions for use.</p>
+        <p class="cm-mono-data" style="margin:0.5rem 0 1rem;">Collect from West Lakes or King William Street, or choose delivery at the next step.</p>
+        <p class="cm-mono-data" style="margin:0 0 1rem;">Prices include GST where it applies. Questions before you buy? Email <a href="mailto:orders.adelaide@canmedcompounding.com">orders.adelaide@canmedcompounding.com</a> and ask for a pharmacist.</p>
+        {% else %}
+        <p class="cm-body-l" style="margin-top:1rem;">Browse our over-the-counter range, or send a prescription if you need a medicine compounded.</p>
+        <p style="margin-top:1rem;"><a class="cm-btn cm-btn--accent" href="/pages/shop">Shop products</a> <a class="cm-btn cm-btn--secondary" href="/pages/prescriptions">Send a prescription</a></p>
+        {% endunless %}
 
         <div class="cart-page__items">
           {%- content_for 'block', id: 'cart-page-items', type: '_cart-products' %}

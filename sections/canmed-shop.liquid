@@ -69,7 +69,7 @@
     </div>
   </div>
 
-  <div class="cm-shell cm-shop__panels">
+    <div class="cm-shell cm-shop__panels" id="cm-shop-products">
     <div class="cm-shop__panel" role="tabpanel" data-cm-shop-panel="all">
       <p class="cm-mono-data cm-shop__note">{{ section.settings.note_all | default: 'All lines you can order online. Compounded scripts use the Prescriptions form.' | escape }}</p>
       {% render 'canmed-shop-grid', collection: col_all, show_all: true, empty_heading: section.settings.empty_heading, empty_body: section.settings.empty_body, empty_cta: section.settings.empty_cta, empty_link: section.settings.empty_link %}
@@ -84,6 +84,38 @@
       <p class="cm-mono-data cm-shop__note">{{ section.settings.note_otc | default: 'Available to order directly, no consultation required.' | escape }}</p>
       {% render 'canmed-shop-grid', collection: col_otc, tier_tag: 'access-otc', media_tier: 'otc', empty_heading: section.settings.empty_heading, empty_body: section.settings.empty_body, empty_cta: section.settings.empty_cta, empty_link: section.settings.empty_link %}
     </div>
+  </div>
+
+  <div class="cm-shell" style="padding-bottom:3rem;">
+    <div class="cm-info-cards" style="margin-top:0;">
+      <article class="cm-info-card">
+        <h3>Over the counter</h3>
+        <p>Add to cart and check out. No prescription needed. A pharmacist is available if you have questions.</p>
+        <p><a href="#cm-shop-products">Shop now</a></p>
+      </article>
+      <article class="cm-info-card">
+        <h3>Pharmacist only</h3>
+        <p>These are supplied after a short chat with a pharmacist, in store or by phone, to make sure the product suits you. Ask your pharmacist about this product.</p>
+        <p><a href="/pages/contact">Call us</a></p>
+      </article>
+      <article class="cm-info-card">
+        <h3>Prescription only</h3>
+        <p>We can't sell these through the shop. Send us your prescription and a pharmacist will contact you with a price before anything is prepared.</p>
+        <p><a href="{{ section.settings.prescriptions_link | default: '/pages/prescriptions' }}">Start a prescription</a></p>
+      </article>
+    </div>
+    {% if section.settings.delivery_strip != blank %}
+      <p class="cm-mono-data" style="margin-top:1.5rem;">{{ section.settings.delivery_strip | escape }}</p>
+    {% endif %}
+    {% if section.settings.bottom_banner != blank %}
+      <p class="cm-body-l" style="margin-top:1.5rem;">
+        {{ section.settings.bottom_banner | escape }}
+        <a href="{{ section.settings.prescriptions_link | default: '/pages/prescriptions' }}">{{ section.settings.bottom_banner_cta | default: 'Send a prescription' | escape }}</a>
+      </p>
+    {% endif %}
+    {% if section.settings.label_line != blank %}
+      <p class="cm-mono-data" style="margin-top:1rem;">{{ section.settings.label_line | escape }}</p>
+    {% endif %}
   </div>
 </section>
 
@@ -118,7 +150,11 @@
     { "type": "text", "id": "empty_heading", "label": "Empty heading", "default": "Nothing in this tier yet." },
     { "type": "textarea", "id": "empty_body", "label": "Empty body", "default": "Try another access tier, or tell us what you need and we'll quote a compound." },
     { "type": "text", "id": "empty_cta", "label": "Empty CTA", "default": "Ask a pharmacist →" },
-    { "type": "url", "id": "empty_link", "label": "Empty CTA link" }
+    { "type": "url", "id": "empty_link", "label": "Empty CTA link" },
+    { "type": "textarea", "id": "delivery_strip", "label": "Delivery strip" },
+    { "type": "textarea", "id": "bottom_banner", "label": "Bottom banner" },
+    { "type": "text", "id": "bottom_banner_cta", "label": "Bottom banner button", "default": "Send a prescription" },
+    { "type": "text", "id": "label_line", "label": "Label line", "default": "Always read the label and follow the directions for use." }
   ],
   "presets": [{ "name": "CanMed — Shop" }]
 }

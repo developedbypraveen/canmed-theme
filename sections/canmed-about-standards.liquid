@@ -80,6 +80,9 @@
         {% endfor %}
       </div>
     </div>
+    {% if section.settings.footnote != blank %}
+      <p class="cm-au-std__foot" style="margin-top:1.5rem;">{{ section.settings.footnote | escape }}</p>
+    {% endif %}
   </div>
 </section>
 
@@ -100,7 +103,8 @@
       "label": "Lead",
       "default": "Whether you visit West Lakes or King William Street, the compounding bench follows the same discipline."
     },
-    { "type": "text", "id": "stage_kicker", "label": "Stage kicker", "default": "On the bench" }
+    { "type": "text", "id": "stage_kicker", "label": "Stage kicker", "default": "On the bench" },
+    { "type": "text", "id": "footnote", "label": "Line under the strip" }
   ],
   "blocks": [
     {

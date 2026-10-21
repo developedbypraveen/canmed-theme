@@ -78,22 +78,49 @@
       </div>
     </div>
 
+    </div>
+
+    <div class="cm-footer__news" style="margin-top:2rem;max-width:28rem;">
+      <h2 class="cm-footer__loc-name">News from the pharmacy</h2>
+      <p class="cm-footer__blurb">Opening hours, new over-the-counter products, and practical tips on storing and taking medicines. About once a month.</p>
+      {% form 'customer', id: 'cm-newsletter' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <label class="cm-mono-data" for="cm-news-name">First name</label>
+        <input id="cm-news-name" type="text" name="contact[first_name]" autocomplete="given-name">
+        <label class="cm-mono-data" for="cm-news-email">Email</label>
+        <input id="cm-news-email" type="email" name="contact[email]" required autocomplete="email">
+        <label class="cm-mono-data" style="display:flex;gap:0.5rem;align-items:flex-start;margin-top:0.75rem;">
+          <input type="checkbox" name="contact[note]" value="newsletter-consent" required>
+          <span>Yes, send me emails from CanMed Compounding Chemist. I can unsubscribe at any time.</span>
+        </label>
+        <button type="submit" class="cm-btn cm-btn--accent" style="margin-top:0.75rem;">Sign up</button>
+        <p class="cm-mono-data">We'll only use your email for this newsletter. See our Privacy Policy.</p>
+        {% if form.posted_successfully? %}
+          <p>Thanks, you're on the list. Your first email will arrive soon.</p>
+        {% endif %}
+        {{ form.errors | default_errors }}
+      {% endform %}
+    </div>
+
     {% if section.settings.show_compliance %}
       <div class="cm-footer__compliance">
         <p class="cm-footer__compliance-eyebrow">{{ section.settings.compliance_eyebrow | escape }}</p>
         <p class="cm-footer__compliance-body">{{ section.settings.compliance_body | escape }}</p>
+        {% if section.settings.compliance_extra != blank %}
+          <p class="cm-footer__compliance-body">{{ section.settings.compliance_extra | escape }}</p>
+        {% endif %}
       </div>
     {% endif %}
 
     <div class="cm-footer__legal">
       <p class="cm-footer__copy">
         © {{ 'now' | date: '%Y' }}
-        {{ section.settings.copyright | default: 'CanMed Compounding Chemist. Pharmacy licence VIC-2291.' | escape }}
+        {{ section.settings.copyright | default: 'CanMed Compounding Chemist.' | escape }}
       </p>
       <div class="cm-footer__legal-links">
-        <a href="{{ section.settings.link_privacy | default: '/policies/privacy-policy' }}">Privacy</a>
-        <a href="{{ section.settings.link_terms | default: '/policies/terms-of-service' }}">Terms</a>
-        <a href="{{ section.settings.link_admin | default: '/pages/admin' }}">Staff portal</a>
+        <a href="{{ section.settings.link_privacy | default: '/policies/privacy-policy' }}">Privacy Policy</a>
+        <a href="{{ section.settings.link_terms | default: '/policies/terms-of-service' }}">Terms & Conditions</a>
+        <a href="{{ section.settings.link_contact | default: '/pages/contact' }}">Contact</a>
       </div>
     </div>
   </div>
@@ -148,13 +175,19 @@
       "type": "textarea",
       "id": "compliance_body",
       "label": "Notice body",
-      "default": "Compounded medicines are prepared for an individual patient and are not evaluated by the TGA in the way registered products are. Nothing on this site is medical advice. Schedule 4 and Schedule 8 items are supplied only against a valid Australian prescription."
+      "default": "Compounded medicines are prepared by a pharmacist for one patient, on a valid prescription. They are not assessed by the Therapeutic Goods Administration (TGA) for safety, quality or effectiveness the way registered medicines are. If a suitable registered medicine is available, your prescriber or pharmacist may recommend it instead. Prescription-only and controlled medicines are supplied only on a valid Australian prescription. Information on this site is general in nature and is not medical advice."
+    },
+    {
+      "type": "textarea",
+      "id": "compliance_extra",
+      "label": "Notice second line",
+      "default": "For over-the-counter products, always read the label and follow the directions for use."
     },
     {
       "type": "text",
       "id": "copyright",
       "label": "Copyright line",
-      "default": "CanMed Compounding Chemist. Pharmacy licence VIC-2291."
+      "default": "CanMed Compounding Chemist."
     },
     {
       "type": "url",

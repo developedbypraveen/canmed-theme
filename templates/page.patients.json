@@ -15,27 +15,120 @@
     "rx_types": {
       "type": "canmed-rx-types",
       "blocks": {
-        "t1": { "type": "type", "settings": { "icon": "paediatric", "title": "Paediatric", "body": "Child-scaled doses and flavours" } },
-        "t2": { "type": "type", "settings": { "icon": "geriatric", "title": "Geriatric", "body": "Swallowing and polypharmacy support" } },
-        "t3": { "type": "type", "settings": { "icon": "veterinary", "title": "Veterinary", "body": "Species-specific formulations" } },
-        "t4": { "type": "type", "settings": { "icon": "phyto", "title": "Alternative Medicine", "body": "Approved prescriptions only" } },
-        "t5": { "type": "type", "settings": { "icon": "other", "title": "Something else", "body": "Tell us and we'll route it" } }
+        "t1": {
+          "type": "type",
+          "settings": {
+            "icon": "paediatric",
+            "title": "Paediatric",
+            "body": "Doses and forms sized for children",
+            "detail": "Children often need smaller doses than a tablet allows, or a form they can actually take. Where your child's prescriber asks for it, we can prepare a liquid in place of a tablet, adjust the strength, or add a flavour that makes taking it easier. We'll show you how to measure each dose before you leave."
+          }
+        },
+        "t2": {
+          "type": "type",
+          "settings": {
+            "icon": "geriatric",
+            "title": "Geriatric",
+            "body": "Easier-to-swallow forms for older adults",
+            "detail": "Swallowing can get harder with age, and crushing tablets isn't always a safe workaround. On a prescriber's order, we can prepare a medicine as a liquid, a thickened liquid at a set IDDSI level, or another form that suits the person. If they take several medicines, we're happy to talk with their carer or doctor about how it all fits together."
+          }
+        },
+        "t3": {
+          "type": "type",
+          "settings": {
+            "icon": "veterinary",
+            "title": "Veterinary",
+            "body": "Prepared to a vet's prescription",
+            "detail": "Animals come in every size, and many won't take a tablet made for people. When a registered vet prescribes it, we can prepare a medicine at a strength that suits the animal's weight, in a form that's easier to give. If you're a pet owner, start with your vet. They can send the script straight to us."
+          }
+        },
+        "t4": {
+          "type": "type",
+          "settings": {
+            "icon": "phyto",
+            "title": "Alternative Medicine",
+            "body": "Less common prescriptions, checked case by case",
+            "detail": "Some prescriptions ask for natural-based ingredients or formulations you won't find on a pharmacy shelf. If your prescriber has written one, send it through and a pharmacist will check whether we can prepare it, and explain what's involved before anything is made. We only prepare these against a valid Australian prescription."
+          }
+        },
+        "t5": {
+          "type": "type",
+          "settings": {
+            "icon": "freefrom",
+            "title": "Free-from formulas",
+            "body": "Without the ingredient you react to",
+            "detail": "Some commercial medicines contain lactose, gluten, dyes, sugar or preservatives that don't agree with everyone. If your prescriber asks for a version without a particular ingredient, we'll check whether it can be made that way and tell you plainly if it can't."
+          }
+        },
+        "t6": {
+          "type": "type",
+          "settings": {
+            "icon": "hardtofind",
+            "title": "Hard-to-find medicines",
+            "body": "When a product isn't available in Australia",
+            "detail": "Medicines are sometimes discontinued or short in supply. If your prescriber decides a compounded version is appropriate, we can look at whether it's practical to prepare. If a suitable commercial product is available, we'll tell you, because that's usually the better option."
+          }
+        },
+        "t7": {
+          "type": "type",
+          "settings": {
+            "icon": "other",
+            "title": "Something else",
+            "body": "Not sure where yours fits? Ask us",
+            "detail": "Every prescription is different. Tell us what you've been prescribed and a pharmacist will get back to you to talk through whether we can help."
+          }
+        }
       },
-      "block_order": ["t1", "t2", "t3", "t4", "t5"],
+      "block_order": ["t1", "t2", "t3", "t4", "t5", "t6", "t7"],
       "settings": {
         "eyebrow": "What we make",
-        "heading": "Five kinds of problem we solve most often."
+        "heading": "When a standard medicine doesn't quite fit",
+        "intro": "Most people never need a compounded medicine. But sometimes the form, strength or ingredients of a commercial product don't suit the person taking it. If your doctor or vet thinks a compounded version is the right call, we prepare it to their prescription. These are the requests we see most.",
+        "button_label": "Send a prescription",
+        "button_link": "/pages/prescriptions",
+        "footnote": "Compounded medicines are only prepared on a valid prescription for a named patient. Your prescriber decides whether one is right for you."
       }
     },
     "otc": {
       "type": "canmed-otc-teaser",
       "blocks": {
-        "p1": { "type": "product", "settings": { "badge": "Over the counter", "title": "Barrier Repair Ointment", "body": "Fragrance-free, for compromised skin", "price": "$28.00" } },
-        "p2": { "type": "product", "settings": { "badge": "Over the counter", "title": "Electrolyte Replacement Sachets", "body": "Clinically weighted salts, low sugar", "price": "$22.00" } },
-        "p3": { "type": "product", "settings": { "badge": "Over the counter", "title": "Wound Irrigation Kit", "body": "Sterile saline, single-use ampoules", "price": "$19.00" } }
+        "p1": {
+          "type": "product",
+          "settings": {
+            "badge": "Over the counter",
+            "title": "Barrier Repair Ointment",
+            "body": "Fragrance-free ointment.",
+            "price": "From $28.00"
+          }
+        },
+        "p2": {
+          "type": "product",
+          "settings": {
+            "badge": "Over the counter",
+            "title": "Electrolyte Replacement Sachets",
+            "body": "Oral rehydration powder, low in sugar.",
+            "price": "From $22.00"
+          }
+        },
+        "p3": {
+          "type": "product",
+          "settings": {
+            "badge": "Over the counter",
+            "title": "Wound Irrigation Kit",
+            "body": "Sterile saline in single-use ampoules, for rinsing.",
+            "price": "From $19.00"
+          }
+        }
       },
       "block_order": ["p1", "p2", "p3"],
-      "settings": {}
+      "settings": {
+        "eyebrow": "Online pharmacy",
+        "heading": "Everyday pharmacy lines, delivered",
+        "lede": "Alongside compounding, we stock a small range of over-the-counter products you can order online. No prescription needed. If you're not sure a product suits you, call or email and a pharmacist will help.",
+        "cta_label": "Shop over-the-counter products",
+        "cta_link": "/pages/shop",
+        "label_line": "Always read the label and follow the directions for use."
+      }
     },
     "faq": {
       "type": "canmed-faq",

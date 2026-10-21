@@ -3,74 +3,28 @@
     "legal": {
       "type": "canmed-legal",
       "blocks": {
-        "s1": {
-          "type": "section",
-          "settings": {
-            "title": "Prescriptions",
-            "body": "Schedule 4 and Schedule 8 medicines require a valid Australian prescription from a registered prescriber. We verify every script with the prescriber's practice before compounding. Uploading a prescription is a request, not a completed order."
-          }
-        },
-        "s2": {
-          "type": "section",
-          "settings": {
-            "title": "Pharmacist discretion",
-            "body": "A pharmacist may decline to dispense where the formulation is unsafe, where a commercial product exists that meets the clinical need, or where the prescription cannot be verified. If we decline, we tell you why and refund any payment in full."
-          }
-        },
-        "s3": {
-          "type": "section",
-          "settings": {
-            "title": "Compounded medicines",
-            "body": "Compounded medicines are made for an individual patient and are not TGA-registered products. They are prepared to the strength and form specified by your prescriber, with beyond-use dates based on the formulation, not the shelf life of a commercial equivalent."
-          }
-        },
-        "s4": {
-          "type": "section",
-          "settings": {
-            "title": "Pricing and payment",
-            "body": "Prices shown are in AUD and include GST where applicable. Compounded items are quoted after pharmacist review because ingredients and quantity vary. Payment is taken once the formulation is confirmed."
-          }
-        },
-        "s5": {
-          "type": "section",
-          "settings": {
-            "title": "Delivery",
-            "body": "Cold-chain items ship in insulated packaging with a temperature indicator and are dispatched Monday to Wednesday only. Someone must be present to accept Schedule 4 and Schedule 8 deliveries. Click and collect is available at both clinics."
-          }
-        },
-        "s6": {
-          "type": "section",
-          "settings": {
-            "title": "Returns",
-            "body": "For safety reasons, dispensed medicines cannot be returned or resupplied to another patient. If an item arrives damaged, incorrectly compounded or outside its temperature range, contact us within 48 hours and we will remake or refund it."
-          }
-        },
-        "s7": {
-          "type": "section",
-          "settings": {
-            "title": "Veterinary supply",
-            "body": "Veterinary compounds are supplied against a prescription from a registered veterinarian for a named animal under their care, and must not be given to any other animal or to humans."
-          }
-        }
+        "s1": { "type": "section", "settings": { "title": "1. Information on this site", "body": "The content on this site is general information only. It isn't medical advice and doesn't replace a consultation with your doctor, vet or pharmacist. Always talk to a health professional about your own situation." } },
+        "s2": { "type": "section", "settings": { "title": "2. Prescriptions", "body": "We only prepare compounded and prescription medicines on a valid Australian prescription from an authorised prescriber.\n\nPaper prescriptions must reach us in original form before we can supply, unless the law allows otherwise. Electronic prescriptions can be sent by token.\n\nOur pharmacists may decline to prepare or supply a medicine if, in their professional judgement, it isn't appropriate or safe to do so, or if they need more information from the prescriber.\n\nSome medicines, including Schedule 8 medicines, have extra legal requirements for supply, collection and delivery. We'll tell you if these apply." } },
+        "s3": { "type": "section", "settings": { "title": "3. Quotes, prices and payment", "body": "Compounded medicines are priced individually. We'll give you a quote after a pharmacist reviews your prescription, and we won't start preparing until you accept it.\n\nPrices for over-the-counter products are shown on the site in Australian dollars and include GST where it applies.\n\nWe may correct pricing errors before an order is confirmed.\n\nPayment is taken at checkout for shop orders, or when you accept a quote for compounded orders." } },
+        "s4": { "type": "section", "settings": { "title": "4. Preparation times", "body": "Most compounded medicines are ready within 1 to 2 business days of a valid prescription. Some take longer. These times are estimates, not guarantees, and we'll let you know if yours will be delayed." } },
+        "s5": { "type": "section", "settings": { "title": "5. Collection and delivery", "body": "You can collect from either clinic during opening hours. Photo ID may be required for some medicines.\n\nDelivery fees and timeframes are shown at checkout. Delivery time is extra to preparation time.\n\nSome medicines can't be posted, or need to be signed for. We'll tell you before you pay.\n\nCheck your order when it arrives and tell us if anything is wrong or damaged." } },
+        "s6": { "type": "section", "settings": { "title": "6. Returns and refunds", "body": "For safety reasons, we can't accept returns of medicines once they've left the pharmacy, including compounded medicines made for you.\n\nIf a product is faulty, damaged, or not what you ordered, contact us and we'll arrange a replacement or refund.\n\nNothing in these terms limits your rights under the Australian Consumer Law." } },
+        "s7": { "type": "section", "settings": { "title": "7. Your account", "body": "Keep your login details private. You're responsible for activity on your account, and you should tell us straight away if you think someone else has accessed it. Please keep your contact and delivery details up to date." } },
+        "s8": { "type": "section", "settings": { "title": "8. Liability", "body": "To the extent the law allows, we aren't liable for indirect loss arising from your use of this site. This doesn't affect any guarantee or right you have under the Australian Consumer Law that can't be excluded." } },
+        "s9": { "type": "section", "settings": { "title": "9. Website content", "body": "All text, images and logos on this site belong to CanMed Compounding Chemist or are used with permission. Please don't copy them without our written consent." } },
+        "s10": { "type": "section", "settings": { "title": "10. Privacy", "body": "Our Privacy Policy explains how we handle your personal and health information." } },
+        "s11": { "type": "section", "settings": { "title": "11. Changes to these terms", "body": "We may update these terms from time to time. The version on this page at the time of your order applies to that order." } },
+        "s12": { "type": "section", "settings": { "title": "12. Governing law", "body": "These terms are governed by the laws of South Australia." } },
+        "s13": { "type": "section", "settings": { "title": "Contact", "body": "CanMed Compounding Chemist, Ground Floor, 90 King William Street, Adelaide SA 5000. Email: orders.adelaide@canmedcompounding.com" } }
       },
-      "block_order": [
-        "s1",
-        "s2",
-        "s3",
-        "s4",
-        "s5",
-        "s6",
-        "s7"
-      ],
+      "block_order": ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10", "s11", "s12", "s13"],
       "settings": {
         "eyebrow": "Legal",
         "heading": "Terms of Service",
-        "updated": "Last updated 1 August 2026",
-        "intro": "These terms apply when you order from CanMed Compounding Chemist, in store or online."
+        "updated": "",
+        "intro": "These terms apply when you use this website or order from CanMed Compounding Chemist. By using the site or placing an order, you agree to them."
       }
     }
   },
-  "order": [
-    "legal"
-  ]
+  "order": ["legal"]
 }

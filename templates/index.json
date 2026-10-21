@@ -159,7 +159,7 @@
         "cta_link": "",
         "show_compliance": true,
         "compliance_eyebrow": "Regulatory notice",
-        "compliance_body": "Compounded medicines are prepared for an individual patient and are not evaluated by the TGA in the way registered products are. Nothing on this site is medical advice. Schedule 4 and Schedule 8 items are supplied only against a valid Australian prescription."
+        "compliance_body": "Compounded medicines are prepared by a pharmacist for one patient, on a valid prescription. They are not assessed by the Therapeutic Goods Administration (TGA) for safety, quality or effectiveness the way registered medicines are. If a suitable registered medicine is available, your prescriber or pharmacist may recommend it instead. Prescription-only and controlled medicines are supplied only on a valid Australian prescription. Information on this site is general in nature and is not medical advice. For over-the-counter products, always read the label and follow the directions for use."
       }
     }
   },

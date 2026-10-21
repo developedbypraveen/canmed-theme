@@ -65,8 +65,8 @@
             "c1": "CM-PS-014",
             "c2": "Oral suspension",
             "c3": "SyrSpend SF pH4",
-            "c4": "0.1 – 50 mg/mL",
-            "c5": "24 h",
+            "c4": "0.1 to 50 mg/mL",
+            "c5": "24 hours",
             "c6": "West Lakes",
             "site": "wl"
           }
@@ -78,9 +78,9 @@
             "c1": "CM-TD-233",
             "c2": "Transdermal cream",
             "c3": "Anhydrous emollient",
-            "c4": "0.5 – 200 mg/g",
-            "c5": "48 h",
-            "c6": "Adelaide",
+            "c4": "0.5 to 200 mg/g",
+            "c5": "48 hours",
+            "c6": "King William St",
             "site": "adl"
           }
         },
@@ -91,9 +91,9 @@
             "c1": "CM-TR-118",
             "c2": "Buccal troche",
             "c3": "PEG 1450",
-            "c4": "1 – 100 mg/unit",
-            "c5": "48 h",
-            "c6": "Adelaide",
+            "c4": "1 to 100 mg per troche",
+            "c5": "48 hours",
+            "c6": "King William St",
             "site": "adl"
           }
         },
@@ -104,8 +104,8 @@
             "c1": "CM-VT-058",
             "c2": "PLO gel",
             "c3": "Pluronic F127",
-            "c4": "1 – 25 mg/0.1 mL",
-            "c5": "48 h",
+            "c4": "1 to 25 mg per 0.1 mL",
+            "c5": "48 hours",
             "c6": "West Lakes",
             "site": "wl"
           }
@@ -116,9 +116,9 @@
             "icon": "thick",
             "c1": "CM-GD-071",
             "c2": "Thickened liquid",
-            "c3": "Xanthan",
-            "c4": "IDDSI 2 – 4",
-            "c5": "24 h",
+            "c3": "Xanthan gum",
+            "c4": "IDDSI levels 2 to 4",
+            "c5": "24 hours",
             "c6": "West Lakes",
             "site": "wl"
           }
@@ -129,10 +129,10 @@
             "icon": "dropper",
             "c1": "CM-PC-102",
             "c2": "Oral liquid",
-            "c3": "MCT",
-            "c4": "5 – 100 mg/mL",
-            "c5": "72 h",
-            "c6": "Adelaide",
+            "c3": "MCT oil",
+            "c4": "5 to 100 mg/mL",
+            "c5": "72 hours",
+            "c6": "King William St",
             "site": "adl"
           }
         },
@@ -169,10 +169,12 @@
       ],
       "settings": {
         "eyebrow": "Base formulary",
-        "heading": "Standard bases and ranges",
-        "secondary_label": "For vets",
-        "secondary_link": "shopify://pages/for-vets",
-        "primary_label": "Open prescriber account",
+        "heading": "Our standard bases and strength ranges",
+        "intro": "These are the bases we use most often and the strength ranges we usually work within. They're a starting point, not a limit. If your patient needs something outside these ranges, or a base that isn't listed, call us before you write the script and we'll tell you what's practical.",
+        "notes": "<p>Turnaround is counted from receipt of a valid prescription and doesn't include delivery.</p><p>Strength ranges depend on the active ingredient's stability and solubility in each base. We'll confirm before preparing.</p><p>Where a suitable registered product exists, we'll let you know.</p>",
+        "secondary_label": "Request the full formulary",
+        "secondary_link": "/pages/contact",
+        "primary_label": "Open a prescriber account",
         "primary_link": "",
         "show_pharmacists": true
       }

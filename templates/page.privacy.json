@@ -3,74 +3,26 @@
     "legal": {
       "type": "canmed-legal",
       "blocks": {
-        "s1": {
-          "type": "section",
-          "settings": {
-            "title": "What we collect",
-            "body": "Your name, date of birth, contact details, Medicare and concession numbers where relevant, prescriber details, the prescriptions you upload, and the medicines we dispense to you. For veterinary compounds we also record the animal's species, weight and the treating vet."
-          }
-        },
-        "s2": {
-          "type": "section",
-          "settings": {
-            "title": "Why we collect it",
-            "body": "To dispense your medicine safely and legally. Compounding requires an accurate clinical picture \u2014 allergies, concurrent medicines and dose history \u2014 and Australian pharmacy law requires us to keep dispensing records."
-          }
-        },
-        "s3": {
-          "type": "section",
-          "settings": {
-            "title": "How long we keep it",
-            "body": "Dispensing records are retained for a minimum of seven years, and until a paediatric patient turns 25, as required by state pharmacy regulations. Uploaded prescription images are stored encrypted and purged once the record is transcribed and verified."
-          }
-        },
-        "s4": {
-          "type": "section",
-          "settings": {
-            "title": "Who can see it",
-            "body": "The pharmacists and dispensary technicians at your nominated location, and your prescriber. We never sell health information, and we do not use it for advertising or share it with third-party marketing platforms."
-          }
-        },
-        "s5": {
-          "type": "section",
-          "settings": {
-            "title": "Security",
-            "body": "Health information is encrypted in transit and at rest. Access is role-based and every view or change of a prescription record is written to an audit trail attached to a named staff member."
-          }
-        },
-        "s6": {
-          "type": "section",
-          "settings": {
-            "title": "Accessing or correcting your record",
-            "body": "You may request a copy of your record or ask us to correct it at any time. Email privacy@canmed.com.au or speak to the pharmacist at your dispensary. We respond within 30 days."
-          }
-        },
-        "s7": {
-          "type": "section",
-          "settings": {
-            "title": "Complaints",
-            "body": "If you believe we have mishandled your information, contact our Privacy Officer first. If you are not satisfied with our response, you can escalate to the Office of the Australian Information Commissioner at oaic.gov.au."
-          }
-        }
+        "s1": { "type": "section", "settings": { "title": "What we collect", "body": "Contact details: your name, address, phone number, email and date of birth.\n\nHealth information: prescriptions, medicine history, allergies, and anything you or your prescriber tell us that we need to prepare and supply your medicine safely.\n\nFor animal patients: the owner's details and the animal's name, species, weight and prescribing vet.\n\nPrescriber details: the name, practice and registration details of the doctor, vet or other prescriber.\n\nPayment and order details: what you ordered, delivery details and payment status. Card numbers are handled by our payment provider and we don't store them.\n\nWebsite data: pages visited, device and browser type, and information collected through cookies." } },
+        "s2": { "type": "section", "settings": { "title": "How we collect it", "body": "Mostly from you, through our prescription form, your account, phone calls, email or in store. We also receive information from your prescriber when they send a prescription, and from electronic prescription systems." } },
+        "s3": { "type": "section", "settings": { "title": "Why we use it", "body": "To check, prepare, label and supply your medicine.\n\nTo contact you or your prescriber about your prescription, quote or order.\n\nTo meet our legal record-keeping duties as a pharmacy.\n\nTo process payments and arrange delivery.\n\nTo send you marketing emails, only if you've opted in. You can unsubscribe at any time." } },
+        "s4": { "type": "section", "settings": { "title": "Who we share it with", "body": "Only as much as needed, and only with:\n\nyour prescriber, where we need to clarify or confirm a prescription\n\ndelivery and courier services, which receive your name, address and phone number\n\nour payment provider and website platform (Shopify)\n\ngovernment bodies, regulators or others where the law requires or allows it, for example monitored-medicine reporting systems\n\nWe never sell your personal information." } },
+        "s5": { "type": "section", "settings": { "title": "Information stored overseas", "body": "Our website runs on Shopify, which may store data on servers outside Australia. We take reasonable steps to make sure these providers protect your information in line with Australian law." } },
+        "s6": { "type": "section", "settings": { "title": "How we keep it safe", "body": "We limit access to staff who need it, use password-protected systems, and store paper records securely. We keep records for as long as pharmacy laws require, then destroy them securely." } },
+        "s7": { "type": "section", "settings": { "title": "Accessing or correcting your information", "body": "You can ask to see the information we hold about you, or ask us to correct it. Contact our Privacy Officer using the details below. We'll respond within 30 days. In a few cases the law allows us to refuse access, and if so we'll explain why." } },
+        "s8": { "type": "section", "settings": { "title": "Data breaches", "body": "If a breach is likely to cause you serious harm, we'll tell you and the Office of the Australian Information Commissioner (OAIC), as required by the Notifiable Data Breaches scheme." } },
+        "s9": { "type": "section", "settings": { "title": "Cookies", "body": "Our site uses cookies to keep your cart, remember your login and understand how the site is used. You can turn cookies off in your browser, but some parts of the site may stop working." } },
+        "s10": { "type": "section", "settings": { "title": "Complaints", "body": "If you're unhappy with how we've handled your information, contact our Privacy Officer first. If you're not satisfied with our response, you can contact the OAIC at oaic.gov.au or 1300 363 992." } },
+        "s11": { "type": "section", "settings": { "title": "Contact our Privacy Officer", "body": "Privacy Officer, CanMed Compounding Chemist, Ground Floor, 90 King William Street, Adelaide SA 5000." } }
       },
-      "block_order": [
-        "s1",
-        "s2",
-        "s3",
-        "s4",
-        "s5",
-        "s6",
-        "s7"
-      ],
+      "block_order": ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10", "s11"],
       "settings": {
         "eyebrow": "Legal",
         "heading": "Privacy Policy",
-        "updated": "Last updated 1 August 2026",
-        "intro": "CanMed Compounding Chemist handles health information under the Privacy Act 1988 (Cth) and the Australian Privacy Principles. This page is written in plain language on purpose."
+        "updated": "",
+        "intro": "This policy explains how CanMed Compounding Chemist (\"we\", \"us\") handles your personal information. We follow the Privacy Act 1988 (Cth) and the Australian Privacy Principles. Much of what we hold is health information, which the law treats as sensitive, so we take extra care with it."
       }
     }
   },
-  "order": [
-    "legal"
-  ]
+  "order": ["legal"]
 }
