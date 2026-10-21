@@ -78,25 +78,29 @@
       </div>
     </div>
 
-    </div>
-
-    <div class="cm-footer__news" style="margin-top:2rem;max-width:28rem;">
-      <h2 class="cm-footer__loc-name">News from the pharmacy</h2>
-      <p class="cm-footer__blurb">Opening hours, new over-the-counter products, and practical tips on storing and taking medicines. About once a month.</p>
+    <div class="cm-footer__news">
+      <h2 class="cm-footer__news-title">News from the pharmacy</h2>
+      <p class="cm-footer__news-intro">Opening hours, new over-the-counter products, and practical tips on storing and taking medicines. About once a month.</p>
       {% form 'customer', id: 'cm-newsletter' %}
         <input type="hidden" name="contact[tags]" value="newsletter">
-        <label class="cm-mono-data" for="cm-news-name">First name</label>
-        <input id="cm-news-name" type="text" name="contact[first_name]" autocomplete="given-name">
-        <label class="cm-mono-data" for="cm-news-email">Email</label>
-        <input id="cm-news-email" type="email" name="contact[email]" required autocomplete="email">
-        <label class="cm-mono-data" style="display:flex;gap:0.5rem;align-items:flex-start;margin-top:0.75rem;">
+        <div class="cm-footer__news-fields">
+          <label>
+            <span>First name</span>
+            <input id="cm-news-name" type="text" name="contact[first_name]" autocomplete="given-name">
+          </label>
+          <label>
+            <span>Email</span>
+            <input id="cm-news-email" type="email" name="contact[email]" required autocomplete="email">
+          </label>
+        </div>
+        <label class="cm-footer__news-consent">
           <input type="checkbox" name="contact[note]" value="newsletter-consent" required>
           <span>Yes, send me emails from CanMed Compounding Chemist. I can unsubscribe at any time.</span>
         </label>
-        <button type="submit" class="cm-btn cm-btn--accent" style="margin-top:0.75rem;">Sign up</button>
-        <p class="cm-mono-data">We'll only use your email for this newsletter. See our Privacy Policy.</p>
+        <button type="submit" class="cm-btn cm-btn--accent">Sign up</button>
+        <p class="cm-footer__news-note">We'll only use your email for this newsletter. See our <a href="{{ section.settings.link_privacy | default: '/policies/privacy-policy' }}">Privacy Policy</a>.</p>
         {% if form.posted_successfully? %}
-          <p>Thanks, you're on the list. Your first email will arrive soon.</p>
+          <p class="cm-footer__news-note">Thanks, you're on the list. Your first email will arrive soon.</p>
         {% endif %}
         {{ form.errors | default_errors }}
       {% endform %}
