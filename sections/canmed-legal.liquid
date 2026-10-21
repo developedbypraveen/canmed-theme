@@ -1,18 +1,26 @@
 <section class="cm-legal" {{ section.shopify_attributes }}>
   <div class="cm-shell">
-    <div class="cm-legal__inner">
+    <div class="cm-legal__head">
       {% if section.settings.eyebrow != blank %}<p class="cm-eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
       {% if section.settings.heading != blank %}<h1 class="cm-display-l">{{ section.settings.heading | escape }}</h1>{% endif %}
-      {% if section.settings.updated != blank %}<p class="cm-mono-data cm-legal__updated" style="color:var(--cm-muted);">{{ section.settings.updated | escape }}</p>{% endif %}
+      {% if section.settings.updated != blank %}<p class="cm-mono-data cm-legal__updated">{{ section.settings.updated | escape }}</p>{% endif %}
       {% if section.settings.intro != blank %}<p class="cm-body-l cm-legal__intro">{{ section.settings.intro | escape }}</p>{% endif %}
-      <div class="cm-legal__sections">
-        {% for block in section.blocks %}
-          <div class="cm-legal__section" {{ block.shopify_attributes }}>
-            <h2 class="cm-display-m">{{ block.settings.title | escape }}</h2>
-            <p>{{ block.settings.body | escape | newline_to_br }}</p>
+    </div>
+    <div class="cm-legal__sections">
+      {% for block in section.blocks %}
+        <article class="cm-legal__section" {{ block.shopify_attributes }}>
+          <h2>{{ block.settings.title | escape }}</h2>
+          <div class="cm-legal__copy">
+            {% assign paragraphs = block.settings.body | newline_to_br | replace: '<br />', '<br>' | split: '<br><br>' %}
+            {% for paragraph in paragraphs %}
+              {% assign clean = paragraph | strip %}
+              {% if clean != blank %}
+                <p>{{ clean }}</p>
+              {% endif %}
+            {% endfor %}
           </div>
-        {% endfor %}
-      </div>
+        </article>
+      {% endfor %}
     </div>
   </div>
 </section>

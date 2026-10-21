@@ -1737,16 +1737,107 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 .cm-pro-locs { margin-top: 3rem; display: grid; gap: 1.5rem; }
 @media (min-width: 768px) { .cm-pro-locs { grid-template-columns: repeat(2, 1fr); } }
 
-.cm-legal { padding-block: 3.5rem; }
-@media (min-width: 768px) { .cm-legal { padding-block: 6rem; } }
-.cm-legal__inner { max-width: 68ch; }
-.cm-legal .cm-display-l { margin-top: 1.25rem; }
-.cm-legal__updated { margin-top: 0.75rem; }
-.cm-legal__intro { margin-top: 2rem; }
-.cm-legal__sections { margin-top: 3rem; display: grid; gap: 2.5rem; }
-.cm-legal__section { border-top: 1px solid var(--cm-hairline); padding-top: 1.5rem; }
-.cm-legal__section .cm-display-m { margin: 0; }
-.cm-legal__section p { margin: 0.75rem 0 0; color: var(--cm-muted); line-height: 1.55; }
+.cm-legal {
+  padding-block: var(--cm-section-y);
+  background: var(--cm-secondary);
+}
+
+.cm-legal__head {
+  max-width: 46rem;
+}
+
+.cm-legal .cm-display-l {
+  margin-top: 1rem;
+}
+
+.cm-legal__updated {
+  margin-top: 0.75rem;
+  color: var(--cm-muted);
+}
+
+.cm-legal__intro {
+  margin-top: 1.25rem;
+  color: var(--cm-muted);
+}
+
+.cm-legal__sections {
+  margin-top: 2.25rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.cm-legal__section {
+  display: grid;
+  gap: 0.75rem;
+  background: #fff;
+  border: 1px solid var(--cm-hairline);
+  border-radius: 16px;
+  padding: 1.35rem 1.35rem 1.5rem;
+}
+
+@media (min-width: 800px) {
+  .cm-legal__section {
+    grid-template-columns: minmax(11rem, 16rem) minmax(0, 1fr);
+    gap: 1.25rem 2.5rem;
+    align-items: start;
+    padding: 1.75rem 2rem;
+  }
+}
+
+.cm-legal__section h2 {
+  margin: 0;
+  font-family: var(--cm-font-display);
+  font-weight: 600;
+  font-size: clamp(1.15rem, 1.4vw, 1.4rem);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--cm-pine);
+}
+
+.cm-legal__copy p {
+  margin: 0 0 0.85rem;
+  color: var(--cm-muted);
+  line-height: 1.65;
+  font-size: 1rem;
+}
+
+.cm-legal__copy p:last-child {
+  margin-bottom: 0;
+}
+
+.shopify-policy__container {
+  width: 100%;
+  max-width: var(--cm-shell);
+  margin-inline: auto;
+  padding: var(--cm-section-y) var(--cm-section-x);
+  box-sizing: border-box;
+}
+
+.shopify-policy__title h1 {
+  margin: 0;
+  font-family: var(--cm-font-display);
+  font-weight: 600;
+  font-size: clamp(2.125rem, 4.5vw, 3.5rem);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  color: var(--cm-pine);
+}
+
+.shopify-policy__body {
+  margin-top: 1.75rem;
+  max-width: 46rem;
+}
+
+.shopify-policy__body .rte,
+.shopify-policy__body .rte p {
+  color: var(--cm-muted);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.shopify-policy__body .rte p {
+  margin: 0 0 0.9rem;
+}
 
 /* —— Shop (Lovable match) —— */
 .cm-shop__hero {
