@@ -21,11 +21,17 @@
   position:relative;overflow:hidden;isolation:isolate;
   background:#ffffff;
   color:var(--cm-text);font-family:var(--cm-body);
-  padding:clamp(64px,8vw,120px) clamp(20px,5vw,64px);
+  padding-block:var(--cm-section-y,5rem);
 }
 .cm-bf *,.cm-bf *::before,.cm-bf *::after{box-sizing:border-box}
 .cm-bf :where(h2,h3,p){margin:0;padding:0}
-.cm-bf__inner{position:relative;z-index:1;max-width:1240px;margin:0 auto}
+.cm-bf__inner{
+  position:relative;z-index:1;
+  width:100%;
+  max-width:var(--cm-shell,1440px);
+  margin-inline:auto;
+  padding-inline:var(--cm-section-x,24px);
+}
 
 .cm-bf__aurora{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .cm-bf__aurora span{position:absolute;border-radius:50%;filter:blur(80px);opacity:.28;animation:cmBfDrift 22s ease-in-out infinite alternate}
