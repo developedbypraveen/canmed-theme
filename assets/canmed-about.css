@@ -21,7 +21,14 @@
 .cm-au,.cm-au *,.cm-au *::before,.cm-au *::after{box-sizing:border-box}
 .cm-au :where(h1,h2,h3,p,ul,dl,dt,dd,address){margin:0;padding:0}
 .cm-au a{color:inherit}
-.cm-au__shell{max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,64px)}
+.cm-au__shell,
+.cm-au-hero__inner{
+  width:100%;
+  max-width:var(--cm-shell,1440px);
+  margin-inline:auto;
+  padding-inline:var(--cm-section-x,24px);
+  box-sizing:border-box;
+}
 
 /* ===== CanMed | About us (scoped .cm-au) ===== */
 
@@ -51,7 +58,7 @@
   background-image:radial-gradient(rgba(157,62,198,.07) 1px,transparent 1px);background-size:22px 22px;
   -webkit-mask-image:linear-gradient(180deg,#000 40%,transparent 95%);mask-image:linear-gradient(180deg,#000 40%,transparent 95%);
 }
-.cm-au-hero__inner{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,64px)}
+.cm-au-hero__inner{position:relative;z-index:1}
 
 .cm-au-eyebrow{
   display:inline-flex;align-items:center;gap:10px;
