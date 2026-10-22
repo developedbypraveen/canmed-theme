@@ -29,11 +29,16 @@
 
   position:relative;overflow:hidden;
   background:var(--cm-bg);color:var(--cm-ink);font-family:var(--cm-body);
-  padding:clamp(64px,8vw,120px) clamp(20px,5vw,64px);
+  padding-block:var(--cm-section-y,5rem);
 }
 .cm-make *,.cm-make *::before,.cm-make *::after{box-sizing:border-box}
 .cm-make :where(h2,h3,p,ul){margin:0;padding:0}
-.cm-make__inner{max-width:1240px;margin:0 auto}
+.cm-make__inner{
+  width:100%;
+  max-width:var(--cm-shell,1440px);
+  margin-inline:auto;
+  padding-inline:var(--cm-section-x,24px);
+}
 
 .cm-make__eyebrow{
   display:inline-flex;align-items:center;gap:10px;
