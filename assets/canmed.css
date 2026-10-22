@@ -19,6 +19,8 @@
   --cm-shell: 1440px;
   --cm-section-x: 24px;
   --cm-section-y: 4rem;
+  --cm-h1-size: clamp(2.35rem, 4.2vw + 0.4rem, 4rem);
+  --cm-h1-leading: 1.08;
 }
 
 @media (max-width: 1440px) {
@@ -44,6 +46,13 @@
 @media (min-width: 769px) {
   :root {
     --cm-section-y: 5rem;
+  }
+}
+
+@media (min-width: 900px) {
+  :root {
+    --cm-h1-size: clamp(3rem, 3.2vw + 1rem, 4.25rem);
+    --cm-h1-leading: 1.05;
   }
 }
 
@@ -820,23 +829,29 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
   min-width: 0;
 }
 
-.cm-hero__title {
+.cm-hero__title,
+.cm-page-hero h1,
+.cm-pro-banner h1,
+.cm-legal h1,
+.cm-shop__hero h1,
+.cm-product__info h1,
+.cm-rx h1,
+.cm-contact-grid h1,
+.cm-account__title,
+.cm-account h1,
+.shopify-policy__title h1 {
   font-family: var(--cm-font-display);
   font-weight: 700;
-  font-size: clamp(2.35rem, 4.2vw + 0.4rem, 4rem);
-  line-height: 1.08;
+  font-size: var(--cm-h1-size);
+  line-height: var(--cm-h1-leading);
   letter-spacing: -0.025em;
   color: var(--cm-pine);
+}
+
+.cm-hero__title {
   margin: 1rem 0 0;
   text-wrap: balance;
   max-width: none;
-}
-
-@media (min-width: 900px) {
-  .cm-hero__title {
-    font-size: clamp(3rem, 3.2vw + 1rem, 4.25rem);
-    line-height: 1.05;
-  }
 }
 
 .cm-hero__lede {
@@ -1505,10 +1520,7 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 
 /* ---------- Inner pages ---------- */
 .cm-page-hero {
-  padding-block: 3.5rem;
-}
-@media (min-width: 768px) {
-  .cm-page-hero { padding-block: 6rem; }
+  padding-block: var(--cm-section-y);
 }
 .cm-page-hero__grid {
   display: grid;
@@ -1639,9 +1651,9 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 .cm-team-card__name { margin: 0; font-weight: 600; color: var(--cm-pine); }
 .cm-team-cta { margin-top: 2.5rem; }
 
-.cm-contact-grid { display: grid; gap: 3rem; padding-block: 3.5rem; }
+.cm-contact-grid { display: grid; gap: 3rem; padding-block: var(--cm-section-y); }
 @media (min-width: 768px) {
-  .cm-contact-grid { grid-template-columns: 5fr 7fr; padding-block: 6rem; gap: 2rem; }
+  .cm-contact-grid { grid-template-columns: 5fr 7fr; gap: 2rem; }
 }
 .cm-contact-locs { margin-top: 2.5rem; }
 .cm-contact-loc { border-top: 1px solid var(--cm-hairline); padding-top: 1rem; margin-top: 1.5rem; }
@@ -1710,9 +1722,9 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 
 .cm-pro-banner { background: var(--cm-pine); color: #fff; border-bottom: 1px solid var(--cm-hairline); }
 .cm-pro-banner--dark { background: var(--cm-pine-dark); }
-.cm-pro-banner__grid { display: grid; gap: 2rem; padding-block: 3rem; }
+.cm-pro-banner__grid { display: grid; gap: 2rem; padding-block: var(--cm-section-y); }
 @media (min-width: 768px) {
-  .cm-pro-banner__grid { grid-template-columns: 7fr 5fr; padding-block: 4rem; }
+  .cm-pro-banner__grid { grid-template-columns: 7fr 5fr; }
 }
 .cm-pro-banner .cm-mono-caption { color: var(--cm-amber-light); }
 .cm-pro-banner .cm-display-l { color: #fff; margin-top: 1rem; }
@@ -1815,12 +1827,6 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 
 .shopify-policy__title h1 {
   margin: 0;
-  font-family: var(--cm-font-display);
-  font-weight: 600;
-  font-size: clamp(2.125rem, 4.5vw, 3.5rem);
-  line-height: 1.06;
-  letter-spacing: -0.02em;
-  color: var(--cm-pine);
 }
 
 .shopify-policy__body {
@@ -1869,10 +1875,7 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 }
 .cm-shop__hero-inner {
   position: relative;
-  padding-block: 3.5rem;
-}
-@media (min-width: 768px) {
-  .cm-shop__hero-inner { padding-block: 5rem; }
+  padding-block: var(--cm-section-y);
 }
 .cm-shop__hero .cm-display-l {
   margin-top: 1rem;
@@ -1962,8 +1965,7 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
   outline: none;
 }
 .cm-shop__sort select:focus { border-bottom-color: var(--cm-amber); }
-.cm-shop__panels { padding-block: 3rem 5rem; }
-@media (min-width: 768px) { .cm-shop__panels { padding-block: 5rem; } }
+.cm-shop__panels { padding-block: var(--cm-section-y); }
 .cm-shop__panel[hidden] { display: none !important; }
 .cm-shop__note { max-width: 36rem; color: var(--cm-muted); margin: 0; }
 .cm-shop__grid {
@@ -2101,8 +2103,7 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 .cm-shop__empty-link:hover { text-decoration: underline !important; }
 
 /* —— Product —— */
-.cm-product { padding-block: 3rem 5rem; }
-@media (min-width: 768px) { .cm-product { padding-block: 4rem 6rem; } }
+.cm-product { padding-block: var(--cm-section-y); }
 .cm-product__grid {
   display: grid;
   gap: 3rem;
@@ -2242,8 +2243,7 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 .cm-product__actions--otc { margin-top: 1.25rem; }
 
 /* —— Prescriptions intake —— */
-.cm-rx { padding-block: 3rem 5rem; }
-@media (min-width: 768px) { .cm-rx { padding-block: 4rem 6rem; } }
+.cm-rx { padding-block: var(--cm-section-y); }
 .cm-rx__grid {
   display: grid;
   gap: 3rem;
@@ -2484,7 +2484,7 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 /* Same shell as header / product rail */
 .cm-cart-section > .cm-shell {
   width: 100%;
-  padding-block: 0.5rem 2.5rem;
+  padding-block: var(--cm-section-y);
 }
 
 .cart-page {
@@ -2528,7 +2528,9 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
   font-family: var(--cm-font-display) !important;
   color: var(--cm-pine) !important;
   letter-spacing: -0.02em;
-  font-size: clamp(1.75rem, 3vw, 2.25rem) !important;
+  font-size: var(--cm-h1-size) !important;
+  line-height: var(--cm-h1-leading) !important;
+  font-weight: 700 !important;
   margin: 0 !important;
 }
 .cart-page__items {

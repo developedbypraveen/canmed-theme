@@ -1,13 +1,7 @@
 /* CanMed — My Account (Lovable account layout) */
 
 .cm-account {
-  padding-block: 3rem;
-}
-
-@media (min-width: 768px) {
-  .cm-account {
-    padding-block: 5rem;
-  }
+  padding-block: var(--cm-section-y, 5rem);
 }
 
 /* Account uses denser type than marketing pages */
@@ -18,10 +12,10 @@
 .cm-account__title {
   margin: 1rem 0 0;
   font-family: var(--cm-font-display);
-  font-weight: 600;
-  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  font-weight: 700;
+  font-size: var(--cm-h1-size, clamp(2.35rem, 4.2vw + 0.4rem, 4rem));
+  line-height: var(--cm-h1-leading, 1.08);
+  letter-spacing: -0.025em;
   color: var(--cm-pine);
 }
 
