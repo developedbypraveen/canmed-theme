@@ -417,7 +417,7 @@ body:has(.cm-hero) :is(h1, h2, h3, h4, h5, h6, p, a, button, input, select, text
 .cm-header__account {
   display: none;
   font-family: var(--cm-font-mono);
-  font-size: 0.78rem;
+  font-size: 1rem;
   white-space: nowrap;
   color: rgb(74 63 82 / 0.75);
   text-decoration: none !important;
